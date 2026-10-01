@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Junp3x · Páginas web y chatbots con IA</title>
+<meta name="description" content="Junp3x diseña páginas web con movimiento y chatbots con IA para negocios en Colombia. Cotiza tu página en 1 minuto y recibe el precio al instante.">
+<meta name="theme-color" content="#1e2225">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta property="og:title" content="Junp3x · Páginas web y chatbots con IA">
+<meta property="og:description" content="Páginas que se sienten como entrar a otro mundo. Cotiza la tuya en 1 minuto.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Lexend:wght@500&display=swap">
+<link rel="stylesheet" href="css/styles.css">
+<script type="module" src="js/main.js"></script>
+</head>
+<body>
+
+<!-- Fondo vivo de toda la página -->
+<canvas class="ambient" id="ambient" aria-hidden="true"></canvas>
+<div class="progress" aria-hidden="true"><i id="progress"></i></div>
+
+<!-- ============ Intro ============ -->
+<div class="intro" id="intro" aria-hidden="true">
+  <canvas class="intro-waves" id="introWaves"></canvas>
+  <div class="intro-inner">
+    <svg id="logoBig" class="logo-big"></svg>
+    <div class="wordmark" id="wordmark">Junp3x</div>
+    <div class="slogan" id="slogan">Expertise · Experience · Express</div>
+  </div>
+  <button class="skip" id="skip" type="button">Saltar</button>
+</div>
+
+<!-- ============ Navegación ============ -->
+<nav class="nav" id="nav" aria-label="Principal">
+  <a class="brand" href="#inicio" aria-label="Junp3x, inicio"><svg id="logoSmall" aria-hidden="true"></svg><b>Junp3x</b></a>
+  <ul>
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="#demo">Demo IA</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+  </ul>
+  <a class="nav-cta" href="#cotizar">Cotizar</a>
+</nav>
+
+<main>
+
+<!-- ============ Portada ============ -->
+<section class="hero" id="inicio">
+  <canvas id="terrain" aria-hidden="true"></canvas>
+  <div class="hero-copy">
+    <h1 id="headline">Webs y asistentes de chat que <span class="grad accent">trabajan para mejorar tu negocio</span></h1>
+    <p class="sub reveal">Soy Nicolás. Diseño páginas con movimiento y chatbots que atienden a tus clientes a cualquier hora.</p>
+    <div class="actions reveal">
+      <a class="btn btn-main magnetic" href="#cotizar">Cotiza tu página en 1 minuto
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn btn-ghost magnetic" href="#proyectos">Ver proyectos</a>
+    </div>
+  </div>
+</section>
+
+<a class="band" href="#cotizar" data-dir="1" aria-label="Cotiza aquí mismo">
+  <span class="band-track" aria-hidden="true" data-words="Diseño web|Chatbots con IA|Animación|Identidad visual|Pedidos por WhatsApp|Cotiza aquí mismo"></span>
+</a>
+
+<!-- ============ 3X ============ -->
+<section class="x3" id="tresx" aria-label="Las 3X de Junp3x">
+  <div class="x3-pin">
+    <div class="x3-head wrap"><svg id="logoMid" aria-hidden="true"></svg></div>
+    <div class="x3-view">
+      <div class="x3-track" id="x3track">
+
+        <article class="x3-panel tone-coral">
+          <div class="x3-text">
+            <h2>Expertise</h2>
+            <p>Sitios rápidos y seguros, animaciones modernas y asistentes con inteligencia artificial que resuelven tareas reales de un negocio.</p>
+          </div>
+          <svg class="x3-art art-expertise" viewBox="0 0 400 400" aria-hidden="true">
+            <circle class="ring ring-a" cx="200" cy="200" r="178"/>
+            <circle class="ring ring-b" cx="200" cy="200" r="158"/>
+            <g class="cross"><path d="M200 6v40M200 354v40M6 200h40M354 200h40"/></g>
+            <path class="wire" pathLength="1" d="M200 90L295.3 145L295.3 255L200 310L104.7 255L104.7 145Z M200 200L104.7 145 M200 200L295.3 145 M200 200V310"/>
+            <g class="core">
+              <path class="f-top" d="M200 150L243.3 175L200 200L156.7 175Z"/>
+              <path class="f-left" d="M156.7 175L200 200V250L156.7 225Z"/>
+              <path class="f-right" d="M243.3 175L200 200V250L243.3 225Z"/>
+            </g>
+            <rect class="scan" x="90" y="196" width="220" height="2"/>
+          </svg>
+        </article>
+
+        <article class="x3-panel tone-mid">
+          <div class="x3-text">
+            <h2>Experience</h2>
+            <p>Proyectos publicados para clientes reales: una corporación cultural, un restaurante con pedidos y un sitio sobre la historia del cacao.</p>
+          </div>
+          <svg class="x3-art art-experience" viewBox="0 0 400 400" aria-hidden="true">
+            <ellipse class="ripple" cx="200" cy="262" rx="170" ry="85"/>
+            <ellipse class="ripple r2" cx="200" cy="262" rx="170" ry="85"/>
+            <ellipse class="ripple r3" cx="200" cy="262" rx="170" ry="85"/>
+            <g class="slab s1"><path class="f-left" d="M130 250L200 285V303L130 268Z"/><path class="f-right" d="M270 250L200 285V303L270 268Z"/><path class="f-top" d="M200 215L270 250L200 285L130 250Z"/></g>
+            <g class="slab s2"><path class="f-left" d="M130 222L200 257V275L130 240Z"/><path class="f-right" d="M270 222L200 257V275L270 240Z"/><path class="f-top" d="M200 187L270 222L200 257L130 222Z"/></g>
+            <g class="slab s3"><path class="f-left" d="M130 194L200 229V247L130 212Z"/><path class="f-right" d="M270 194L200 229V247L270 212Z"/><path class="f-top" d="M200 159L270 194L200 229L130 194Z"/></g>
+            <g class="slab s4"><path class="f-left" d="M130 166L200 201V219L130 184Z"/><path class="f-right" d="M270 166L200 201V219L270 184Z"/><path class="f-top" d="M200 131L270 166L200 201L130 166Z"/></g>
+          </svg>
+        </article>
+
+        <article class="x3-panel tone-cyan">
+          <div class="x3-text">
+            <h2>Express</h2>
+            <p>Trato directo conmigo, avances por WhatsApp durante todo el proceso y entregas en semanas, no en meses.</p>
+          </div>
+          <svg class="x3-art art-express" viewBox="0 0 400 400" aria-hidden="true">
+            <g class="streaks"><rect x="0" y="120" width="120" height="2"/><rect x="40" y="168" width="70" height="2"/><rect x="10" y="236" width="100" height="2"/><rect x="60" y="284" width="60" height="2"/></g>
+            <g class="clock ghost ghost-a"><circle cx="210" cy="200" r="120"/><path class="hand-m" d="M210 200V102"/><path class="hand-h" d="M210 200h58"/></g>
+            <g class="clock ghost ghost-b"><circle cx="210" cy="200" r="120"/><path class="hand-m" d="M210 200V102"/><path class="hand-h" d="M210 200h58"/></g>
+            <g class="clock ghost ghost-c"><circle cx="210" cy="200" r="120"/><path class="hand-m" d="M210 200V102"/><path class="hand-h" d="M210 200h58"/></g>
+            <g class="clock main">
+              <circle cx="210" cy="200" r="120"/>
+              <path class="ticks" pathLength="60" d="M210 92v14M318 200h-14M210 308v-14M102 200h14"/>
+              <path class="hand-m" d="M210 200V102"/>
+              <path class="hand-h" d="M210 200h58"/>
+              <circle class="pin" cx="210" cy="200" r="6"/>
+            </g>
+          </svg>
+        </article>
+
+      </div>
+    </div>
+    <div class="x3-bar wrap"><i id="x3prog"></i></div>
+  </div>
+</section>
+
+<!-- ============ Proyectos ============ -->
+<section class="block wrap" id="proyectos">
+  <header class="sec-head">
+    <h2 class="sec-title">Sitios que ya están trabajando para sus dueños</h2>
+  </header>
+  <div class="projects">
+    <button class="proj spot" type="button" data-proj="corp">
+      <span class="art unveil"><span class="bar"><i></i><i></i><i></i><em>corporacion-tame</em></span><img src="assets/img/shot-corp.jpg" alt="Portada del sitio de la Corporación Tame Historia y Cultura" loading="lazy"></span>
+      <span class="proj-meta">
+        <span class="proj-title">Corporación Tame Historia y Cultura</span>
+        <span class="proj-text">Historia local con línea de tiempo y un panel para editar sin tocar código.</span>
+        <span class="more">Ver el caso</span>
+      </span>
+    </button>
+    <button class="proj spot" type="button" data-proj="pancita">
+      <span class="art unveil"><span class="bar"><i></i><i></i><i></i><em>pancita-llena</em></span><img src="assets/img/shot-pancita.jpg" alt="Portada del sitio de Pancita Llena" loading="lazy"></span>
+      <span class="proj-meta">
+        <span class="proj-title">Pancita Llena</span>
+        <span class="proj-text">Menú para armar y un carrito que envía el pedido completo por WhatsApp.</span>
+        <span class="more">Ver el caso</span>
+      </span>
+    </button>
+    <button class="proj spot" type="button" data-proj="cacao">
+      <span class="art unveil"><span class="bar"><i></i><i></i><i></i><em>cacao-tame</em></span><img src="assets/img/shot-cacao.jpg" alt="Portada del sitio Cacao Tame" loading="lazy"></span>
+      <span class="proj-meta">
+        <span class="proj-title">Cacao Tame</span>
+        <span class="proj-text">400 años de cacao en Tame, Arauca, contados en una línea de tiempo.</span>
+        <span class="more">Ver el caso</span>
+      </span>
+    </button>
+  </div>
+  <a class="cta-strip spot" href="#cotizar">
+    <span><b>¿Te imaginas tu negocio así?</b> Mira el precio de tu página al instante.</span>
+    <span class="cta-go">Cotizar ahora <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </a>
+</section>
+
+<dialog class="case" id="caseDlg" aria-labelledby="caseTitle">
+  <div class="case-art" id="caseArt"></div>
+  <div class="case-body">
+    <h3 id="caseTitle"></h3>
+    <p id="caseText"></p>
+    <dl class="case-facts" id="caseFacts"></dl>
+    <div class="case-actions">
+      <a class="btn btn-main" id="caseLink" href="#" target="_blank" rel="noopener noreferrer">Abrir el sitio</a>
+      <a class="btn btn-ghost" id="caseQuote" href="#cotizar">Quiero algo así</a>
+      <button class="btn btn-ghost" type="button" id="caseClose">Cerrar</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- ============ Demo del chatbot ============ -->
+<section class="block wrap" id="demo">
+  <header class="sec-head">
+    <h2 class="sec-title">Un asistente que agenda citas por WhatsApp mientras tú trabajas</h2>
+    <p class="sec-sub">Ejemplo real hecho para la peluquería Team Hair.</p>
+  </header>
+  <div class="demo-grid">
+    <div class="phone">
+      <video id="demoVid" src="assets/video/demo-chatbot.mp4" poster="assets/video/demo-poster.jpg" muted playsinline loop preload="metadata" aria-label="Video del chatbot de Team Hair agendando una cita"></video>
+      <div class="phone-time"><i id="vidProg"></i></div>
+    </div>
+    <ol class="steps" id="steps">
+      <li data-t="0"><b>Saluda y ofrece opciones</b><span>Agendar, ver servicios o hablar con una persona.</span></li>
+      <li data-t="4"><b>Muestra servicios y precios</b><span>Cada servicio con su valor y duración.</span></li>
+      <li data-t="17"><b>Ofrece solo horarios libres</b><span>Nada de citas cruzadas.</span></li>
+      <li data-t="23"><b>Confirma y avisa al negocio</b><span>El dueño recibe cada cita nueva.</span></li>
+      <li data-t="32"><b>Recuerda 1 hora antes</b><span>El cliente confirma o reprograma en el chat.</span></li>
+    </ol>
+  </div>
+  <div class="demo-cta"><a class="btn btn-main magnetic" href="#cotizar" data-type="chatbot">Quiero uno para mi negocio</a></div>
+</section>
+
+<!-- ============ Galería ============ -->
+<section class="block wrap" id="disenos">
+  <header class="sec-head">
+    <h2 class="sec-title">Detalles de cada proyecto</h2>
+  </header>
+  <div class="gallery" id="gallery">
+    <div class="gcol" data-speed="-0.06">
+      <button class="gitem tall unveil" type="button" data-full="assets/img/logo-junp3x.jpg" data-cap="Identidad Junp3x: triángulo de bloques con el código dentro."><img src="assets/img/logo-junp3x.jpg" alt="Logo Junp3x" loading="lazy"></button>
+      <button class="gitem unveil" type="button" data-full="assets/img/shot-corp-publicaciones.jpg" data-cap="Corporación Tame: biblioteca de publicaciones con libros en 3D."><img src="assets/img/shot-corp-publicaciones.jpg" alt="Sección de publicaciones de la Corporación Tame" loading="lazy"></button>
+      <button class="gitem unveil" type="button" data-full="assets/img/frame-29.jpg" data-cap="Chatbot Team Hair: confirmación de la cita."><img src="assets/img/frame-29.jpg" alt="Pantalla de confirmación del chatbot" loading="lazy"></button>
+    </div>
+    <div class="gcol" data-speed="0.08">
+      <button class="gitem tall unveil" type="button" data-full="assets/img/frame-5.jpg" data-cap="Chatbot Team Hair: menú de categorías de servicio."><img src="assets/img/frame-5.jpg" alt="Menú de categorías del chatbot" loading="lazy"></button>
+      <button class="gitem unveil" type="button" data-full="assets/img/shot-pancita-menu.jpg" data-cap="Pancita Llena: el cliente arma su menú ejecutivo."><img src="assets/img/shot-pancita-menu.jpg" alt="Menú ejecutivo de Pancita Llena" loading="lazy"></button>
+      <a class="gitem cta-tile unveil" href="#cotizar"><b>Tu marca puede ser la siguiente</b><span>Cotiza en un minuto</span></a>
+    </div>
+    <div class="gcol" data-speed="-0.03">
+      <button class="gitem unveil" type="button" data-full="assets/img/shot-corp-intro.jpg" data-cap="Corporación Tame: entrada con el escudo y contador de carga."><img src="assets/img/shot-corp-intro.jpg" alt="Pantalla de entrada de la Corporación Tame" loading="lazy"></button>
+      <button class="gitem tall unveil" type="button" data-full="assets/img/frame-21.jpg" data-cap="Chatbot Team Hair: elección de hora con cupos libres."><img src="assets/img/frame-21.jpg" alt="Selector de horas del chatbot" loading="lazy"></button>
+      <button class="gitem unveil" type="button" data-full="assets/img/shot-cacao-monumento.jpg" data-cap="Cacao Tame: el monumento a la planta de cacao."><img src="assets/img/shot-cacao-monumento.jpg" alt="Sección del monumento en Cacao Tame" loading="lazy"></button>
+    </div>
+  </div>
+</section>
+
+<dialog class="lightbox" id="lightbox" aria-label="Diseño ampliado">
+  <img id="lbImg" alt="">
+  <p id="lbCap"></p>
+  <button type="button" class="lb-close" id="lbClose" aria-label="Cerrar">×</button>
+</dialog>
+
+<!-- ============ Servicios y proceso ============ -->
+<section class="block wrap" id="servicios">
+  <header class="sec-head">
+    <h2 class="sec-title">Lo que puedo hacer por tu negocio</h2>
+  </header>
+  <div class="services">
+    <article class="spot tone-coral"><span class="ico"></span><h3>Páginas web con movimiento</h3><p>De una página de presentación a un sitio completo con animaciones.</p><a class="svc-go" href="#cotizar" data-type="sitio">Cotizar esto <span aria-hidden="true">→</span></a></article>
+    <article class="spot tone-mid"><span class="ico"></span><h3>Pedidos por WhatsApp</h3><p>Menú o catálogo con carrito que envía el pedido listo a tu WhatsApp.</p><a class="svc-go" href="#cotizar" data-type="pedidos">Cotizar esto <span aria-hidden="true">→</span></a></article>
+    <article class="spot tone-sky"><span class="ico"></span><h3>Chatbots para negocios</h3><p>Agenda citas, responde preguntas y te avisa de cada cliente nuevo.</p><a class="svc-go" href="#cotizar" data-type="chatbot">Cotizar esto <span aria-hidden="true">→</span></a></article>
+    <article class="spot tone-cyan"><span class="ico"></span><h3>Identidad visual</h3><p>Logo, colores y tipografías para la web y las redes.</p><a class="svc-go" href="#cotizar" data-type="marca">Cotizar esto <span aria-hidden="true">→</span></a></article>
+  </div>
+
+  <header class="sec-head sec-head-gap">
+    <h2 class="sec-title">De la primera charla al lanzamiento en cuatro pasos</h2>
+  </header>
+  <ol class="process" id="process">
+    <li><span class="pn"><em>1</em></span><div><h3>Conversamos</h3><p>Me cuentas qué necesita tu negocio.</p></div></li>
+    <li><span class="pn"><em>2</em></span><div><h3>Diseño</h3><p>Ves cómo va a quedar antes de programar.</p></div></li>
+    <li><span class="pn"><em>3</em></span><div><h3>Construyo</h3><p>Te comparto avances para probar en tu celular.</p></div></li>
+    <li><span class="pn"><em>4</em></span><div><h3>Lanzamos</h3><p>Lo publico y quedo pendiente de cualquier ajuste.</p></div></li>
+  </ol>
+</section>
+
+<!-- ============ Cotizador ============ -->
+<section class="block wrap" id="cotizar">
+  <header class="sec-head">
+    <h2 class="sec-title">Calcula cuánto costaría tu proyecto</h2>
+    <p class="sec-sub">Precios de lanzamiento. El valor final lo confirmamos al hablar.</p>
+  </header>
+  <div class="quote">
+    <form class="q-form" id="qForm">
+      <fieldset>
+        <legend><span>1</span>¿Qué necesitas?</legend>
+        <div class="opts">
+          <label><input type="radio" name="type" value="landing" id="t-landing"><span><b>Página de presentación</b><small>Una sola página con tu información y contacto</small></span></label>
+          <label><input type="radio" name="type" value="sitio" id="t-sitio" checked><span><b>Sitio completo con animaciones</b><small>Varias secciones, como Corporación Tame</small></span></label>
+          <label><input type="radio" name="type" value="pedidos" id="t-pedidos"><span><b>Menú o catálogo con pedidos</b><small>Carrito que envía el pedido a WhatsApp</small></span></label>
+          <label><input type="radio" name="type" value="chatbot" id="t-chatbot"><span><b>Chatbot para WhatsApp</b><small>Agenda citas o toma pedidos, como el demo</small></span></label>
+          <label><input type="radio" name="type" value="marca" id="t-marca"><span><b>Logo e identidad visual</b><small>Logo, colores y tipografías</small></span></label>
+        </div>
+      </fieldset>
+      <fieldset id="qSecWrap">
+        <legend><span>2</span>¿Cuántas secciones?</legend>
+        <div class="range"><input type="range" id="qSections" min="1" max="12" value="5" aria-label="Número de secciones"><output id="qSecOut" for="qSections">5</output></div>
+        <small class="hint" id="qSecHint"></small>
+      </fieldset>
+      <fieldset>
+        <legend><span>3</span>Extras</legend>
+        <div class="checks">
+          <label><input type="checkbox" id="x-textos" value="textos"><span>Redacto los textos por ti</span></label>
+          <label><input type="checkbox" id="x-dominio" value="dominio"><span>Configuro dominio y alojamiento</span></label>
+          <label id="x-botWrap"><input type="checkbox" id="x-bot" value="bot"><span>Asistente de chat en la página</span></label>
+          <label id="x-3dWrap"><input type="checkbox" id="x-3d" value="3d"><span>Efectos 3D premium</span></label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend><span>4</span>¿Para cuándo?</legend>
+        <div class="seg">
+          <label><input type="radio" name="when" value="normal" checked><span>2 a 3 semanas</span></label>
+          <label><input type="radio" name="when" value="rapido"><span>En 1 semana (+20%)</span></label>
+        </div>
+      </fieldset>
+    </form>
+    <aside class="q-result" id="qResult" aria-live="polite">
+      <div class="q-prog"><i id="qProg"></i></div>
+      <div class="q-build" aria-hidden="true"><svg id="qTower" viewBox="0 0 240 230"></svg><span class="q-tag" id="qTag"></span></div>
+      <div class="q-price"><span id="qMin">100</span><em>a</em><span id="qMax">130</span><small>USD</small></div>
+      <ul class="q-lines" id="qLines"></ul>
+      <a class="btn btn-wa magnetic" id="qSend" href="https://wa.me/573204108873" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>
+        Enviar por WhatsApp</a>
+      <p class="q-note">Una agencia en Colombia cobra entre 430 y 850 USD por una sola landing page (<a href="https://cangrejodigital.com/diseno-web/cuanto-cuesta-pagina-web-colombia/" target="_blank" rel="noopener noreferrer">Cangrejo Digital, 2026</a>).</p>
+    </aside>
+  </div>
+</section>
+
+<a class="band" href="#cotizar" data-dir="-1" aria-label="Cotiza aquí mismo">
+  <span class="band-track" aria-hidden="true" data-words="Expertise|Experience|Express|Hecho a la medida|Cotiza aquí mismo"></span>
+</a>
+
+<!-- ============ Contacto ============ -->
+<section class="contact wrap" id="contacto">
+  <svg id="logoEnd" aria-hidden="true"></svg>
+  <h2>¿Construimos lo tuyo?</h2>
+  <p>Escríbeme y te cuento cómo lo haría, cuánto tardaría y cuánto costaría.</p>
+  <div class="actions center">
+    <a class="btn btn-wa magnetic" href="https://wa.me/573204108873?text=Hola%20Junp3x%2C%20quiero%20hablar%20de%20un%20proyecto" target="_blank" rel="noopener noreferrer">Hablar por WhatsApp</a>
+  </div>
+  <div class="mail"><a id="mailTxt" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=junp3x.contact@gmail.com&amp;su=Quiero%20cotizar%20un%20proyecto" target="_blank" rel="noopener noreferrer">junp3x.contact@gmail.com</a><button type="button" id="mailCopy">Copiar</button></div>
+</section>
+
+</main>
+
+<footer class="footer wrap">
+  <span>© 2026 Junp3x · Expertise · Experience · Express</span>
+  <button type="button" id="replay" class="linkish">Ver la entrada otra vez</button>
+</footer>
+
+<!-- ============ Accesos flotantes ============ -->
+<a class="qmini" id="qmini" href="#qResult"><span>Tu estimado</span><b id="qMiniVal">$100–130 USD</b><em>Ver y enviar</em></a>
+<a class="qdock" id="qdock" href="#cotizar">Cotiza en 1 minuto</a>
+<button type="button" class="ai-fab" id="aiFab" aria-label="Abrir el asistente de Junp3x" aria-controls="chat" aria-expanded="false">
+  <svg id="robotFab" aria-hidden="true"></svg>
+  <span class="ai-fab-wa" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg></span>
+</button>
+<section class="chat" id="chat" role="dialog" aria-labelledby="chatTitle">
+  <header class="chat-head">
+    <svg class="chat-logo" id="robotChat" aria-hidden="true"></svg>
+    <div><b id="chatTitle">Asistente Junp3x</b><small>Responde al instante con IA</small></div>
+    <button type="button" class="chat-close" id="chatClose" aria-label="Cerrar el asistente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </header>
+  <div class="chat-log" id="chatLog" role="log" aria-live="polite"></div>
+  <div class="chat-chips" id="chatChips">
+    <button type="button">¿Cuánto cuesta una página?</button>
+    <button type="button">Quiero un chatbot para mi negocio</button>
+    <button type="button">¿Cómo es el proceso?</button>
+  </div>
+  <form class="chat-form" id="chatForm">
+    <label class="sr-only" for="chatInput">Tu mensaje</label>
+    <input id="chatInput" name="msg" maxlength="500" autocomplete="off" placeholder="Escribe tu pregunta">
+    <button type="submit" id="chatSend" aria-label="Enviar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+  </form>
+  <a class="chat-wa" id="chatWa" href="https://wa.me/573204108873?text=Hola%20Junp3x" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>Ir directo al chat de WhatsApp</a>
+</section>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<!-- Íconos reutilizables -->
+<svg width="0" height="0" class="sprite" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.3-.5 0-.9.2-3.1-.7-2.6-1-4.3-3.7-4.4-3.9-.1-.2-1-1.4-1-2.6s.7-1.9.9-2.1c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.6-.1 1.2z"/></symbol>
+</svg>
+
+</body>
+</html>
