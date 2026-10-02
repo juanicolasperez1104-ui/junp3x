@@ -23,10 +23,15 @@ Sitio estático (HTML, CSS y JavaScript sin librerías externas) con un asistent
 - `_headers`: cabeceras de seguridad para el hosting.
 
 ## Activar el asistente de IA (Cloudflare Pages)
-1. Crear una llave en console.anthropic.com (con límite de gasto mensual, por ejemplo 5 USD).
-2. En Cloudflare Pages: Settings → Variables and Secrets → agregar `ANTHROPIC_API_KEY` como **secreto**.
-3. Recomendado: Security → WAF → Rate limiting rule para `/api/chat` (por ejemplo 20 solicitudes por minuto por IP).
-4. Publicar. Si la llave falta o la IA falla, el chat invita a seguir por WhatsApp; la página nunca se rompe.
+**Opción gratuita (activa):** IA de Cloudflare (Workers AI, modelo Llama 3.3 70B).
+1. Cloudflare → Workers & Pages → proyecto `junp3x` → Settings → Bindings → Add → **Workers AI**.
+2. Variable name: `AI` → Save.
+3. Deployments → último despliegue → ⋯ → Retry deployment.
+
+**Opción Claude (mejor calidad, de pago):** agregar el secreto `ANTHROPIC_API_KEY` en Settings → Variables and Secrets. Si existe, la función usa Claude primero.
+
+Recomendado en ambos casos: Security → WAF → Rate limiting rule para `/api/chat` (por ejemplo 20 solicitudes por minuto por IP).
+Si la IA falla o no está configurada, el chat invita a seguir por WhatsApp; la página nunca se rompe.
 
 ## Seguridad
 - La llave de la IA vive solo en el servidor; nunca llega al navegador ni al repositorio.
