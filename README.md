@@ -33,6 +33,13 @@ Sitio estático (HTML, CSS y JavaScript sin librerías externas) con un asistent
 Recomendado en ambos casos: Security → WAF → Rate limiting rule para `/api/chat` (por ejemplo 20 solicitudes por minuto por IP).
 Si la IA falla o no está configurada, el chat invita a seguir por WhatsApp; la página nunca se rompe.
 
+## Bot de WhatsApp Business (`functions/api/whatsapp.js`)
+Webhook de la API oficial de WhatsApp (Meta). Responde con la misma IA y los mismos datos de `js/knowledge.js`.
+- Secretos en Cloudflare: `WA_VERIFY_TOKEN`, `WA_APP_SECRET`, `WA_TOKEN`, `WA_PHONE_ID`. Enlace KV opcional `CHATS` (memoria 24 h).
+- Cada mensaje se acepta solo si trae la firma válida de Meta (HMAC-SHA256 con el App Secret).
+- Si Nicolás escribe desde la app (evento `smb_message_echoes`) o el cliente pide un asesor, el bot calla 12 h en ese chat.
+- Webhook en Meta: `https://junp3x.com/api/whatsapp`, campos `messages` y `smb_message_echoes`.
+
 ## Seguridad
 - La llave de la IA vive solo en el servidor; nunca llega al navegador ni al repositorio.
 - La función acepta solo POST desde el mismo dominio, mensajes de máximo 500 caracteres, 12 turnos y 8 KB, y limita mensajes por visitante.

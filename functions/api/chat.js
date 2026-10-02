@@ -44,27 +44,33 @@ export async function onRequestPost({ request, env }) {
   if (!messages.length) return json({ error: 'bad_request' }, 400);
 
   try {
-    const text = tidy(env.ANTHROPIC_API_KEY ? await askClaude(env, messages) : await askFree(env, messages));
+    const text = await answer(env, messages);
     return text ? json({ text }) : json({ error: 'empty' }, 502);
   } catch (e) {
     return json({ error: e && e.code === 'rate_limited' ? 'rate_limited' : 'upstream_error' }, 502);
   }
 }
 
-async function askClaude(env, messages) {
+// También la usa el bot de WhatsApp (functions/api/whatsapp.js).
+export async function answer(env, messages, channel = 'web') {
+  const system = systemPrompt(channel);
+  return tidy(env.ANTHROPIC_API_KEY ? await askClaude(env, system, messages) : await askFree(env, system, messages));
+}
+
+async function askClaude(env, system, messages) {
   const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: { 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
-    body: JSON.stringify({ model: CLAUDE_MODEL, max_tokens: LIMITS.maxTokens, system: systemPrompt(), messages }),
+    body: JSON.stringify({ model: CLAUDE_MODEL, max_tokens: LIMITS.maxTokens, system, messages }),
   });
   if (!res.ok) throw { code: res.status === 429 ? 'rate_limited' : 'upstream_error' };
   const data = await res.json();
   return (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
 }
 
-async function askFree(env, messages) {
+async function askFree(env, system, messages) {
   const out = await env.AI.run(FREE_MODEL, {
-    messages: [{ role: 'system', content: systemPrompt() }, ...messages],
+    messages: [{ role: 'system', content: system }, ...messages],
     max_tokens: LIMITS.maxTokens,
     temperature: .4,
   });
