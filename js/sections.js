@@ -43,7 +43,7 @@ function projects() {
     }));
     $('#caseLink').href = d.link;
     $('#caseQuote').dataset.type = d.quote;
-    source = $('.work-media .main', btn.closest('.work'));
+    source = $('.work-media .main img', btn.closest('.work'));
     bigArt = source.cloneNode(true);
     bigArt.className = '';
     bigArt.loading = 'eager';

@@ -1,4 +1,5 @@
-Fuentes incluidas en el sitio, ambas con licencia SIL Open Font License 1.1 (uso comercial permitido):
+Fuentes incluidas en el sitio, todas con licencia SIL Open Font License 1.1 (uso comercial permitido):
 - Host Grotesk (títulos) · Element Type · https://fonts.google.com/specimen/Host+Grotesk
 - Geist (textos) · Vercel · https://fonts.google.com/specimen/Geist
+- Geist Mono (metadatos, solo caracteres latinos) · Vercel · https://fonts.google.com/specimen/Geist+Mono
 Texto de la licencia: https://openfontlicense.org

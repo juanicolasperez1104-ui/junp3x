@@ -13,6 +13,7 @@
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/host-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/img/corp-viaje.jpg" as="image" fetchpriority="high">
 <link rel="stylesheet" href="css/styles.css">
 <script type="module" src="js/main.js"></script>
 </head>
@@ -49,13 +50,30 @@
 <!-- ============ Portada ============ -->
 <section class="hero" id="inicio" data-tone="#1c2023">
   <canvas id="terrain" aria-hidden="true"></canvas>
-  <h1 id="headline">Webs y asistentes de chat que trabajan para <span class="hl">mejorar tu negocio</span></h1>
-  <div class="hero-foot">
-    <p class="sub reveal">Soy Nicolás. Diseño páginas con movimiento, apps y chatbots que atienden a tus clientes a cualquier hora.</p>
-    <div class="actions reveal">
-      <a class="btn btn-main magnetic" href="#cotizar">Cotiza tu página en 1 minuto</a>
-      <a class="btn btn-ghost magnetic" href="#app">Ver proyectos</a>
+  <div class="hero-copy">
+    <h1 id="headline">Webs, apps y chatbots que trabajan para <span class="hl">tu negocio</span></h1>
+    <div class="hero-foot">
+      <p class="sub reveal">Soy Nicolás. Diseño páginas con movimiento, apps y chatbots que atienden a tus clientes a cualquier hora.</p>
+      <div class="actions reveal">
+        <a class="btn btn-main magnetic" href="#cotizar">Cotiza tu página en 1 minuto</a>
+        <a class="btn btn-ghost magnetic" href="#app">Ver proyectos</a>
+      </div>
     </div>
+  </div>
+  <!-- Escenario: piezas reales de proyectos publicados -->
+  <div class="hero-stage" id="heroStage">
+    <figure class="win stage-win reveal">
+      <div class="win-bar" aria-hidden="true"><i></i><i></i><i></i><span>corporaciontamehistoriaycultura.co</span></div>
+      <img src="assets/img/corp-viaje.jpg" alt="Sitio de la Corporación Tame Historia y Cultura, hecho por Junp3x" width="1600" height="1000" fetchpriority="high">
+    </figure>
+    <figure class="stage-phone reveal">
+      <img src="assets/img/app-inicio.jpg" alt="App de mantenimiento hecha por Junp3x, pantalla de inicio del técnico" width="780" height="1688">
+    </figure>
+    <a class="stage-card reveal" href="#cotizar" data-type="sitio">
+      <small>Sitio completo con animaciones</small>
+      <b id="stagePrice">Desde $100 USD</b>
+      <span>Cotiza en 1 minuto</span>
+    </a>
   </div>
   <span class="cue" aria-hidden="true"><i></i></span>
 </section>
@@ -131,11 +149,12 @@
       <article class="work w-corp">
         <div class="work-copy">
           <h2>Corporación Tame Historia y Cultura</h2>
+          <p class="meta">Sitio cultural · Three.js y Supabase</p>
           <p>Un viaje de cuatro siglos: reloj 3D, puertas al tiempo y el sonido del cuatro llanero.</p>
           <div class="actions"><button class="btn btn-main" type="button" data-proj="corp">Ver el caso</button><a class="btn btn-ghost" href="https://corporaciontamehistoriaycultura.co/" target="_blank" rel="noopener noreferrer">Abrir el sitio</a></div>
         </div>
-        <div class="work-media" data-cursor="Ver">
-          <img class="main" src="assets/img/corp-viaje.jpg" alt="Portada de la Corporación Tame con el reloj de bolsillo en 3D" width="1600" height="1000" loading="lazy">
+        <div class="work-media" data-cursor="Explorar">
+          <figure class="win main"><div class="win-bar" aria-hidden="true"><i></i><i></i><i></i><span>corporaciontamehistoriaycultura.co</span></div><img src="assets/img/corp-viaje.jpg" alt="Portada de la Corporación Tame con el reloj de bolsillo en 3D" width="1600" height="1000" loading="lazy"></figure>
           <img class="float" src="assets/img/corp-puertas.jpg" alt="Las seis puertas al tiempo del sitio de la Corporación Tame" width="1600" height="1000" loading="lazy">
         </div>
       </article>
@@ -143,6 +162,7 @@
       <article class="work w-hair">
         <div class="work-copy">
           <h2>Un asistente que agenda citas por ti</h2>
+          <p class="meta">Chatbot de WhatsApp · Agenda de citas</p>
           <p>Hecho para la peluquería Team Hair: muestra servicios, ofrece horarios libres y recuerda la cita.</p>
           <div class="actions"><a class="btn btn-main" href="#cotizar" data-type="chatbot">Quiero uno para mi negocio</a></div>
         </div>
@@ -157,11 +177,12 @@
       <article class="work w-pancita">
         <div class="work-copy">
           <h2>Pancita Llena</h2>
+          <p class="meta">Pedidos por WhatsApp · HTML, CSS y JavaScript</p>
           <p>El cliente arma su plato y el pedido llega completo al WhatsApp del restaurante.</p>
           <div class="actions"><button class="btn btn-main" type="button" data-proj="pancita">Ver el caso</button><a class="btn btn-ghost" href="https://juanicolasperez1104-ui.github.io/Pancita-llena/" target="_blank" rel="noopener noreferrer">Abrir el sitio</a></div>
         </div>
-        <div class="work-media" data-cursor="Ver">
-          <img class="main" src="assets/img/shot-pancita.jpg" alt="Portada del sitio de Pancita Llena" width="1400" height="875" loading="lazy">
+        <div class="work-media" data-cursor="Explorar">
+          <figure class="win main"><div class="win-bar" aria-hidden="true"><i></i><i></i><i></i><span>juanicolasperez1104-ui.github.io/Pancita-llena</span></div><img src="assets/img/shot-pancita.jpg" alt="Portada del sitio de Pancita Llena" width="1400" height="875" loading="lazy"></figure>
           <img class="float" src="assets/img/shot-pancita-menu.jpg" alt="Menú ejecutivo de Pancita Llena" width="1400" height="875" loading="lazy">
         </div>
       </article>
@@ -169,11 +190,12 @@
       <article class="work w-cacao">
         <div class="work-copy">
           <h2>Cacao Tame</h2>
+          <p class="meta">Sitio cultural · HTML, CSS y JavaScript</p>
           <p>400 años de cacao en Tame, Arauca, contados en una línea de tiempo.</p>
           <div class="actions"><button class="btn btn-main" type="button" data-proj="cacao">Ver el caso</button><a class="btn btn-ghost" href="https://juanicolasperez1104-ui.github.io/Cacao-tame/" target="_blank" rel="noopener noreferrer">Abrir el sitio</a></div>
         </div>
-        <div class="work-media" data-cursor="Ver">
-          <img class="main" src="assets/img/shot-cacao.jpg" alt="Portada del sitio Cacao Tame" width="1400" height="875" loading="lazy">
+        <div class="work-media" data-cursor="Explorar">
+          <figure class="win main"><div class="win-bar" aria-hidden="true"><i></i><i></i><i></i><span>juanicolasperez1104-ui.github.io/Cacao-tame</span></div><img src="assets/img/shot-cacao.jpg" alt="Portada del sitio Cacao Tame" width="1400" height="875" loading="lazy"></figure>
           <img class="float" src="assets/img/shot-cacao-monumento.jpg" alt="Sección del monumento al cacao" width="1400" height="875" loading="lazy">
         </div>
       </article>

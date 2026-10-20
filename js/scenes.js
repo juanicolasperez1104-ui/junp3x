@@ -74,6 +74,26 @@ function works() {
       if (Math.abs(off) < .5) w.classList.add('seen');
     });
   });
+
+  // con el teclado: el contenedor fijo no se desplaza solo; la página baja hasta el proyecto enfocado
+  const pin = $('.works-pin', sec);
+  pin.addEventListener('scroll', () => { pin.scrollLeft = 0; });
+  panels.forEach((w, i) => w.addEventListener('focusin', () => {
+    pin.scrollLeft = 0;
+    const top = sec.getBoundingClientRect().top + scrollY;
+    scrollTo({ top: top + (i / (panels.length - 1)) * (sec.offsetHeight - innerHeight), behavior: 'instant' });
+  }));
+
+  // con el puntero: la ventana del proyecto se inclina unos grados hacia él
+  if (!fine) return;
+  $$('.work-media', sec).forEach(m => {
+    m.addEventListener('pointermove', e => {
+      const r = m.getBoundingClientRect();
+      m.style.setProperty('--ry', `${((e.clientX - r.left) / r.width - .5) * 5}deg`);
+      m.style.setProperty('--rx', `${(.5 - (e.clientY - r.top) / r.height) * 4}deg`);
+    });
+    m.addEventListener('pointerleave', () => { m.style.setProperty('--rx', '0deg'); m.style.setProperty('--ry', '0deg'); });
+  });
 }
 
 /* ---------- Muro: dos filas de pantallas que corren en sentidos opuestos ---------- */
@@ -175,6 +195,8 @@ function navSpy() {
 export function initScenes() {
   tones();
   navSpy();
+  // lo que recibe el foco del teclado aparece aunque su animación de entrada no haya corrido
+  document.addEventListener('focusin', e => e.target.closest('.rise, .slide, .work, .x3-card')?.classList.add('seen'));
   if (reduce) {
     // sin escenas: tocar cada paso de la app cambia la pantalla del celular
     const caps = $$('.app-caps li'), screens = $$('.scr');
