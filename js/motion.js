@@ -1,28 +1,59 @@
-// Movimiento general: apariciones, bandas, luz en tarjetas, cursor, barra y scroll suave.
-import { $, $$, reduce, fine, pointer, onceVisible, onScroll, svg } from './utils.js';
+// Movimiento general: apariciones, bandas, barra, menú, botones y scroll suave.
+import { $, $$, reduce, fine, onceVisible, onScroll, svg } from './utils.js';
 
-/* ---------- Títulos que suben palabra por palabra y bloques que aparecen ---------- */
+/* ---------- Apariciones: títulos por palabras y bloques por partes ---------- */
+function splitWords(el) {
+  const words = el.textContent.trim().split(/\s+/);
+  el.replaceChildren();
+  words.forEach((word, i) => {
+    const outer = document.createElement('span');
+    const inner = document.createElement('span');
+    outer.className = 'w';
+    inner.textContent = word;
+    inner.style.setProperty('--i', i);
+    outer.appendChild(inner);
+    el.append(outer, ' ');
+  });
+}
+
 function reveals() {
   document.documentElement.classList.add('js');
-  $$('.sec-title').forEach(title => {
-    const words = title.textContent.trim().split(/\s+/);
-    title.replaceChildren();
-    words.forEach((word, i) => {
-      const outer = document.createElement('span');
-      const inner = document.createElement('span');
-      outer.className = 'w';
-      inner.textContent = word;
-      inner.style.setProperty('--i', i);
-      outer.appendChild(inner);
-      title.append(outer, ' ');
-    });
+  $$('.sec-title, .contact h2').forEach(splitWords);
+
+  // cada parte de una sección entra con un pequeño retraso respecto a la anterior
+  const parts = [];
+  const stagger = (els, from = 0) => els.forEach((el, i) => {
+    el.classList.add('rise');
+    el.style.setProperty('--d', from + i);
+    parts.push(el);
   });
-  const blocks = $$('.sec-head,.projects,.demo-grid,.gallery,.services,.process,.quote');
-  blocks.forEach(el => el.classList.add('sec-in'));
-  onceVisible(blocks, el => el.classList.add('seen'));
+  $$('.sec-head').forEach(head => {
+    head.classList.add('rise');
+    head.style.setProperty('--d', 0);
+    parts.push(head);
+    stagger($$('.sec-sub', head), 3);
+  });
+  stagger($$('.proj-meta'), 2);
+  stagger($$('.cta-strip, .demo-grid, .demo-cta, .q-form, .q-result'));
+  stagger($$('.services > li'));
+  stagger($$('.process > li'));
+  $$('.contact > *:not(h2)').forEach((el, i) => { el.classList.add('rise'); el.style.setProperty('--d', i); parts.push(el); });
+  const contactTitle = $('.contact h2');
+  onceVisible([...parts, contactTitle], el => el.classList.add('seen'), '0px 0px -8% 0px');
+
   const unveils = $$('.unveil');
   unveils.forEach((el, i) => { el.style.transitionDelay = `${(i % 3) * 90}ms`; });
   onceVisible(unveils, el => el.classList.add('seen'), '0px 0px -6% 0px');
+
+  // el nombre del pie sube letra por letra
+  const mark = $('.foot-mark');
+  mark.replaceChildren(...[...mark.textContent].map((ch, i) => {
+    const s = document.createElement('span');
+    s.textContent = ch;
+    s.style.setProperty('--i', i);
+    return s;
+  }));
+  onceVisible([mark], el => el.classList.add('seen'), '0px 0px -4% 0px');
 }
 
 /* ---------- Bandas de texto: siempre en movimiento, aceleran con el scroll ---------- */
@@ -105,37 +136,17 @@ function chrome() {
   });
 }
 
-/* ---------- Interacciones con el mouse ---------- */
-function pointerEffects() {
+/* ---------- Botones que se acercan levemente al puntero ---------- */
+function magnetic() {
   if (!fine || reduce) return;
-  // luz que sigue al puntero en tarjetas
-  $$('.spot').forEach(el => el.addEventListener('pointermove', e => {
-    const r = el.getBoundingClientRect();
-    el.style.setProperty('--px', `${e.clientX - r.left}px`);
-    el.style.setProperty('--py', `${e.clientY - r.top}px`);
-  }));
-  // botones que se acercan al puntero
   $$('.magnetic').forEach(b => {
     b.addEventListener('pointermove', e => {
       const r = b.getBoundingClientRect();
-      b.style.setProperty('--mx', `${(e.clientX - r.left - r.width / 2) * .28}px`);
-      b.style.setProperty('--my', `${(e.clientY - r.top - r.height / 2) * .35}px`);
+      b.style.setProperty('--mx', `${(e.clientX - r.left - r.width / 2) * .16}px`);
+      b.style.setProperty('--my', `${(e.clientY - r.top - r.height / 2) * .22}px`);
     });
     b.addEventListener('pointerleave', () => { b.style.setProperty('--mx', '0px'); b.style.setProperty('--my', '0px'); });
   });
-  // cursor en forma de bloque
-  const cur = $('#cursor');
-  let cx = pointer.x, cy = pointer.y;
-  addEventListener('pointermove', () => { cur.style.opacity = '1'; }, { passive: true });
-  document.addEventListener('pointerleave', () => { cur.style.opacity = '0'; });
-  document.addEventListener('pointerover', e => cur.classList.toggle('big', !!e.target.closest('a,button,.steps li,label')));
-  const follow = () => {
-    cx += (pointer.x - cx) * .2;
-    cy += (pointer.y - cy) * .2;
-    cur.style.transform = `translate(${cx}px,${cy}px)`;
-    requestAnimationFrame(follow);
-  };
-  follow();
 }
 
 /* ---------- Scroll suave con inercia para la rueda del mouse ---------- */
@@ -166,6 +177,6 @@ export function initMotion() {
   reveals();
   bands();
   chrome();
-  pointerEffects();
+  magnetic();
   smoothWheel();
 }

@@ -11,9 +11,8 @@
 <meta property="og:description" content="Páginas que se sienten como entrar a otro mundo. Cotiza la tuya en 1 minuto.">
 <meta property="og:type" content="website">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Lexend:wght@500&display=swap">
+<link rel="preload" href="assets/fonts/host-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/styles.css">
 <script type="module" src="js/main.js"></script>
 </head>
@@ -50,8 +49,8 @@
 <!-- ============ Portada ============ -->
 <section class="hero" id="inicio">
   <canvas id="terrain" aria-hidden="true"></canvas>
-  <div class="hero-copy">
-    <h1 id="headline">Webs y asistentes de chat que <span class="grad accent">trabajan para mejorar tu negocio</span></h1>
+  <h1 id="headline">Webs y asistentes de chat que trabajan para mejorar tu negocio</h1>
+  <div class="hero-foot">
     <p class="sub reveal">Soy Nicolás. Diseño páginas con movimiento y chatbots que atienden a tus clientes a cualquier hora.</p>
     <div class="actions reveal">
       <a class="btn btn-main magnetic" href="#cotizar">Cotiza tu página en 1 minuto
@@ -136,27 +135,27 @@
 <!-- ============ Proyectos ============ -->
 <section class="block wrap" id="proyectos">
   <header class="sec-head">
-    <h2 class="sec-title">Sitios que ya están trabajando para sus dueños</h2>
+    <h2 class="sec-title">Sitios que ya trabajan para sus dueños</h2>
   </header>
   <div class="projects">
-    <button class="proj spot" type="button" data-proj="corp">
-      <span class="art unveil"><span class="bar"><i></i><i></i><i></i><em>corporacion-tame</em></span><img src="assets/img/shot-corp.jpg" alt="Portada del sitio de la Corporación Tame Historia y Cultura" loading="lazy"></span>
+    <button class="proj proj-lead" type="button" data-proj="corp">
+      <span class="art unveil"><img src="assets/img/shot-corp.jpg" alt="Portada del sitio de la Corporación Tame Historia y Cultura" loading="lazy"></span>
       <span class="proj-meta">
         <span class="proj-title">Corporación Tame Historia y Cultura</span>
         <span class="proj-text">Historia local con línea de tiempo y un panel para editar sin tocar código.</span>
         <span class="more">Ver el caso</span>
       </span>
     </button>
-    <button class="proj spot" type="button" data-proj="pancita">
-      <span class="art unveil"><span class="bar"><i></i><i></i><i></i><em>pancita-llena</em></span><img src="assets/img/shot-pancita.jpg" alt="Portada del sitio de Pancita Llena" loading="lazy"></span>
+    <button class="proj" type="button" data-proj="pancita">
+      <span class="art unveil"><img src="assets/img/shot-pancita.jpg" alt="Portada del sitio de Pancita Llena" loading="lazy"></span>
       <span class="proj-meta">
         <span class="proj-title">Pancita Llena</span>
         <span class="proj-text">Menú para armar y un carrito que envía el pedido completo por WhatsApp.</span>
         <span class="more">Ver el caso</span>
       </span>
     </button>
-    <button class="proj spot" type="button" data-proj="cacao">
-      <span class="art unveil"><span class="bar"><i></i><i></i><i></i><em>cacao-tame</em></span><img src="assets/img/shot-cacao.jpg" alt="Portada del sitio Cacao Tame" loading="lazy"></span>
+    <button class="proj" type="button" data-proj="cacao">
+      <span class="art unveil"><img src="assets/img/shot-cacao.jpg" alt="Portada del sitio Cacao Tame" loading="lazy"></span>
       <span class="proj-meta">
         <span class="proj-title">Cacao Tame</span>
         <span class="proj-text">400 años de cacao en Tame, Arauca, contados en una línea de tiempo.</span>
@@ -164,7 +163,7 @@
       </span>
     </button>
   </div>
-  <a class="cta-strip spot" href="#cotizar">
+  <a class="cta-strip" href="#cotizar">
     <span><b>¿Te imaginas tu negocio así?</b> Mira el precio de tu página al instante.</span>
     <span class="cta-go">Cotizar ahora <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
   </a>
@@ -187,8 +186,8 @@
 <!-- ============ Demo del chatbot ============ -->
 <section class="block wrap" id="demo">
   <header class="sec-head">
-    <h2 class="sec-title">Un asistente que agenda citas por WhatsApp mientras tú trabajas</h2>
-    <p class="sec-sub">Ejemplo real hecho para la peluquería Team Hair.</p>
+    <h2 class="sec-title">Un asistente que agenda citas por ti</h2>
+    <p class="sec-sub">Ejemplo real por WhatsApp, hecho para la peluquería Team Hair.</p>
   </header>
   <div class="demo-grid">
     <div class="phone">
@@ -239,36 +238,36 @@
 <!-- ============ Servicios y proceso ============ -->
 <section class="block wrap" id="servicios">
   <header class="sec-head">
-    <h2 class="sec-title">Lo que puedo hacer por tu negocio</h2>
+    <h2 class="sec-title">Lo que hago por tu negocio</h2>
   </header>
-  <div class="services">
-    <article class="spot tone-coral"><span class="ico"></span><h3>Páginas web con movimiento</h3><p>De una página de presentación a un sitio completo con animaciones.</p><a class="svc-go" href="#cotizar" data-type="sitio">Cotizar esto <span aria-hidden="true">→</span></a></article>
-    <article class="spot tone-mid"><span class="ico"></span><h3>Pedidos por WhatsApp</h3><p>Menú o catálogo con carrito que envía el pedido listo a tu WhatsApp.</p><a class="svc-go" href="#cotizar" data-type="pedidos">Cotizar esto <span aria-hidden="true">→</span></a></article>
-    <article class="spot tone-sky"><span class="ico"></span><h3>Chatbots para negocios</h3><p>Agenda citas, responde preguntas y te avisa de cada cliente nuevo.</p><a class="svc-go" href="#cotizar" data-type="chatbot">Cotizar esto <span aria-hidden="true">→</span></a></article>
-    <article class="spot tone-cyan"><span class="ico"></span><h3>Identidad visual</h3><p>Logo, colores y tipografías para la web y las redes.</p><a class="svc-go" href="#cotizar" data-type="marca">Cotizar esto <span aria-hidden="true">→</span></a></article>
-  </div>
+  <ul class="services">
+    <li class="tone-coral"><a class="svc" href="#cotizar" data-type="sitio"><h3>Páginas web con movimiento</h3><p>De una página de presentación a un sitio completo con animaciones.</p><span class="svc-go">Cotizar <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+    <li class="tone-mid"><a class="svc" href="#cotizar" data-type="pedidos"><h3>Pedidos por WhatsApp</h3><p>Menú o catálogo con carrito que envía el pedido listo a tu WhatsApp.</p><span class="svc-go">Cotizar <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+    <li class="tone-sky"><a class="svc" href="#cotizar" data-type="chatbot"><h3>Chatbots para negocios</h3><p>Agenda citas, responde preguntas y te avisa de cada cliente nuevo.</p><span class="svc-go">Cotizar <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+    <li class="tone-cyan"><a class="svc" href="#cotizar" data-type="marca"><h3>Identidad visual</h3><p>Logo, colores y tipografías para la web y las redes.</p><span class="svc-go">Cotizar <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+  </ul>
 
   <header class="sec-head sec-head-gap">
-    <h2 class="sec-title">De la primera charla al lanzamiento en cuatro pasos</h2>
+    <h2 class="sec-title">De la idea al lanzamiento</h2>
   </header>
   <ol class="process" id="process">
-    <li><span class="pn"><em>1</em></span><div><h3>Conversamos</h3><p>Me cuentas qué necesita tu negocio.</p></div></li>
-    <li><span class="pn"><em>2</em></span><div><h3>Diseño</h3><p>Ves cómo va a quedar antes de programar.</p></div></li>
-    <li><span class="pn"><em>3</em></span><div><h3>Construyo</h3><p>Te comparto avances para probar en tu celular.</p></div></li>
-    <li><span class="pn"><em>4</em></span><div><h3>Lanzamos</h3><p>Lo publico y quedo pendiente de cualquier ajuste.</p></div></li>
+    <li><h3>Conversamos</h3><p>Me cuentas qué necesita tu negocio.</p></li>
+    <li><h3>Diseño</h3><p>Ves cómo va a quedar antes de programar.</p></li>
+    <li><h3>Construyo</h3><p>Te comparto avances para probar en tu celular.</p></li>
+    <li><h3>Lanzamos</h3><p>Lo publico y quedo pendiente de cualquier ajuste.</p></li>
   </ol>
 </section>
 
 <!-- ============ Cotizador ============ -->
 <section class="block wrap" id="cotizar">
   <header class="sec-head">
-    <h2 class="sec-title">Calcula cuánto costaría tu proyecto</h2>
+    <h2 class="sec-title">Calcula el precio de tu proyecto</h2>
     <p class="sec-sub">Precios de lanzamiento. El valor final lo confirmamos al hablar.</p>
   </header>
   <div class="quote">
     <form class="q-form" id="qForm">
       <fieldset>
-        <legend><span>1</span>¿Qué necesitas?</legend>
+        <legend>¿Qué necesitas?</legend>
         <div class="opts">
           <label><input type="radio" name="type" value="landing" id="t-landing"><span><b>Página de presentación</b><small>Una sola página con tu información y contacto</small></span></label>
           <label><input type="radio" name="type" value="sitio" id="t-sitio" checked><span><b>Sitio completo con animaciones</b><small>Varias secciones, como Corporación Tame</small></span></label>
@@ -278,12 +277,12 @@
         </div>
       </fieldset>
       <fieldset id="qSecWrap">
-        <legend><span>2</span>¿Cuántas secciones?</legend>
+        <legend>¿Cuántas secciones?</legend>
         <div class="range"><input type="range" id="qSections" min="1" max="12" value="5" aria-label="Número de secciones"><output id="qSecOut" for="qSections">5</output></div>
         <small class="hint" id="qSecHint"></small>
       </fieldset>
       <fieldset>
-        <legend><span>3</span>Extras</legend>
+        <legend>Extras</legend>
         <div class="checks">
           <label><input type="checkbox" id="x-textos" value="textos"><span>Redacto los textos por ti</span></label>
           <label><input type="checkbox" id="x-dominio" value="dominio"><span>Configuro dominio y alojamiento</span></label>
@@ -292,7 +291,7 @@
         </div>
       </fieldset>
       <fieldset>
-        <legend><span>4</span>¿Para cuándo?</legend>
+        <legend>¿Para cuándo?</legend>
         <div class="seg">
           <label><input type="radio" name="when" value="normal" checked><span>2 a 3 semanas</span></label>
           <label><input type="radio" name="when" value="rapido"><span>En 1 semana (+20%)</span></label>
@@ -330,8 +329,11 @@
 </main>
 
 <footer class="footer wrap">
-  <span>© 2026 Junp3x · Expertise · Experience · Express</span>
-  <button type="button" id="replay" class="linkish">Ver la entrada otra vez</button>
+  <p class="foot-mark" aria-hidden="true">Junp3x</p>
+  <div class="foot-row">
+    <span>© 2026 Junp3x · Expertise · Experience · Express</span>
+    <button type="button" id="replay" class="linkish">Ver la entrada otra vez</button>
+  </div>
 </footer>
 
 <!-- ============ Accesos flotantes ============ -->
@@ -360,7 +362,6 @@
   </form>
   <a class="chat-wa" id="chatWa" href="https://wa.me/573204108873?text=Hola%20Junp3x" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>Ir directo al chat de WhatsApp</a>
 </section>
-<div class="cursor" id="cursor" aria-hidden="true"></div>
 
 <!-- Íconos reutilizables -->
 <svg width="0" height="0" class="sprite" aria-hidden="true">

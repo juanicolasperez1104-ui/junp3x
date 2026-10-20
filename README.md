@@ -2,6 +2,11 @@
 
 Sitio estático (HTML, CSS y JavaScript sin librerías externas) con un asistente de IA servido por una función propia.
 
+## Diseño
+- Sobrio: solo títulos y texto breve; sin etiquetas sobre los títulos, sin numeraciones ni adornos.
+- Tipografía: Host Grotesk (títulos) + Geist (textos). Tamaños definidos una sola vez en `:root` de `css/styles.css`.
+- Movimiento: títulos que suben palabra por palabra, bloques que entran escalonados, imágenes que se descubren y se desplazan con el scroll, intro solo una vez por visita (se salta con la rueda o una tecla). Todo respeta "reducir movimiento" del sistema.
+
 ## Estructura
 - `index.html`: contenido de la página.
 - `css/styles.css`: estilos, ordenados por secciones (ver índice al inicio del archivo).
@@ -13,13 +18,13 @@ Sitio estático (HTML, CSS y JavaScript sin librerías externas) con un asistent
   - `intro.js` + `waves.js`: animación de entrada con la superficie de puntos en olas.
   - `ambient.js`: fondo con luces que emiten ondas.
   - `hero.js`: portada y terreno de cubos.
-  - `motion.js`: apariciones, bandas, cursor, menú y scroll suave.
+  - `motion.js`: apariciones escalonadas, bandas, menú, botones y scroll suave.
   - `sections.js`: 3X, proyectos, demo, galería, proceso y contacto.
   - `quote.js`: cotizador.
   - `assistant.js`: chat con IA que se abre desde el botón del robot.
   - `robot.js`: el robot de cubos, cara del asistente (ojos que siguen el cursor y parpadean).
 - `functions/api/chat.js`: función del servidor (Cloudflare Pages) que habla con Claude.
-- `assets/`: imágenes y video.
+- `assets/`: imágenes, video y fuentes (`assets/fonts/`: Host Grotesk para títulos y Geist para textos, servidas desde el propio sitio).
 - `_headers`: cabeceras de seguridad para el hosting.
 
 ## Activar el asistente de IA (Cloudflare Pages)
@@ -46,7 +51,7 @@ Webhook de la API oficial de WhatsApp (Meta). Responde con la misma IA y los mis
 - Las instrucciones del asistente están en el servidor; lo que escribe el visitante no puede cambiar sus reglas ni sus precios.
 - Las respuestas se muestran como texto plano (`textContent`), nunca como HTML.
 - Sin base de datos ni formularios que guarden datos personales.
-- Sin scripts de terceros; solo las fuentes de Google.
+- Sin scripts ni estilos de terceros: las fuentes también se sirven desde el propio dominio.
 - Todo el JavaScript va en archivos propios, sin código en línea ni `innerHTML`.
 - `_headers` activa HTTPS obligatorio, bloquea que otras páginas incrusten el sitio y limita qué recursos puede cargar.
 - Enlaces externos con `rel="noopener noreferrer"`.

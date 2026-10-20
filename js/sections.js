@@ -1,5 +1,5 @@
 // Secciones con comportamiento propio: 3X, proyectos, demo, galería y proceso.
-import { $, $$, reduce, fine, clamp01, onScroll } from './utils.js';
+import { $, $$, reduce, clamp01, onScroll } from './utils.js';
 import { buildLogo } from './logo.js';
 
 /* ---------- 3X: paneles horizontales y logo que se enciende por tramos ---------- */
@@ -19,7 +19,7 @@ function x3() {
   });
 }
 
-/* ---------- Proyectos: inclinación 3D y ficha ampliada ---------- */
+/* ---------- Proyectos: ficha ampliada con transición desde la imagen ---------- */
 const PROJECTS = {
   corp: {
     title: 'Corporación Tame Historia y Cultura',
@@ -65,8 +65,6 @@ function projects() {
     bigArt.classList.remove('unveil', 'seen');
     bigArt.style.transitionDelay = '';
     artBox.replaceChildren(bigArt);
-    btn.style.setProperty('--rx', '0deg');
-    btn.style.setProperty('--ry', '0deg');
     if (!canVT()) return dlg.showModal();
     source.style.viewTransitionName = 'case-art';
     document.startViewTransition(() => {
@@ -88,16 +86,7 @@ function projects() {
     }).finished.finally(() => { src.style.viewTransitionName = ''; });
   };
 
-  $$('.proj').forEach(btn => {
-    btn.addEventListener('click', () => open(btn));
-    if (!fine || reduce) return;
-    btn.addEventListener('pointermove', e => {
-      const r = btn.getBoundingClientRect();
-      btn.style.setProperty('--ry', `${((e.clientX - r.left) / r.width - .5) * 10}deg`);
-      btn.style.setProperty('--rx', `${-((e.clientY - r.top) / r.height - .5) * 8}deg`);
-    });
-    btn.addEventListener('pointerleave', () => { btn.style.setProperty('--rx', '0deg'); btn.style.setProperty('--ry', '0deg'); });
-  });
+  $$('.proj').forEach(btn => btn.addEventListener('click', () => open(btn)));
   $('#caseClose').addEventListener('click', close);
   $('#caseQuote').addEventListener('click', () => dlg.close());
   dlg.addEventListener('click', e => { if (e.target === dlg) close(); });
@@ -145,12 +134,11 @@ function gallery() {
   lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
 }
 
-/* ---------- Proceso: línea que se dibuja con el scroll ---------- */
+/* ---------- Proceso: cada paso se enciende al cruzar el centro de la pantalla ---------- */
 function process() {
-  const list = $('#process'), items = $$('li', list);
+  const items = $$('#process li');
   onScroll(() => {
-    const r = list.getBoundingClientRect(), mark = innerHeight * .62;
-    list.style.setProperty('--p', clamp01((mark - r.top) / r.height));
+    const mark = innerHeight * .62;
     items.forEach(li => li.classList.toggle('on', li.getBoundingClientRect().top < mark));
   });
 }

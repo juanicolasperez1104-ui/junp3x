@@ -1,7 +1,7 @@
-// Portada: título que entra palabra por palabra y terreno de cubos vivo detrás.
+// Portada: título que sube palabra por palabra y terreno de cubos vivo debajo.
 import { $, $$, reduce, pointer, mix, shade, rgba, BG } from './utils.js';
 
-const EASE = 'cubic-bezier(.16,1,.3,1)';
+const EASE = 'cubic-bezier(.23,1,.32,1)';
 const headline = $('#headline');
 const reveals = $$('.hero .reveal');
 let words = [];
@@ -26,25 +26,6 @@ function splitWords(el) {
   });
 }
 
-// Un solo degradado continuo sobre toda la frase, aunque esté partida en palabras
-function setupGradient() {
-  const holder = headline.querySelector('.grad');
-  const gradWords = $$('.w>span', holder);
-  gradWords.forEach(w => w.classList.add('grad'));
-  holder.classList.remove('grad');
-  const align = () => {
-    const boxes = gradWords.map(w => w.parentElement.getBoundingClientRect());
-    const left = Math.min(...boxes.map(b => b.left));
-    const right = Math.max(...boxes.map(b => b.right));
-    gradWords.forEach((w, i) => {
-      w.style.setProperty('--gw', `${right - left}px`);
-      w.style.setProperty('--gx', `${left - boxes[i].left}px`);
-    });
-  };
-  new ResizeObserver(align).observe(headline);
-  document.fonts?.ready.then(align);
-}
-
 export function hideHero() {
   anims.forEach(a => a.cancel());
   anims = [];
@@ -57,12 +38,12 @@ export function showHero() {
   terrain.rise();
   if (reduce) return;
   words.forEach((w, i) => anims.push(w.animate(
-    [{ transform: 'translateY(105%) rotate(4deg)' }, { transform: 'none' }],
-    { duration: 900, delay: 80 + i * 55, easing: EASE, fill: 'both' })));
-  const after = 80 + words.length * 55;
+    [{ transform: 'translateY(105%)' }, { transform: 'none' }],
+    { duration: 1100, delay: 60 + i * 45, easing: EASE, fill: 'both' })));
+  const after = 300 + words.length * 45;
   reveals.forEach((el, i) => anims.push(el.animate(
-    [{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'none' }],
-    { duration: 800, delay: after + i * 120, easing: EASE, fill: 'both' })));
+    [{ opacity: 0, transform: 'translateY(20px)' }, { opacity: 1, transform: 'none' }],
+    { duration: 900, delay: after + i * 90, easing: EASE, fill: 'both' })));
 }
 
 /* ---------- Terreno de cubos ---------- */
@@ -82,8 +63,8 @@ const terrain = (() => {
     const narrow = W < 820;
     G = narrow ? 11 : 13;
     S = narrow ? Math.min(W / 14, 28) : Math.min(W / 40, H / 21, 34);
-    OX = narrow ? W * .5 : W * .74;
-    OY = narrow ? H * .66 : H * .3;
+    OX = narrow ? W * .5 : W * .7;
+    OY = narrow ? H * .7 : H * .6;
     CAP = narrow ? .42 : 1;
     if (reduce) draw(0);
   }
@@ -172,6 +153,5 @@ const terrain = (() => {
 
 export function initHero() {
   splitWords(headline);
-  setupGradient();
   words = $$('.w>span', headline);
 }
