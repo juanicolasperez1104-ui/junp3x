@@ -111,6 +111,15 @@ export function initIntro() {
   }));
   letters = [...wordmark.children];
   $('#skip').addEventListener('click', finish);
+  // la rueda, un deslizamiento o una tecla también saltan la entrada
+  const skipOnInput = () => { if (!intro.hidden) finish(); };
+  addEventListener('wheel', skipOnInput, { passive: true });
+  addEventListener('touchmove', skipOnInput, { passive: true });
+  addEventListener('keydown', e => { if (['Escape', 'Enter', ' ', 'ArrowDown', 'PageDown'].includes(e.key)) skipOnInput(); });
   $('#replay').addEventListener('click', () => { scrollTo({ top: 0, behavior: 'instant' }); play(); });
-  if (reduce) { intro.hidden = true; showHero(); } else play();
+
+  // la entrada completa se ve una vez por visita; al volver, la portada aparece de inmediato
+  let seen = false;
+  try { seen = sessionStorage.getItem('junp3x-intro') === '1'; sessionStorage.setItem('junp3x-intro', '1'); } catch { /* almacenamiento bloqueado */ }
+  if (reduce || seen) { intro.hidden = true; brand.classList.add('vt'); showHero(); } else play();
 }

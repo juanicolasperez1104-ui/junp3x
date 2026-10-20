@@ -3,9 +3,9 @@ import { reduce, CORAL, CYAN, rgba } from './utils.js';
 
 const MID = [185, 139, 156];
 const ORBS = [
-  { c: CORAL, x: .12, y: .18, ax: .22, ay: .16, px: 47, py: 61, a: .1, phase: 0 },
-  { c: CYAN, x: .86, y: .48, ax: .18, ay: .22, px: 58, py: 43, a: .1, phase: 2.6 },
-  { c: MID, x: .45, y: .92, ax: .26, ay: .14, px: 53, py: 71, a: .07, phase: 5.1 },
+  { c: CORAL, x: .12, y: .18, ax: .22, ay: .16, px: 47, py: 61, a: .07, phase: 0 },
+  { c: CYAN, x: .86, y: .48, ax: .18, ay: .22, px: 58, py: 43, a: .07, phase: 2.6 },
+  { c: MID, x: .45, y: .92, ax: .26, ay: .14, px: 53, py: 71, a: .05, phase: 5.1 },
 ];
 const RING_EVERY = 5.4;   // segundos entre ondas de una misma luz
 const RING_LIFE = 11;     // segundos que tarda una onda en desvanecerse
@@ -40,7 +40,7 @@ export function initAmbient() {
         const age = ((t + n * 1.8) % RING_EVERY) + k * RING_EVERY;
         if (age > RING_LIFE) continue;
         const p = age / RING_LIFE, e = 1 - (1 - p) ** 3;
-        ctx.strokeStyle = rgba(o.c, .2 * (1 - p) ** 1.6 * Math.min(1, p * 8));
+        ctx.strokeStyle = rgba(o.c, .13 * (1 - p) ** 1.6 * Math.min(1, p * 8));
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.ellipse(x, y, 30 + e * V * .42, (30 + e * V * .42) * .86, 0, 0, 6.2832);

@@ -163,12 +163,13 @@ function shortcuts() {
   });
 
   const dock = $('#qdock');
-  const zones = { hero: true, quote: false, contact: false };
+  const zones = { hero: true, quote: false, contact: false, app: false, works: false };
   const dockIO = new IntersectionObserver(entries => {
     entries.forEach(e => { zones[e.target.dataset.zone] = e.isIntersecting; });
-    dock.classList.toggle('show', !zones.hero && !zones.quote && !zones.contact);
-  }, { threshold: .15 });
-  [['hero', 'inicio'], ['quote', 'cotizar'], ['contact', 'contacto']].forEach(([zone, id]) => {
+    dock.classList.toggle('show', !Object.values(zones).some(Boolean));
+  }, { rootMargin: '-15% 0px -15% 0px' });
+  // las escenas de la app y los proyectos ya tienen sus propios botones
+  [['hero', 'inicio'], ['quote', 'cotizar'], ['contact', 'contacto'], ['app', 'app'], ['works', 'proyectos']].forEach(([zone, id]) => {
     const section = document.getElementById(id);
     section.dataset.zone = zone;
     dockIO.observe(section);

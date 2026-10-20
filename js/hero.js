@@ -1,9 +1,11 @@
-// Portada: título que entra palabra por palabra y terreno de cubos vivo detrás.
-import { $, $$, reduce, pointer, mix, shade, rgba, BG } from './utils.js';
+// Portada: título que sube palabra por palabra, escenario con piezas reales y terreno de cubos vivo debajo.
+import { $, $$, reduce, fine, pointer, mix, shade, rgba, BG } from './utils.js';
+import { TYPES } from './pricing.js';
 
-const EASE = 'cubic-bezier(.16,1,.3,1)';
+const EASE = 'cubic-bezier(.23,1,.32,1)';
 const headline = $('#headline');
-const reveals = $$('.hero .reveal');
+const reveals = $$('.hero-copy .reveal');
+const pieces = $$('.hero-stage .reveal');
 let words = [];
 let anims = [];
 
@@ -26,43 +28,28 @@ function splitWords(el) {
   });
 }
 
-// Un solo degradado continuo sobre toda la frase, aunque esté partida en palabras
-function setupGradient() {
-  const holder = headline.querySelector('.grad');
-  const gradWords = $$('.w>span', holder);
-  gradWords.forEach(w => w.classList.add('grad'));
-  holder.classList.remove('grad');
-  const align = () => {
-    const boxes = gradWords.map(w => w.parentElement.getBoundingClientRect());
-    const left = Math.min(...boxes.map(b => b.left));
-    const right = Math.max(...boxes.map(b => b.right));
-    gradWords.forEach((w, i) => {
-      w.style.setProperty('--gw', `${right - left}px`);
-      w.style.setProperty('--gx', `${left - boxes[i].left}px`);
-    });
-  };
-  new ResizeObserver(align).observe(headline);
-  document.fonts?.ready.then(align);
-}
-
 export function hideHero() {
   anims.forEach(a => a.cancel());
   anims = [];
   if (reduce) return;
-  [...words, ...reveals].forEach(el => { el.style.opacity = '0'; });
+  [...words, ...reveals, ...pieces].forEach(el => { el.style.opacity = '0'; });
 }
 
 export function showHero() {
-  [...words, ...reveals].forEach(el => { el.style.opacity = ''; });
+  [...words, ...reveals, ...pieces].forEach(el => { el.style.opacity = ''; });
   terrain.rise();
   if (reduce) return;
   words.forEach((w, i) => anims.push(w.animate(
-    [{ transform: 'translateY(105%) rotate(4deg)' }, { transform: 'none' }],
-    { duration: 900, delay: 80 + i * 55, easing: EASE, fill: 'both' })));
-  const after = 80 + words.length * 55;
+    [{ transform: 'translateY(105%)' }, { transform: 'none' }],
+    { duration: 1100, delay: 60 + i * 45, easing: EASE, fill: 'both' })));
+  const after = 300 + words.length * 45;
   reveals.forEach((el, i) => anims.push(el.animate(
-    [{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'none' }],
-    { duration: 800, delay: after + i * 120, easing: EASE, fill: 'both' })));
+    [{ opacity: 0, transform: 'translateY(20px)' }, { opacity: 1, transform: 'none' }],
+    { duration: 900, delay: after + i * 90, easing: EASE, fill: 'both' })));
+  // las piezas del escenario llegan antes que el texto termine: ventana, celular y tarjeta
+  pieces.forEach((el, i) => anims.push(el.animate(
+    [{ opacity: 0, transform: 'translateY(70px) scale(.96)' }, { opacity: 1, transform: 'none' }],
+    { duration: 1300, delay: 200 + i * 160, easing: EASE, fill: 'both' })));
 }
 
 /* ---------- Terreno de cubos ---------- */
@@ -82,8 +69,8 @@ const terrain = (() => {
     const narrow = W < 820;
     G = narrow ? 11 : 13;
     S = narrow ? Math.min(W / 14, 28) : Math.min(W / 40, H / 21, 34);
-    OX = narrow ? W * .5 : W * .74;
-    OY = narrow ? H * .66 : H * .3;
+    OX = narrow ? W * .5 : W * .7;
+    OY = narrow ? H * .7 : H * .74;
     CAP = narrow ? .42 : 1;
     if (reduce) draw(0);
   }
@@ -170,8 +157,28 @@ const terrain = (() => {
   return { rise() { if (reduce) { rise = 1; return; } riseStart = performance.now(); rise = 0; } };
 })();
 
+/* ---------- Profundidad: cada pieza del escenario sigue al puntero a distinta distancia ---------- */
+function depth() {
+  const stage = $('#heroStage');
+  if (!stage || reduce || !fine) return;
+  let x = 0, y = 0, on = true;
+  new IntersectionObserver(([e]) => { on = e.isIntersecting; if (on) requestAnimationFrame(loop); }).observe(stage);
+  function loop() {
+    const tx = pointer.active ? pointer.x / innerWidth * 2 - 1 : 0;
+    const ty = pointer.active ? pointer.y / innerHeight * 2 - 1 : 0;
+    x += (tx - x) * .06; y += (ty - y) * .06;
+    stage.style.setProperty('--px', x.toFixed(4));
+    stage.style.setProperty('--py', y.toFixed(4));
+    if (on) requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+}
+
 export function initHero() {
   splitWords(headline);
-  setupGradient();
   words = $$('.w>span', headline);
+  // el precio de la tarjeta sale del mismo lugar que el cotizador
+  const price = $('#stagePrice');
+  if (price) price.textContent = `Desde $${TYPES.sitio.base[0]} USD`;
+  depth();
 }
