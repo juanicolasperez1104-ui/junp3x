@@ -5,7 +5,8 @@ Sitio estático (HTML, CSS y JavaScript sin librerías externas) con un asistent
 ## Diseño
 - Sobrio: solo títulos y texto breve; sin etiquetas sobre los títulos, sin numeraciones ni adornos.
 - Tipografía: Host Grotesk (títulos) + Geist (textos). Tamaños definidos una sola vez en `:root` de `css/styles.css`.
-- Movimiento: títulos que suben palabra por palabra, bloques que entran escalonados, imágenes que se descubren y se desplazan con el scroll, intro solo una vez por visita (se salta con la rueda o una tecla). Todo respeta "reducir movimiento" del sistema.
+- Recorrido por escenas: 3X en tarjetas de color que se apilan, la app de mantenimiento con pantallas que cambian al bajar, proyectos en un recorrido horizontal (cada uno con su color), muro de pantallas, servicios con vista previa que sigue al puntero, proceso en paneles de color que se deslizan y contacto en un bloque claro.
+- Movimiento: títulos que suben palabra por palabra, botones con texto que rueda y relleno de color, fondo que cambia de tono por sección, intro solo una vez por visita. Con "reducir movimiento" las escenas se muestran como una columna normal.
 
 ## Estructura
 - `index.html`: contenido de la página.
@@ -18,8 +19,9 @@ Sitio estático (HTML, CSS y JavaScript sin librerías externas) con un asistent
   - `intro.js` + `waves.js`: animación de entrada con la superficie de puntos en olas.
   - `ambient.js`: fondo con luces que emiten ondas.
   - `hero.js`: portada y terreno de cubos.
-  - `motion.js`: apariciones escalonadas, bandas, menú, botones y scroll suave.
-  - `sections.js`: 3X, proyectos, demo, galería, proceso y contacto.
+  - `motion.js`: apariciones escalonadas, botones, menú y scroll suave.
+  - `scenes.js`: escenas guiadas por el scroll (3X, app, proyectos, muro, proceso), tono de fondo y cursor.
+  - `sections.js`: ficha de proyectos, video del asistente y contacto.
   - `quote.js`: cotizador.
   - `assistant.js`: chat con IA que se abre desde el botón del robot.
   - `robot.js`: el robot de cubos, cara del asistente (ojos que siguen el cursor y parpadean).

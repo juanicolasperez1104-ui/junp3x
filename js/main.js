@@ -2,6 +2,7 @@
 import { initHero } from './hero.js';
 import { initMotion } from './motion.js';
 import { initSections } from './sections.js';
+import { initScenes } from './scenes.js';
 import { initQuote } from './quote.js';
 import { buildLogo } from './logo.js';
 import { initIntro } from './intro.js';
@@ -12,6 +13,7 @@ buildLogo(document.getElementById('logoSmall'), { small: true });
 initAmbient();
 initHero();
 initMotion();
+initScenes();
 initSections();
 initQuote();
 initAssistant();

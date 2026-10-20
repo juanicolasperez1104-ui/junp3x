@@ -1,31 +1,14 @@
-// Secciones con comportamiento propio: 3X, proyectos, demo, galería y proceso.
-import { $, $$, reduce, clamp01, onScroll } from './utils.js';
+// Secciones con comportamiento propio: ficha de proyectos, video del asistente y contacto.
+import { $, $$, reduce } from './utils.js';
 import { buildLogo } from './logo.js';
-
-/* ---------- 3X: paneles horizontales y logo que se enciende por tramos ---------- */
-function x3() {
-  const section = $('#tresx'), track = $('#x3track'), progress = $('#x3prog');
-  const logo = buildLogo($('#logoMid'), { small: true });
-  onScroll(() => {
-    const r = section.getBoundingClientRect();
-    const p = clamp01(-r.top / (r.height - innerHeight));
-    const seg = p * 2, k = Math.floor(Math.min(seg, 1.999)), f = seg - k;
-    const e = f < .22 ? 0 : f > .78 ? 1 : (f - .22) / .56;
-    const pos = k + (e < .5 ? 2 * e * e : 1 - Math.pow(-2 * e + 2, 2) / 2);
-    track.style.transform = `translate3d(${-pos * 33.3333}%,0,0)`;
-    progress.style.transform = `scaleX(${p})`;
-    const active = Math.round(pos);
-    logo.groups.forEach((g, i) => g.classList.toggle('off', logo.edges[i] > active));
-  });
-}
 
 /* ---------- Proyectos: ficha ampliada con transición desde la imagen ---------- */
 const PROJECTS = {
   corp: {
     title: 'Corporación Tame Historia y Cultura',
-    text: 'Un sitio para guardar y compartir la memoria de Tame. La corporación edita su contenido desde un panel propio y la comunidad puede enviar aportes.',
-    facts: [['Destacado', 'Entrada con escudo y contador, reloj 3D, libros 3D que giran con el mouse y versión en inglés'], ['Tecnología', 'HTML, CSS, JavaScript, Supabase y GitHub Pages']],
-    link: 'https://nicolasperzalf.github.io/CorporacionTame-HistoriayCultura/',
+    text: 'Un viaje por cuatro siglos de historia de Tame. La corporación edita su contenido desde un panel propio y la comunidad puede enviar aportes.',
+    facts: [['Destacado', 'Reloj de bolsillo en 3D, puertas al tiempo, libros que giran y el sonido del cuatro llanero'], ['Tecnología', 'HTML, CSS, JavaScript, Three.js y Supabase, con dominio propio']],
+    link: 'https://corporaciontamehistoriaycultura.co/',
     quote: 'sitio',
   },
   pancita: {
@@ -60,10 +43,10 @@ function projects() {
     }));
     $('#caseLink').href = d.link;
     $('#caseQuote').dataset.type = d.quote;
-    source = $('.art', btn);
+    source = $('.work-media .main', btn.closest('.work'));
     bigArt = source.cloneNode(true);
-    bigArt.classList.remove('unveil', 'seen');
-    bigArt.style.transitionDelay = '';
+    bigArt.className = '';
+    bigArt.loading = 'eager';
     artBox.replaceChildren(bigArt);
     if (!canVT()) return dlg.showModal();
     source.style.viewTransitionName = 'case-art';
@@ -86,65 +69,30 @@ function projects() {
     }).finished.finally(() => { src.style.viewTransitionName = ''; });
   };
 
-  $$('.proj').forEach(btn => btn.addEventListener('click', () => open(btn)));
+  $$('[data-proj]').forEach(btn => {
+    btn.addEventListener('click', () => open(btn));
+    // la imagen del proyecto también abre la ficha
+    $('.work-media[data-cursor]', btn.closest('.work'))?.addEventListener('click', () => open(btn));
+  });
   $('#caseClose').addEventListener('click', close);
   $('#caseQuote').addEventListener('click', () => dlg.close());
   dlg.addEventListener('click', e => { if (e.target === dlg) close(); });
   dlg.addEventListener('cancel', e => { e.preventDefault(); close(); });
 }
 
-/* ---------- Demo: video sincronizado con los pasos ---------- */
+/* ---------- Video del asistente: se reproduce solo cuando se ve ---------- */
 function demo() {
-  const video = $('#demoVid'), steps = $$('#steps li'), bar = $('#vidProg');
+  const video = $('#demoVid'), bar = $('#vidProg');
   if (reduce) video.controls = true;
   else new IntersectionObserver(([e]) => { e.isIntersecting ? video.play().catch(() => {}) : video.pause(); }, { threshold: .35 }).observe(video);
-  const sync = () => {
-    let idx = 0;
-    steps.forEach((li, i) => { if (parseFloat(li.dataset.t) <= video.currentTime + .05) idx = i; });
-    steps.forEach((li, i) => li.classList.toggle('on', i === idx));
+  video.addEventListener('timeupdate', () => {
     if (video.duration) bar.style.transform = `scaleX(${video.currentTime / video.duration})`;
-  };
-  video.addEventListener('timeupdate', sync);
-  sync();
-  steps.forEach(li => li.addEventListener('click', () => {
-    video.currentTime = parseFloat(li.dataset.t);
-    video.play().catch(() => {});
-    sync();
-  }));
-}
-
-/* ---------- Galería: columnas a distinta velocidad y vista ampliada ---------- */
-function gallery() {
-  const box = $('#gallery'), cols = $$('.gcol', box);
-  if (!reduce) onScroll(() => {
-    if (innerWidth <= 760) return;
-    const g = box.getBoundingClientRect();
-    const off = g.top + g.height / 2 - innerHeight / 2;
-    cols.forEach(c => { c.style.transform = `translate3d(0,${off * parseFloat(c.dataset.speed)}px,0)`; });
-  });
-  const lb = $('#lightbox'), img = $('#lbImg'), cap = $('#lbCap');
-  $$('.gitem[data-full]').forEach(b => b.addEventListener('click', () => {
-    img.src = b.dataset.full;
-    img.alt = $('img', b).alt;
-    cap.textContent = b.dataset.cap;
-    lb.showModal();
-    if (!reduce) lb.animate([{ opacity: 0, transform: 'scale(.94)' }, { opacity: 1, transform: 'none' }], { duration: 350, easing: 'cubic-bezier(.16,1,.3,1)' });
-  }));
-  $('#lbClose').addEventListener('click', () => lb.close());
-  lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
-}
-
-/* ---------- Proceso: cada paso se enciende al cruzar el centro de la pantalla ---------- */
-function process() {
-  const items = $$('#process li');
-  onScroll(() => {
-    const mark = innerHeight * .62;
-    items.forEach(li => li.classList.toggle('on', li.getBoundingClientRect().top < mark));
   });
 }
 
 /* ---------- Contacto: el logo se arma al llegar y se copia el correo ---------- */
 function contact() {
+  buildLogo($('#logoNext'));
   const logo = buildLogo($('#logoEnd'));
   if (!reduce) {
     const scatter = logo.groups.map(() => ({ x: (Math.random() - .5) * 260, y: (Math.random() - .5) * 200 - 60, r: (Math.random() - .5) * 120 }));
@@ -174,10 +122,7 @@ function contact() {
 }
 
 export function initSections() {
-  x3();
   projects();
   demo();
-  gallery();
-  process();
   contact();
 }

@@ -37,9 +37,9 @@
 <nav class="nav" id="nav" aria-label="Principal">
   <a class="brand" href="#inicio" aria-label="Junp3x, inicio"><svg id="logoSmall" aria-hidden="true"></svg><b>Junp3x</b></a>
   <ul>
-    <li><a href="#proyectos">Proyectos</a></li>
-    <li><a href="#demo">Demo IA</a></li>
+    <li><a href="#app">Proyectos</a></li>
     <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#proceso">Proceso</a></li>
   </ul>
   <a class="nav-cta" href="#cotizar">Cotizar</a>
 </nav>
@@ -47,36 +47,24 @@
 <main>
 
 <!-- ============ Portada ============ -->
-<section class="hero" id="inicio">
+<section class="hero" id="inicio" data-tone="#1c2023">
   <canvas id="terrain" aria-hidden="true"></canvas>
-  <h1 id="headline">Webs y asistentes de chat que trabajan para mejorar tu negocio</h1>
+  <h1 id="headline">Webs y asistentes de chat que trabajan para <span class="hl">mejorar tu negocio</span></h1>
   <div class="hero-foot">
-    <p class="sub reveal">Soy Nicolás. Diseño páginas con movimiento y chatbots que atienden a tus clientes a cualquier hora.</p>
+    <p class="sub reveal">Soy Nicolás. Diseño páginas con movimiento, apps y chatbots que atienden a tus clientes a cualquier hora.</p>
     <div class="actions reveal">
-      <a class="btn btn-main magnetic" href="#cotizar">Cotiza tu página en 1 minuto
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      <a class="btn btn-ghost magnetic" href="#proyectos">Ver proyectos</a>
+      <a class="btn btn-main magnetic" href="#cotizar">Cotiza tu página en 1 minuto</a>
+      <a class="btn btn-ghost magnetic" href="#app">Ver proyectos</a>
     </div>
   </div>
+  <span class="cue" aria-hidden="true"><i></i></span>
 </section>
 
-<a class="band" href="#cotizar" data-dir="1" aria-label="Cotiza aquí mismo">
-  <span class="band-track" aria-hidden="true" data-words="Diseño web|Chatbots con IA|Animación|Identidad visual|Pedidos por WhatsApp|Cotiza aquí mismo"></span>
-</a>
-
-<!-- ============ 3X ============ -->
-<section class="x3" id="tresx" aria-label="Las 3X de Junp3x">
-  <div class="x3-pin">
-    <div class="x3-head wrap"><svg id="logoMid" aria-hidden="true"></svg></div>
-    <div class="x3-view">
-      <div class="x3-track" id="x3track">
-
-        <article class="x3-panel tone-coral">
-          <div class="x3-text">
-            <h2>Expertise</h2>
-            <p>Sitios rápidos y seguros, animaciones modernas y asistentes con inteligencia artificial que resuelven tareas reales de un negocio.</p>
-          </div>
-          <svg class="x3-art art-expertise" viewBox="0 0 400 400" aria-hidden="true">
+<!-- ============ 3X: tarjetas que se apilan ============ -->
+<section class="x3" id="tresx" aria-label="Las 3X de Junp3x" data-tone="#1c2023">
+  <article class="x3-card tone-coral">
+    <div class="x3-text"><h2>Expertise</h2><p>Sitios rápidos y seguros, animaciones modernas y asistentes con inteligencia artificial que resuelven tareas reales de un negocio.</p></div>
+    <svg class="x3-art art-expertise" viewBox="0 0 400 400" aria-hidden="true">
             <circle class="ring ring-a" cx="200" cy="200" r="178"/>
             <circle class="ring ring-b" cx="200" cy="200" r="158"/>
             <g class="cross"><path d="M200 6v40M200 354v40M6 200h40M354 200h40"/></g>
@@ -88,14 +76,10 @@
             </g>
             <rect class="scan" x="90" y="196" width="220" height="2"/>
           </svg>
-        </article>
-
-        <article class="x3-panel tone-mid">
-          <div class="x3-text">
-            <h2>Experience</h2>
-            <p>Proyectos publicados para clientes reales: una corporación cultural, un restaurante con pedidos y un sitio sobre la historia del cacao.</p>
-          </div>
-          <svg class="x3-art art-experience" viewBox="0 0 400 400" aria-hidden="true">
+  </article>
+  <article class="x3-card tone-mid">
+    <div class="x3-text"><h2>Experience</h2><p>Proyectos publicados para clientes reales: una corporación cultural, una app de mantenimiento, un restaurante con pedidos y un asistente que agenda citas.</p></div>
+    <svg class="x3-art art-experience" viewBox="0 0 400 400" aria-hidden="true">
             <ellipse class="ripple" cx="200" cy="262" rx="170" ry="85"/>
             <ellipse class="ripple r2" cx="200" cy="262" rx="170" ry="85"/>
             <ellipse class="ripple r3" cx="200" cy="262" rx="170" ry="85"/>
@@ -104,14 +88,10 @@
             <g class="slab s3"><path class="f-left" d="M130 194L200 229V247L130 212Z"/><path class="f-right" d="M270 194L200 229V247L270 212Z"/><path class="f-top" d="M200 159L270 194L200 229L130 194Z"/></g>
             <g class="slab s4"><path class="f-left" d="M130 166L200 201V219L130 184Z"/><path class="f-right" d="M270 166L200 201V219L270 184Z"/><path class="f-top" d="M200 131L270 166L200 201L130 166Z"/></g>
           </svg>
-        </article>
-
-        <article class="x3-panel tone-cyan">
-          <div class="x3-text">
-            <h2>Express</h2>
-            <p>Trato directo conmigo, avances por WhatsApp durante todo el proceso y entregas en semanas, no en meses.</p>
-          </div>
-          <svg class="x3-art art-express" viewBox="0 0 400 400" aria-hidden="true">
+  </article>
+  <article class="x3-card tone-cyan">
+    <div class="x3-text"><h2>Express</h2><p>Trato directo conmigo, avances por WhatsApp durante todo el proceso y entregas en semanas, no en meses.</p></div>
+    <svg class="x3-art art-express" viewBox="0 0 400 400" aria-hidden="true">
             <g class="streaks"><rect x="0" y="120" width="120" height="2"/><rect x="40" y="168" width="70" height="2"/><rect x="10" y="236" width="100" height="2"/><rect x="60" y="284" width="60" height="2"/></g>
             <g class="clock ghost ghost-a"><circle cx="210" cy="200" r="120"/><path class="hand-m" d="M210 200V102"/><path class="hand-h" d="M210 200h58"/></g>
             <g class="clock ghost ghost-b"><circle cx="210" cy="200" r="120"/><path class="hand-m" d="M210 200V102"/><path class="hand-h" d="M210 200h58"/></g>
@@ -124,49 +104,92 @@
               <circle class="pin" cx="210" cy="200" r="6"/>
             </g>
           </svg>
-        </article>
+  </article>
+</section>
 
-      </div>
+<!-- ============ App de mantenimiento ============ -->
+<section class="app" id="app" data-tone="#0f2326">
+  <div class="app-pin">
+    <div class="app-copy">
+      <h2 class="sec-title">Mantenimiento en el bolsillo</h2>
+      <p class="app-sub">Una app para empresas de aire acondicionado: del QR del equipo a la firma del cliente.</p>
+      <ol class="app-caps"><li class="on"><b>Escanea el QR del equipo</b><span>Abre su ficha al instante, sin buscar en listas.</span></li><li><b>Checklist del preventivo</b><span>Cada actividad marcada en el celular, en campo.</span></li><li><b>Fotos, aunque no haya señal</b><span>Se guardan en el teléfono y se suben solas al volver internet.</span></li><li><b>Firma del cliente y PDF</b><span>La orden firmada queda sellada y no se puede alterar.</span></li><li><b>Hoja de vida del equipo</b><span>Todo el historial, listo para exportar a Excel.</span></li></ol>
+      <div class="actions"><a class="btn btn-main magnetic" href="https://wa.me/573204108873?text=Hola%20Junp3x%2C%20quiero%20una%20app%20como%20la%20de%20mantenimiento" target="_blank" rel="noopener noreferrer">Quiero una app así</a></div>
     </div>
-    <div class="x3-bar wrap"><i id="x3prog"></i></div>
+    <div class="app-stage">
+      <figure class="laptop"><img src="assets/img/app-escritorio.jpg" alt="La app en el computador: equipos de un cliente con su estado" width="1600" height="1000" loading="lazy"></figure>
+      <figure class="handset"><img class="scr on" src="assets/img/app-inicio.jpg" alt="App de mantenimiento: escanea el qr del equipo" width="780" height="1688"><img class="scr" src="assets/img/app-orden.jpg" alt="App de mantenimiento: checklist del preventivo" width="780" height="1688" loading="lazy"><img class="scr" src="assets/img/app-fotos.jpg" alt="App de mantenimiento: fotos, aunque no haya señal" width="780" height="1688" loading="lazy"><img class="scr" src="assets/img/app-firma.jpg" alt="App de mantenimiento: firma del cliente y pdf" width="780" height="1688" loading="lazy"><img class="scr" src="assets/img/app-ficha.jpg" alt="App de mantenimiento: hoja de vida del equipo" width="780" height="1688" loading="lazy"></figure>
+    </div>
   </div>
 </section>
 
-<!-- ============ Proyectos ============ -->
-<section class="block wrap" id="proyectos">
-  <header class="sec-head">
-    <h2 class="sec-title">Sitios que ya trabajan para sus dueños</h2>
-  </header>
-  <div class="projects">
-    <button class="proj proj-lead" type="button" data-proj="corp">
-      <span class="art unveil"><img src="assets/img/shot-corp.jpg" alt="Portada del sitio de la Corporación Tame Historia y Cultura" loading="lazy"></span>
-      <span class="proj-meta">
-        <span class="proj-title">Corporación Tame Historia y Cultura</span>
-        <span class="proj-text">Historia local con línea de tiempo y un panel para editar sin tocar código.</span>
-        <span class="more">Ver el caso</span>
-      </span>
-    </button>
-    <button class="proj" type="button" data-proj="pancita">
-      <span class="art unveil"><img src="assets/img/shot-pancita.jpg" alt="Portada del sitio de Pancita Llena" loading="lazy"></span>
-      <span class="proj-meta">
-        <span class="proj-title">Pancita Llena</span>
-        <span class="proj-text">Menú para armar y un carrito que envía el pedido completo por WhatsApp.</span>
-        <span class="more">Ver el caso</span>
-      </span>
-    </button>
-    <button class="proj" type="button" data-proj="cacao">
-      <span class="art unveil"><img src="assets/img/shot-cacao.jpg" alt="Portada del sitio Cacao Tame" loading="lazy"></span>
-      <span class="proj-meta">
-        <span class="proj-title">Cacao Tame</span>
-        <span class="proj-text">400 años de cacao en Tame, Arauca, contados en una línea de tiempo.</span>
-        <span class="more">Ver el caso</span>
-      </span>
-    </button>
+<!-- ============ Proyectos: recorrido horizontal ============ -->
+<section class="works" id="proyectos" data-tone="#0b0f1c">
+  <div class="works-pin">
+    <div class="works-track">
+
+      <article class="work w-corp">
+        <div class="work-copy">
+          <h2>Corporación Tame Historia y Cultura</h2>
+          <p>Un viaje de cuatro siglos: reloj 3D, puertas al tiempo y el sonido del cuatro llanero.</p>
+          <div class="actions"><button class="btn btn-main" type="button" data-proj="corp">Ver el caso</button><a class="btn btn-ghost" href="https://corporaciontamehistoriaycultura.co/" target="_blank" rel="noopener noreferrer">Abrir el sitio</a></div>
+        </div>
+        <div class="work-media" data-cursor="Ver">
+          <img class="main" src="assets/img/corp-viaje.jpg" alt="Portada de la Corporación Tame con el reloj de bolsillo en 3D" width="1600" height="1000" loading="lazy">
+          <img class="float" src="assets/img/corp-puertas.jpg" alt="Las seis puertas al tiempo del sitio de la Corporación Tame" width="1600" height="1000" loading="lazy">
+        </div>
+      </article>
+
+      <article class="work w-hair">
+        <div class="work-copy">
+          <h2>Un asistente que agenda citas por ti</h2>
+          <p>Hecho para la peluquería Team Hair: muestra servicios, ofrece horarios libres y recuerda la cita.</p>
+          <div class="actions"><a class="btn btn-main" href="#cotizar" data-type="chatbot">Quiero uno para mi negocio</a></div>
+        </div>
+        <div class="work-media media-phone">
+          <div class="phone">
+            <video id="demoVid" src="assets/video/demo-chatbot.mp4" poster="assets/video/demo-poster.jpg" muted playsinline loop preload="metadata" aria-label="Video del chatbot de Team Hair agendando una cita"></video>
+            <div class="phone-time"><i id="vidProg"></i></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="work w-pancita">
+        <div class="work-copy">
+          <h2>Pancita Llena</h2>
+          <p>El cliente arma su plato y el pedido llega completo al WhatsApp del restaurante.</p>
+          <div class="actions"><button class="btn btn-main" type="button" data-proj="pancita">Ver el caso</button><a class="btn btn-ghost" href="https://juanicolasperez1104-ui.github.io/Pancita-llena/" target="_blank" rel="noopener noreferrer">Abrir el sitio</a></div>
+        </div>
+        <div class="work-media" data-cursor="Ver">
+          <img class="main" src="assets/img/shot-pancita.jpg" alt="Portada del sitio de Pancita Llena" width="1400" height="875" loading="lazy">
+          <img class="float" src="assets/img/shot-pancita-menu.jpg" alt="Menú ejecutivo de Pancita Llena" width="1400" height="875" loading="lazy">
+        </div>
+      </article>
+
+      <article class="work w-cacao">
+        <div class="work-copy">
+          <h2>Cacao Tame</h2>
+          <p>400 años de cacao en Tame, Arauca, contados en una línea de tiempo.</p>
+          <div class="actions"><button class="btn btn-main" type="button" data-proj="cacao">Ver el caso</button><a class="btn btn-ghost" href="https://juanicolasperez1104-ui.github.io/Cacao-tame/" target="_blank" rel="noopener noreferrer">Abrir el sitio</a></div>
+        </div>
+        <div class="work-media" data-cursor="Ver">
+          <img class="main" src="assets/img/shot-cacao.jpg" alt="Portada del sitio Cacao Tame" width="1400" height="875" loading="lazy">
+          <img class="float" src="assets/img/shot-cacao-monumento.jpg" alt="Sección del monumento al cacao" width="1400" height="875" loading="lazy">
+        </div>
+      </article>
+
+      <article class="work w-next">
+        <div class="work-copy">
+          <h2>Tu negocio puede ser el siguiente</h2>
+          <p>Mira el precio de tu página al instante.</p>
+          <div class="actions"><a class="btn btn-main magnetic" href="#cotizar">Cotizar ahora</a></div>
+        </div>
+        <svg id="logoNext" class="work-logo" aria-hidden="true"></svg>
+      </article>
+
+    </div>
+    <div class="works-bar" aria-hidden="true"><i id="worksProg"></i></div>
   </div>
-  <a class="cta-strip" href="#cotizar">
-    <span><b>¿Te imaginas tu negocio así?</b> Mira el precio de tu página al instante.</span>
-    <span class="cta-go">Cotizar ahora <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-  </a>
 </section>
 
 <dialog class="case" id="caseDlg" aria-labelledby="caseTitle">
@@ -183,83 +206,58 @@
   </div>
 </dialog>
 
-<!-- ============ Demo del chatbot ============ -->
-<section class="block wrap" id="demo">
-  <header class="sec-head">
-    <h2 class="sec-title">Un asistente que agenda citas por ti</h2>
-    <p class="sec-sub">Ejemplo real por WhatsApp, hecho para la peluquería Team Hair.</p>
-  </header>
-  <div class="demo-grid">
-    <div class="phone">
-      <video id="demoVid" src="assets/video/demo-chatbot.mp4" poster="assets/video/demo-poster.jpg" muted playsinline loop preload="metadata" aria-label="Video del chatbot de Team Hair agendando una cita"></video>
-      <div class="phone-time"><i id="vidProg"></i></div>
-    </div>
-    <ol class="steps" id="steps">
-      <li data-t="0"><b>Saluda y ofrece opciones</b><span>Agendar, ver servicios o hablar con una persona.</span></li>
-      <li data-t="4"><b>Muestra servicios y precios</b><span>Cada servicio con su valor y duración.</span></li>
-      <li data-t="17"><b>Ofrece solo horarios libres</b><span>Nada de citas cruzadas.</span></li>
-      <li data-t="23"><b>Confirma y avisa al negocio</b><span>El dueño recibe cada cita nueva.</span></li>
-      <li data-t="32"><b>Recuerda 1 hora antes</b><span>El cliente confirma o reprograma en el chat.</span></li>
-    </ol>
+<!-- ============ Muro de pantallas en movimiento ============ -->
+<div class="wall" aria-hidden="true">
+  <div class="wall-row" data-dir="1">
+    <img src="assets/img/corp-carga.jpg" alt="" loading="lazy"><img src="assets/img/app-inicio.jpg" alt="" class="tall" loading="lazy"><img src="assets/img/shot-pancita-menu.jpg" alt="" loading="lazy"><img src="assets/img/frame-21.jpg" alt="" class="tall" loading="lazy"><img src="assets/img/shot-corp-publicaciones.jpg" alt="" loading="lazy"><img src="assets/img/app-firma.jpg" alt="" class="tall" loading="lazy"><img src="assets/img/shot-cacao-monumento.jpg" alt="" loading="lazy">
   </div>
-  <div class="demo-cta"><a class="btn btn-main magnetic" href="#cotizar" data-type="chatbot">Quiero uno para mi negocio</a></div>
-</section>
-
-<!-- ============ Galería ============ -->
-<section class="block wrap" id="disenos">
-  <header class="sec-head">
-    <h2 class="sec-title">Detalles de cada proyecto</h2>
-  </header>
-  <div class="gallery" id="gallery">
-    <div class="gcol" data-speed="-0.06">
-      <button class="gitem tall unveil" type="button" data-full="assets/img/logo-junp3x.jpg" data-cap="Identidad Junp3x: triángulo de bloques con el código dentro."><img src="assets/img/logo-junp3x.jpg" alt="Logo Junp3x" loading="lazy"></button>
-      <button class="gitem unveil" type="button" data-full="assets/img/shot-corp-publicaciones.jpg" data-cap="Corporación Tame: biblioteca de publicaciones con libros en 3D."><img src="assets/img/shot-corp-publicaciones.jpg" alt="Sección de publicaciones de la Corporación Tame" loading="lazy"></button>
-      <button class="gitem unveil" type="button" data-full="assets/img/frame-29.jpg" data-cap="Chatbot Team Hair: confirmación de la cita."><img src="assets/img/frame-29.jpg" alt="Pantalla de confirmación del chatbot" loading="lazy"></button>
-    </div>
-    <div class="gcol" data-speed="0.08">
-      <button class="gitem tall unveil" type="button" data-full="assets/img/frame-5.jpg" data-cap="Chatbot Team Hair: menú de categorías de servicio."><img src="assets/img/frame-5.jpg" alt="Menú de categorías del chatbot" loading="lazy"></button>
-      <button class="gitem unveil" type="button" data-full="assets/img/shot-pancita-menu.jpg" data-cap="Pancita Llena: el cliente arma su menú ejecutivo."><img src="assets/img/shot-pancita-menu.jpg" alt="Menú ejecutivo de Pancita Llena" loading="lazy"></button>
-      <a class="gitem cta-tile unveil" href="#cotizar"><b>Tu marca puede ser la siguiente</b><span>Cotiza en un minuto</span></a>
-    </div>
-    <div class="gcol" data-speed="-0.03">
-      <button class="gitem unveil" type="button" data-full="assets/img/shot-corp-intro.jpg" data-cap="Corporación Tame: entrada con el escudo y contador de carga."><img src="assets/img/shot-corp-intro.jpg" alt="Pantalla de entrada de la Corporación Tame" loading="lazy"></button>
-      <button class="gitem tall unveil" type="button" data-full="assets/img/frame-21.jpg" data-cap="Chatbot Team Hair: elección de hora con cupos libres."><img src="assets/img/frame-21.jpg" alt="Selector de horas del chatbot" loading="lazy"></button>
-      <button class="gitem unveil" type="button" data-full="assets/img/shot-cacao-monumento.jpg" data-cap="Cacao Tame: el monumento a la planta de cacao."><img src="assets/img/shot-cacao-monumento.jpg" alt="Sección del monumento en Cacao Tame" loading="lazy"></button>
-    </div>
+  <div class="wall-row" data-dir="-1">
+    <img src="assets/img/app-escritorio.jpg" alt="" loading="lazy"><img src="assets/img/frame-5.jpg" alt="" class="tall" loading="lazy"><img src="assets/img/corp-puertas.jpg" alt="" loading="lazy"><img src="assets/img/app-ficha.jpg" alt="" class="tall" loading="lazy"><img src="assets/img/shot-corp-intro.jpg" alt="" loading="lazy"><img src="assets/img/frame-29.jpg" alt="" class="tall" loading="lazy"><img src="assets/img/logo-junp3x.jpg" alt="" loading="lazy">
   </div>
-</section>
+</div>
 
-<dialog class="lightbox" id="lightbox" aria-label="Diseño ampliado">
-  <img id="lbImg" alt="">
-  <p id="lbCap"></p>
-  <button type="button" class="lb-close" id="lbClose" aria-label="Cerrar">×</button>
-</dialog>
-
-<!-- ============ Servicios y proceso ============ -->
-<section class="block wrap" id="servicios">
+<!-- ============ Servicios ============ -->
+<section class="block wrap" id="servicios" data-tone="#1c2023">
   <header class="sec-head">
     <h2 class="sec-title">Lo que hago por tu negocio</h2>
   </header>
   <ul class="services">
-    <li class="tone-coral"><a class="svc" href="#cotizar" data-type="sitio"><h3>Páginas web con movimiento</h3><p>De una página de presentación a un sitio completo con animaciones.</p><span class="svc-go">Cotizar <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
-    <li class="tone-mid"><a class="svc" href="#cotizar" data-type="pedidos"><h3>Pedidos por WhatsApp</h3><p>Menú o catálogo con carrito que envía el pedido listo a tu WhatsApp.</p><span class="svc-go">Cotizar <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
-    <li class="tone-sky"><a class="svc" href="#cotizar" data-type="chatbot"><h3>Chatbots para negocios</h3><p>Agenda citas, responde preguntas y te avisa de cada cliente nuevo.</p><span class="svc-go">Cotizar <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
-    <li class="tone-cyan"><a class="svc" href="#cotizar" data-type="marca"><h3>Identidad visual</h3><p>Logo, colores y tipografías para la web y las redes.</p><span class="svc-go">Cotizar <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+    <li class="tone-coral" data-img="assets/img/corp-viaje.jpg"><a class="svc" href="#cotizar" data-type="sitio"><h3>Páginas web con movimiento</h3><p>De una página de presentación a un sitio completo con animaciones.</p><span class="svc-go">Cotizar <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+    <li class="tone-mid" data-img="assets/img/app-orden.jpg"><a class="svc" href="https://wa.me/573204108873?text=Hola%20Junp3x%2C%20quiero%20una%20app%20como%20la%20de%20mantenimiento" target="_blank" rel="noopener noreferrer"><h3>Apps para tu operación</h3><p>Órdenes, inventarios y reportes desde el celular, con tu marca.</p><span class="svc-go">Hablemos <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+    <li class="tone-sky" data-img="assets/img/frame-21.jpg"><a class="svc" href="#cotizar" data-type="chatbot"><h3>Chatbots para negocios</h3><p>Agenda citas, responde preguntas y te avisa de cada cliente nuevo.</p><span class="svc-go">Cotizar <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+    <li class="tone-coral" data-img="assets/img/shot-pancita-menu.jpg"><a class="svc" href="#cotizar" data-type="pedidos"><h3>Pedidos por WhatsApp</h3><p>Menú o catálogo con carrito que envía el pedido listo a tu WhatsApp.</p><span class="svc-go">Cotizar <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+    <li class="tone-cyan" data-img="assets/img/logo-junp3x.jpg"><a class="svc" href="#cotizar" data-type="marca"><h3>Identidad visual</h3><p>Logo, colores y tipografías para la web y las redes.</p><span class="svc-go">Cotizar <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
   </ul>
+  <div class="svc-preview" aria-hidden="true"><img alt=""></div>
+</section>
 
-  <header class="sec-head sec-head-gap">
-    <h2 class="sec-title">De la idea al lanzamiento</h2>
-  </header>
-  <ol class="process" id="process">
-    <li><h3>Conversamos</h3><p>Me cuentas qué necesita tu negocio.</p></li>
-    <li><h3>Diseño</h3><p>Ves cómo va a quedar antes de programar.</p></li>
-    <li><h3>Construyo</h3><p>Te comparto avances para probar en tu celular.</p></li>
-    <li><h3>Lanzamos</h3><p>Lo publico y quedo pendiente de cualquier ajuste.</p></li>
-  </ol>
+<!-- ============ Proceso: paneles que se deslizan ============ -->
+<section class="process" id="proceso" data-tone="#1c2023">
+  <div class="sx-pin">
+    <h2 class="sec-title sx-title">De la idea al lanzamiento</h2>
+    <div class="sx-stage">
+      <article class="sx-panel tone-coral">
+        <div class="sx-text"><h3>Conversamos</h3><p>Me cuentas qué necesita tu negocio.</p></div>
+        <svg class="sx-art" viewBox="0 -150 200 310" aria-hidden="true"><g class="cb" transform="translate(0 0)"><path class="ct" d="M100 40l60 30-60 30-60-30z"/><path class="cl" d="M40 70l60 30v52l-60-30z"/><path class="cr" d="M160 70l-60 30v52l60-30z"/></g></svg>
+      </article>
+      <article class="sx-panel tone-mid">
+        <div class="sx-text"><h3>Diseño</h3><p>Ves cómo va a quedar antes de programar.</p></div>
+        <svg class="sx-art" viewBox="0 -150 200 310" aria-hidden="true"><g class="cb" transform="translate(0 0)"><path class="ct" d="M100 40l60 30-60 30-60-30z"/><path class="cl" d="M40 70l60 30v52l-60-30z"/><path class="cr" d="M160 70l-60 30v52l60-30z"/></g><g class="cb" transform="translate(0 -46)"><path class="ct" d="M100 40l60 30-60 30-60-30z"/><path class="cl" d="M40 70l60 30v52l-60-30z"/><path class="cr" d="M160 70l-60 30v52l60-30z"/></g></svg>
+      </article>
+      <article class="sx-panel tone-sky">
+        <div class="sx-text"><h3>Construyo</h3><p>Te comparto avances para probar en tu celular.</p></div>
+        <svg class="sx-art" viewBox="0 -150 200 310" aria-hidden="true"><g class="cb" transform="translate(0 0)"><path class="ct" d="M100 40l60 30-60 30-60-30z"/><path class="cl" d="M40 70l60 30v52l-60-30z"/><path class="cr" d="M160 70l-60 30v52l60-30z"/></g><g class="cb" transform="translate(0 -46)"><path class="ct" d="M100 40l60 30-60 30-60-30z"/><path class="cl" d="M40 70l60 30v52l-60-30z"/><path class="cr" d="M160 70l-60 30v52l60-30z"/></g><g class="cb" transform="translate(0 -92)"><path class="ct" d="M100 40l60 30-60 30-60-30z"/><path class="cl" d="M40 70l60 30v52l-60-30z"/><path class="cr" d="M160 70l-60 30v52l60-30z"/></g></svg>
+      </article>
+      <article class="sx-panel tone-cyan">
+        <div class="sx-text"><h3>Lanzamos</h3><p>Lo publico y quedo pendiente de cualquier ajuste.</p></div>
+        <svg class="sx-art" viewBox="0 -150 200 310" aria-hidden="true"><g class="cb" transform="translate(0 0)"><path class="ct" d="M100 40l60 30-60 30-60-30z"/><path class="cl" d="M40 70l60 30v52l-60-30z"/><path class="cr" d="M160 70l-60 30v52l60-30z"/></g><g class="cb" transform="translate(0 -46)"><path class="ct" d="M100 40l60 30-60 30-60-30z"/><path class="cl" d="M40 70l60 30v52l-60-30z"/><path class="cr" d="M160 70l-60 30v52l60-30z"/></g><g class="cb" transform="translate(0 -92)"><path class="ct" d="M100 40l60 30-60 30-60-30z"/><path class="cl" d="M40 70l60 30v52l-60-30z"/><path class="cr" d="M160 70l-60 30v52l60-30z"/></g><g class="cb" transform="translate(0 -138)"><path class="ct" d="M100 40l60 30-60 30-60-30z"/><path class="cl" d="M40 70l60 30v52l-60-30z"/><path class="cr" d="M160 70l-60 30v52l60-30z"/></g></svg>
+      </article>
+    </div>
+  </div>
 </section>
 
 <!-- ============ Cotizador ============ -->
-<section class="block wrap" id="cotizar">
+<section class="block wrap" id="cotizar" data-tone="#1c2023">
   <header class="sec-head">
     <h2 class="sec-title">Calcula el precio de tu proyecto</h2>
     <p class="sec-sub">Precios de lanzamiento. El valor final lo confirmamos al hablar.</p>
@@ -311,19 +309,17 @@
   </div>
 </section>
 
-<a class="band" href="#cotizar" data-dir="-1" aria-label="Cotiza aquí mismo">
-  <span class="band-track" aria-hidden="true" data-words="Expertise|Experience|Express|Hecho a la medida|Cotiza aquí mismo"></span>
-</a>
-
 <!-- ============ Contacto ============ -->
-<section class="contact wrap" id="contacto">
-  <svg id="logoEnd" aria-hidden="true"></svg>
-  <h2>¿Construimos lo tuyo?</h2>
-  <p>Escríbeme y te cuento cómo lo haría, cuánto tardaría y cuánto costaría.</p>
-  <div class="actions center">
-    <a class="btn btn-wa magnetic" href="https://wa.me/573204108873?text=Hola%20Junp3x%2C%20quiero%20hablar%20de%20un%20proyecto" target="_blank" rel="noopener noreferrer">Hablar por WhatsApp</a>
+<section class="contact" id="contacto" data-tone="#1c2023">
+  <div class="contact-in wrap">
+    <svg id="logoEnd" aria-hidden="true"></svg>
+    <h2>¿Construimos lo tuyo?</h2>
+    <p>Escríbeme y te cuento cómo lo haría, cuánto tardaría y cuánto costaría.</p>
+    <div class="actions center">
+      <a class="btn btn-wa magnetic" href="https://wa.me/573204108873?text=Hola%20Junp3x%2C%20quiero%20hablar%20de%20un%20proyecto" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>Hablar por WhatsApp</a>
+    </div>
+    <div class="mail"><a id="mailTxt" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=junp3x.contact@gmail.com&amp;su=Quiero%20cotizar%20un%20proyecto" target="_blank" rel="noopener noreferrer">junp3x.contact@gmail.com</a><button type="button" id="mailCopy">Copiar</button></div>
   </div>
-  <div class="mail"><a id="mailTxt" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=junp3x.contact@gmail.com&amp;su=Quiero%20cotizar%20un%20proyecto" target="_blank" rel="noopener noreferrer">junp3x.contact@gmail.com</a><button type="button" id="mailCopy">Copiar</button></div>
 </section>
 
 </main>
@@ -331,7 +327,7 @@
 <footer class="footer wrap">
   <p class="foot-mark" aria-hidden="true">Junp3x</p>
   <div class="foot-row">
-    <span>© 2026 Junp3x · Expertise · Experience · Express</span>
+    <span>© 2026 Junp3x</span>
     <button type="button" id="replay" class="linkish">Ver la entrada otra vez</button>
   </div>
 </footer>
@@ -362,6 +358,8 @@
   </form>
   <a class="chat-wa" id="chatWa" href="https://wa.me/573204108873?text=Hola%20Junp3x" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>Ir directo al chat de WhatsApp</a>
 </section>
+
+<div class="cursor" id="cursor" aria-hidden="true"><span></span></div>
 
 <!-- Íconos reutilizables -->
 <svg width="0" height="0" class="sprite" aria-hidden="true">
