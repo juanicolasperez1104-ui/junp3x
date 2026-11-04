@@ -3,10 +3,11 @@
 Sitio estático (HTML, CSS y JavaScript sin librerías externas) con un asistente de IA servido por una función propia.
 
 ## Diseño
-- Sobrio: solo títulos y texto breve; sin etiquetas sobre los títulos, sin numeraciones ni adornos.
-- Tipografía: Host Grotesk (títulos) + Geist (textos). Tamaños definidos una sola vez en `:root` de `css/styles.css`.
-- Recorrido por escenas: 3X en tarjetas de color que se apilan, la app de mantenimiento con pantallas que cambian al bajar, proyectos en un recorrido horizontal (cada uno con su color), muro de pantallas, servicios con vista previa que sigue al puntero, proceso en paneles de color que se deslizan y contacto en un bloque claro.
-- Movimiento: títulos que suben palabra por palabra, botones con texto que rueda y relleno de color, fondo que cambia de tono por sección, intro solo una vez por visita. Con "reducir movimiento" las escenas se muestran como una columna normal.
+- Sitio comercial: cada sección responde una duda del visitante y termina en una acción (cotizar, WhatsApp o ver un caso).
+- Recorrido: portada → soluciones (pestañas: problema, qué incluye, para quién, beneficio, ejemplo real) → software empresarial (app de mantenimiento) → proyectos en recorrido horizontal → demo del chatbot (pasos que saltan al momento del video) → por qué Junp3x (3X) → proceso con entregables → cotizador → preguntas frecuentes → cierre con tres pasos.
+- Tipografía: Host Grotesk (títulos), Geist (textos) y Geist Mono (datos técnicos y precios). Tamaños definidos una sola vez en `:root` de `css/styles.css`.
+- Movimiento: títulos que suben palabra por palabra, botones con texto que rueda y relleno de color, fondo que cambia de tono por sección, intro solo una vez por visita. Scroll nativo (sin inercia). Con "reducir movimiento" las escenas se muestran como una columna normal.
+- Contenido real: nada de clientes, cifras ni testimonios inventados. Los precios salen de `js/pricing.js`; el software empresarial se cotiza a la medida.
 
 ## Estructura
 - `index.html`: contenido de la página.
@@ -19,14 +20,15 @@ Sitio estático (HTML, CSS y JavaScript sin librerías externas) con un asistent
   - `intro.js` + `waves.js`: animación de entrada con la superficie de puntos en olas.
   - `ambient.js`: fondo con luces que emiten ondas.
   - `hero.js`: portada y terreno de cubos.
-  - `motion.js`: apariciones escalonadas, botones, menú y scroll suave.
-  - `scenes.js`: escenas guiadas por el scroll (3X, app, proyectos, muro, proceso), tono de fondo y cursor.
-  - `sections.js`: ficha de proyectos, video del asistente y contacto.
-  - `quote.js`: cotizador.
+  - `motion.js`: apariciones escalonadas, botones y menú.
+  - `scenes.js`: escenas guiadas por el scroll (app, proyectos, proceso), tono de fondo, menú activo y cursor.
+  - `sections.js`: pestañas de soluciones, fichas de caso, demo del chatbot y contacto.
+  - `quote.js`: cotizador con preguntas según el servicio.
   - `assistant.js`: chat con IA que se abre desde el botón del robot.
   - `robot.js`: el robot de cubos, cara del asistente (ojos que siguen el cursor y parpadean).
 - `functions/api/chat.js`: función del servidor (Cloudflare Pages) que habla con Claude.
-- `assets/`: imágenes, video y fuentes (`assets/fonts/`: Host Grotesk para títulos y Geist para textos, servidas desde el propio sitio).
+- `assets/`: imágenes (WebP con versión de 800 px para celular; los JPG originales se conservan), `og.jpg` para compartir, video y fuentes (`assets/fonts/`, servidas desde el propio sitio).
+- `robots.txt` y `sitemap.xml`: para buscadores. Los datos estructurados (servicio profesional) van en el `<head>` de `index.html`.
 - `_headers`: cabeceras de seguridad para el hosting.
 
 ## Activar el asistente de IA (Cloudflare Pages)

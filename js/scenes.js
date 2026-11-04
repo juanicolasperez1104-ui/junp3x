@@ -1,5 +1,5 @@
-// Escenas guiadas por el scroll: 3X que se apilan, app de mantenimiento, proyectos en horizontal,
-// muro de pantallas, vista previa de servicios, proceso en paneles, color de fondo y cursor.
+// Escenas guiadas por el scroll: app de mantenimiento, proyectos en horizontal,
+// proceso en paneles, color de fondo, menú activo y cursor.
 import { $, $$, reduce, fine, clamp01, onScroll, pointer } from './utils.js';
 
 const smooth = t => t * t * (3 - 2 * t);
@@ -13,25 +13,6 @@ const dwell = (seg, hold = .2) => {
   const k = Math.floor(seg), f = seg - k;
   return k + smooth(clamp01((f - hold) / (1 - hold * 2)));
 };
-
-/* ---------- 3X: cada tarjeta se encoge y oscurece cuando la siguiente la cubre ---------- */
-function stack() {
-  const cards = $$('.x3-card');
-  let tops = [];
-  const measure = () => { tops = cards.map(c => parseFloat(getComputedStyle(c).top) || 0); };
-  measure();
-  addEventListener('resize', measure);
-  onScroll(() => {
-    cards.forEach((card, i) => {
-      const next = cards[i + 1];
-      if (!next) return;
-      const y = next.getBoundingClientRect().top;
-      const p = clamp01((innerHeight - y) / Math.max(1, innerHeight - tops[i + 1]));
-      card.style.transform = `scale(${1 - p * .06})`;
-      card.style.setProperty('--dim', (p * .55).toFixed(3));
-    });
-  });
-}
 
 /* ---------- App: el celular cambia de pantalla y el texto acompaña cada paso ---------- */
 function app() {
@@ -96,17 +77,6 @@ function works() {
   });
 }
 
-/* ---------- Muro: dos filas de pantallas que corren en sentidos opuestos ---------- */
-function wall() {
-  const box = $('.wall'), rows = $$('.wall-row', box);
-  onScroll(() => {
-    const r = box.getBoundingClientRect();
-    if (r.bottom < -100 || r.top > innerHeight + 100) return;
-    const t = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
-    rows.forEach(row => { row.style.transform = `translate3d(calc(-50% + ${(t * 22 * row.dataset.dir).toFixed(2)}vw),0,0)`; });
-  });
-}
-
 /* ---------- Proceso: cada paso entra deslizándose sobre el anterior ---------- */
 function process() {
   const sec = $('#proceso'), panels = $$('.sx-panel', sec), n = panels.length;
@@ -127,30 +97,6 @@ function process() {
     panels[0].classList.add('on');
     io.disconnect();
   }, { threshold: .4 }).observe(panels[0]);
-}
-
-/* ---------- Servicios: una imagen sigue al puntero sobre cada fila ---------- */
-function preview() {
-  if (!fine) return;
-  const list = $('.services'), box = $('.svc-preview'), img = $('img', box);
-  let x = pointer.x, y = pointer.y, on = false, raf = 0;
-  const loop = () => {
-    const dx = pointer.x - x, dy = pointer.y - y;
-    x += dx * .14; y += dy * .14;
-    box.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) translate(-50%,-50%) rotate(${Math.max(-8, Math.min(8, dx * .05)).toFixed(2)}deg)`;
-    raf = on || Math.abs(dx) + Math.abs(dy) > .5 ? requestAnimationFrame(loop) : 0;
-  };
-  $$('li', list).forEach(li => li.addEventListener('pointerenter', () => {
-    if (img.getAttribute('src') !== li.dataset.img) {
-      img.src = li.dataset.img;
-      img.animate([{ scale: 1.25, opacity: .3 }, { scale: 1, opacity: 1 }], { duration: 600, easing: 'cubic-bezier(.23,1,.32,1)' });
-    }
-    if (!on) { x = pointer.x; y = pointer.y; }
-    on = true;
-    box.classList.add('on');
-    if (!raf) raf = requestAnimationFrame(loop);
-  }));
-  list.addEventListener('pointerleave', () => { on = false; box.classList.remove('on'); });
 }
 
 /* ---------- Color de fondo que cambia con cada sección ---------- */
@@ -196,7 +142,7 @@ export function initScenes() {
   tones();
   navSpy();
   // lo que recibe el foco del teclado aparece aunque su animación de entrada no haya corrido
-  document.addEventListener('focusin', e => e.target.closest('.rise, .slide, .work, .x3-card')?.classList.add('seen'));
+  document.addEventListener('focusin', e => e.target.closest('.rise, .work')?.classList.add('seen'));
   if (reduce) {
     // sin escenas: tocar cada paso de la app cambia la pantalla del celular
     const caps = $$('.app-caps li'), screens = $$('.scr');
@@ -207,11 +153,8 @@ export function initScenes() {
     return;
   }
   document.documentElement.classList.add('scenes');
-  stack();
   app();
   works();
-  wall();
   process();
-  preview();
   cursor();
 }

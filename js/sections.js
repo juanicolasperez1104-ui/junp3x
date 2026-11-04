@@ -1,54 +1,102 @@
-// Secciones con comportamiento propio: ficha de proyectos, video del asistente y contacto.
+// Secciones con comportamiento propio: soluciones, fichas de caso, demo del chatbot y contacto.
 import { $, $$, reduce } from './utils.js';
 import { buildLogo } from './logo.js';
+import { TYPES } from './pricing.js';
 
-/* ---------- Proyectos: ficha ampliada con transición desde la imagen ---------- */
+/* ---------- Proyectos: ficha del caso con transición desde la imagen ---------- */
+// Solo datos reales de cada proyecto: contexto, necesidad, solución y funcionalidades.
 const PROJECTS = {
   corp: {
     title: 'Corporación Tame Historia y Cultura',
-    text: 'Un viaje por cuatro siglos de historia de Tame. La corporación edita su contenido desde un panel propio y la comunidad puede enviar aportes.',
-    facts: [['Destacado', 'Reloj de bolsillo en 3D, puertas al tiempo, libros que giran y el sonido del cuatro llanero'], ['Tecnología', 'HTML, CSS, JavaScript, Three.js y Supabase, con dominio propio']],
+    context: 'Corporación cultural de Tame, Arauca, que guarda la historia del municipio.',
+    need: 'Contar cuatro siglos de historia de forma que atraiga a jóvenes y visitantes, y actualizar el contenido sin depender de un programador.',
+    solution: 'Un sitio inmersivo con dominio propio y un panel para editar el contenido; la comunidad también puede enviar aportes.',
+    features: ['Reloj de bolsillo en 3D', 'Línea de tiempo con puertas por épocas', 'Libros que giran y el sonido del cuatro llanero', 'Panel de edición y aportes de la comunidad'],
+    tech: 'HTML, CSS, JavaScript, Three.js y Supabase',
     link: 'https://corporaciontamehistoriaycultura.co/',
     quote: 'sitio',
   },
   pancita: {
     title: 'Pancita Llena',
-    text: 'El cliente arma su plato, lo agrega al carrito y el pedido llega completo al WhatsApp del restaurante.',
-    facts: [['Destacado', 'Carrito con total en tiempo real, pedido a la mesa o a domicilio'], ['Tecnología', 'HTML, CSS, JavaScript y GitHub Pages']],
+    context: 'Restaurante que recibe sus pedidos por WhatsApp.',
+    need: 'Tomar pedidos sin una cadena de mensajes para saber qué hay, cuánto vale y cómo lo quiere el cliente.',
+    solution: 'Un menú digital donde el cliente arma su plato y envía el pedido completo al WhatsApp del restaurante.',
+    features: ['Menú por categorías', 'Carrito con total en tiempo real', 'Pedido a la mesa o a domicilio', 'Mensaje de WhatsApp con el pedido listo'],
+    tech: 'HTML, CSS, JavaScript y GitHub Pages',
     link: 'https://juanicolasperez1104-ui.github.io/Pancita-llena/',
     quote: 'pedidos',
   },
   cacao: {
     title: 'Cacao Tame',
-    text: 'Acompaña al monumento del cacao en Tame, Arauca, y cuenta cómo el cultivo pasó del bosque a la exportación.',
-    facts: [['Destacado', 'Línea de tiempo con datos clave, incluida la Ley 2464 de 2025'], ['Tecnología', 'HTML, CSS, JavaScript y GitHub Pages']],
+    context: 'Sitio que acompaña al monumento del cacao en Tame, Arauca.',
+    need: 'Contar la historia del cultivo de forma clara y visual para cualquier visitante.',
+    solution: 'Un sitio con línea de tiempo que va del bosque a la exportación.',
+    features: ['Línea de tiempo con datos clave', 'Incluye la Ley 2464 de 2025', 'Diseño pensado para el celular'],
+    tech: 'HTML, CSS, JavaScript y GitHub Pages',
     link: 'https://juanicolasperez1104-ui.github.io/Cacao-tame/',
     quote: 'sitio',
+  },
+  hair: {
+    title: 'Team Hair · chatbot de citas',
+    context: 'Peluquería con varias sedes que atiende a sus clientes por WhatsApp.',
+    need: 'Responder disponibilidad, precios y horarios a cualquier hora sin perder clientes.',
+    solution: 'Un chatbot de WhatsApp que guía la cita paso a paso y avisa al negocio.',
+    features: ['Menú: citas, servicios, sedes y horarios, preguntas frecuentes y hablar con una persona', 'Agenda por sede, servicio, profesional, día y hora libre', 'Precio y duración de cada servicio', 'Recordatorio una hora antes y aviso al negocio', 'Cancelar o reprogramar libera el cupo'],
+    tech: 'WhatsApp, flujo de conversación y agenda',
+    img: 'assets/img/frame-21.webp',
+    quote: 'chatbot',
+  },
+  app: {
+    title: 'App de mantenimiento',
+    context: 'Empresa de mantenimiento de aire acondicionado con técnicos en campo.',
+    need: 'Dejar el papel: órdenes, fotos y firmas dispersas, y reportes armados a mano.',
+    solution: 'Una app web instalable: el técnico escanea el QR del equipo, llena el checklist, toma fotos y recoge la firma. La orden firmada queda en un PDF sellado.',
+    features: ['Equipos por código QR con hoja de vida', 'Checklist del preventivo', 'Fotos que se guardan sin señal y se suben solas', 'Firma del cliente y PDF que no se puede alterar', 'Reportes en Excel y PDF', 'Usuarios con roles, verificación en dos pasos y marca de cada empresa'],
+    tech: 'Next.js, Supabase y app instalable (PWA)',
+    quote: 'software',
   },
 };
 
 function projects() {
-  const dlg = $('#caseDlg'), artBox = $('#caseArt');
+  const dlg = $('#caseDlg'), artBox = $('#caseArt'), link = $('#caseLink'), quote = $('#caseQuote');
   const canVT = () => document.startViewTransition && !reduce;
   let source = null, bigArt = null;
+
+  const facts = d => [['Contexto', d.context], ['Necesidad', d.need], ['Solución', d.solution], ['Funcionalidades', d.features], ['Tecnología', d.tech]]
+    .flatMap(([k, v]) => {
+      const dt = document.createElement('dt'); dt.textContent = k;
+      const dd = document.createElement('dd');
+      if (Array.isArray(v)) {
+        const ul = document.createElement('ul');
+        ul.append(...v.map(t => { const li = document.createElement('li'); li.textContent = t; return li; }));
+        dd.append(ul);
+      } else dd.textContent = v;
+      return [dt, dd];
+    });
 
   const open = btn => {
     const d = PROJECTS[btn.dataset.proj];
     $('#caseTitle').textContent = d.title;
-    $('#caseText').textContent = d.text;
-    $('#caseFacts').replaceChildren(...d.facts.flatMap(([k, v]) => {
-      const dt = document.createElement('dt'); dt.textContent = k;
-      const dd = document.createElement('dd'); dd.textContent = v;
-      return [dt, dd];
-    }));
-    $('#caseLink').href = d.link;
-    $('#caseQuote').dataset.type = d.quote;
-    source = $('.work-media .main img', btn.closest('.work'));
-    bigArt = source.cloneNode(true);
-    bigArt.className = '';
-    bigArt.loading = 'eager';
+    $('#caseFacts').replaceChildren(...facts(d));
+    link.hidden = !d.link;
+    if (d.link) link.href = d.link;
+    quote.dataset.type = d.quote;
+    dlg.classList.toggle('case-tall', Boolean(d.img));
+    // la imagen del caso: la misma del panel (con transición) o una propia
+    const root = btn.closest('.work, .app');
+    source = d.img || !root ? null : $('[data-case-img]', root);
+    if (source) {
+      bigArt = source.cloneNode(true);
+      bigArt.removeAttribute('data-case-img');
+      bigArt.className = '';
+      bigArt.loading = 'eager';
+    } else {
+      bigArt = document.createElement('img');
+      bigArt.src = d.img;
+      bigArt.alt = '';
+    }
     artBox.replaceChildren(bigArt);
-    if (!canVT()) return dlg.showModal();
+    if (!canVT() || !source) return dlg.showModal();
     source.style.viewTransitionName = 'case-art';
     document.startViewTransition(() => {
       source.style.viewTransitionName = '';
@@ -72,22 +120,67 @@ function projects() {
   $$('[data-proj]').forEach(btn => {
     btn.addEventListener('click', () => open(btn));
     // la imagen del proyecto también abre la ficha
-    $('.work-media[data-cursor]', btn.closest('.work'))?.addEventListener('click', () => open(btn));
+    const work = btn.closest('.work');
+    if (work) $('.work-media[data-cursor]', work)?.addEventListener('click', () => open(btn));
   });
   $('#caseClose').addEventListener('click', close);
-  $('#caseQuote').addEventListener('click', () => dlg.close());
+  quote.addEventListener('click', () => dlg.close());
   dlg.addEventListener('click', e => { if (e.target === dlg) close(); });
   dlg.addEventListener('cancel', e => { e.preventDefault(); close(); });
 }
 
-/* ---------- Video del asistente: se reproduce solo cuando se ve ---------- */
+/* ---------- Soluciones: pestañas accesibles (clic, flechas, Inicio y Fin) ---------- */
+function solutions() {
+  const tabs = $$('.sol-tab'), panels = $$('.sol-panel');
+  // el "desde" de cada solución sale del mismo lugar que el cotizador
+  $$('[data-from]').forEach(el => { el.textContent = `Desde $${TYPES[el.dataset.from].base[0]} USD`; });
+  const select = (i, focus) => {
+    tabs.forEach((t, k) => {
+      const on = k === i;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      panels[k].hidden = !on;
+    });
+    if (focus) tabs[i].focus();
+    if (!reduce) panels[i].animate([{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'none' }], { duration: 600, easing: 'cubic-bezier(.23,1,.32,1)' });
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => select(i));
+    t.addEventListener('keydown', e => {
+      const n = tabs.length;
+      const to = { ArrowDown: i + 1, ArrowRight: i + 1, ArrowUp: i - 1, ArrowLeft: i - 1, Home: 0, End: n - 1 }[e.key];
+      if (to === undefined) return;
+      e.preventDefault();
+      select((to + n) % n, true);
+    });
+  });
+  panels.forEach((p, k) => { p.hidden = k !== 0; });
+}
+
+/* ---------- Demo del chatbot: el video se reproduce al verse y cada paso salta a su momento ---------- */
 function demo() {
-  const video = $('#demoVid'), bar = $('#vidProg');
+  const video = $('#demoVid'), bar = $('#vidProg'), steps = $$('#botSteps button');
+  const marks = steps.map(b => +b.dataset.t);
   if (reduce) video.controls = true;
   else new IntersectionObserver(([e]) => { e.isIntersecting ? video.play().catch(() => {}) : video.pause(); }, { threshold: .35 }).observe(video);
+  let cur = -1;
+  const mark = i => {
+    if (i === cur) return;
+    cur = i;
+    steps.forEach((b, k) => b.classList.toggle('on', k === i));
+  };
+  mark(0);
   video.addEventListener('timeupdate', () => {
     if (video.duration) bar.style.transform = `scaleX(${video.currentTime / video.duration})`;
+    let i = marks.length - 1;
+    while (i > 0 && video.currentTime < marks[i]) i--;
+    mark(i);
   });
+  steps.forEach((b, k) => b.addEventListener('click', () => {
+    mark(k);
+    video.currentTime = marks[k] + .05;
+    video.play().catch(() => {});
+  }));
 }
 
 /* ---------- Contacto: el logo se arma al llegar y se copia el correo ---------- */
@@ -122,6 +215,7 @@ function contact() {
 }
 
 export function initSections() {
+  solutions();
   projects();
   demo();
   contact();

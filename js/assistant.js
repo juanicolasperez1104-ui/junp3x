@@ -158,6 +158,8 @@ export function initAssistant() {
     ui.panel.addEventListener('pointerdown', () => { pinned = true; });
     ui.input.addEventListener('input', () => { pinned = true; });
   }
+  // botones de la página que invitan a probar el asistente
+  $$('[data-open-chat]').forEach(b => b.addEventListener('click', () => { pinned = true; setOpen(true); }));
   ui.close.addEventListener('click', () => setOpen(false));
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && ui.panel.classList.contains('open')) setOpen(false); });
   ui.form.addEventListener('submit', e => { e.preventDefault(); ask(ui.input.value); });

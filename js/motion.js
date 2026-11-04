@@ -1,4 +1,4 @@
-// Movimiento general: apariciones, botones, barra, menú y scroll suave.
+// Movimiento general: apariciones, botones, barra y menú.
 import { $, $$, reduce, fine, onceVisible, onScroll, svg } from './utils.js';
 
 /* ---------- Apariciones: títulos por palabras y bloques por partes ---------- */
@@ -18,7 +18,7 @@ function splitWords(el) {
 
 function reveals() {
   document.documentElement.classList.add('js');
-  $$('.sec-title, .contact h2, .x3-card h2, .work h2').forEach(splitWords);
+  $$('.sec-title, .contact h2, .work h2').forEach(splitWords);
 
   // cada parte de una sección entra con un pequeño retraso respecto a la anterior
   const parts = [];
@@ -34,10 +34,15 @@ function reveals() {
   stagger($$('.q-form, .q-result'));
   stagger($$('.app-copy > :not(.sec-title)'), 'rise', 2);
   stagger($$('.contact-in > *:not(h2)'));
-  // los servicios llegan deslizándose, uno desde cada lado
-  $$('.services > li').forEach((li, i) => li.style.setProperty('--side', i % 2 ? 1 : -1));
-  stagger($$('.services > li'), 'slide');
-  onceVisible([...parts, ...$$('.sec-title, .contact h2, .x3-card')], el => el.classList.add('seen'), '0px 0px -8% 0px');
+  stagger($$('.sol-tab'));
+  stagger($$('.sol-box > .sol-panel'), 'rise', 2);
+  stagger($$('.feats > li'));
+  stagger($$('.feats-note'));
+  stagger($$('.bot-copy > :not(.sec-title)'), 'rise', 1);
+  stagger($$('.bot-media'), 'rise', 2);
+  stagger($$('.x3-card'));
+  stagger($$('.faq-list > details'));
+  onceVisible([...parts, ...$$('.sec-title, .contact h2')], el => el.classList.add('seen'), '0px 0px -8% 0px');
 
   // el nombre del pie sube letra por letra
   const mark = $('.foot-mark');
@@ -107,34 +112,9 @@ function magnetic() {
   });
 }
 
-/* ---------- Scroll suave con inercia para la rueda del mouse ---------- */
-function smoothWheel() {
-  if (!fine || reduce) return;
-  let target = scrollY, current = scrollY, active = false;
-  const maxY = () => document.documentElement.scrollHeight - innerHeight;
-  const glide = () => {
-    current += (target - current) * .085;
-    if (Math.abs(target - current) < .5) { current = target; active = false; }
-    scrollTo({ top: current, behavior: 'instant' });
-    if (active) requestAnimationFrame(glide);
-  };
-  addEventListener('wheel', e => {
-    if (e.ctrlKey || e.defaultPrevented || document.body.style.overflow === 'hidden' || $('dialog[open]')) return;
-    e.preventDefault();
-    if (!active) target = current = scrollY;
-    const d = e.deltaMode === 1 ? e.deltaY * 40 : e.deltaMode === 2 ? e.deltaY * innerHeight : e.deltaY;
-    target = Math.max(0, Math.min(maxY(), target + d));
-    if (!active) { active = true; requestAnimationFrame(glide); }
-  }, { passive: false });
-  const stop = () => { active = false; };
-  addEventListener('keydown', stop);
-  addEventListener('pointerdown', stop);
-}
-
 export function initMotion() {
   buttons();
   reveals();
   chrome();
   magnetic();
-  smoothWheel();
 }
