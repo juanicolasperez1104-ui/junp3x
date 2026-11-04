@@ -1,5 +1,5 @@
 // Fondo vivo: tres luces suaves que derivan por la pantalla y emiten ondas finas, como gotas en agua quieta.
-import { reduce, CORAL, CYAN, rgba } from './utils.js';
+import { reduce, CORAL, CYAN, rgba } from './utils.js?v=20261104c';
 
 const MID = [185, 139, 156];
 const ORBS = [

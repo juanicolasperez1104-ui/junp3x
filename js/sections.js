@@ -1,6 +1,6 @@
 // Secciones con comportamiento propio: fichas de caso, demo del chatbot y contacto.
-import { $, $$, reduce } from './utils.js';
-import { buildLogo } from './logo.js';
+import { $, $$, reduce } from './utils.js?v=20261104c';
+import { buildLogo } from './logo.js?v=20261104c';
 
 /* ---------- Proyectos: ficha del caso con transición desde la imagen ---------- */
 // Solo datos reales de cada proyecto: contexto, necesidad, solución y funcionalidades.

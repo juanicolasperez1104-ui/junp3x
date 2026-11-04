@@ -1,5 +1,5 @@
 // Campo de puntos en perspectiva para la intro: se elevan y forman olas suaves, como una superficie de agua.
-import { mix } from './utils.js';
+import { mix } from './utils.js?v=20261104c';
 
 const HORIZON = .2;      // altura del horizonte (fracción de la pantalla)
 const CAM = .62;         // altura de la cámara sobre la superficie

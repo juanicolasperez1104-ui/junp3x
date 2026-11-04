@@ -1,6 +1,6 @@
 // Cotizador: calcula el rango de precio, hace preguntas según el servicio, dibuja el proyecto en vivo y arma el mensaje de WhatsApp.
-import { $, $$, reduce, svg, mix, shade, rgba } from './utils.js';
-import { WHATSAPP, TYPES, EXTRAS, PER_SECTION, RUSH } from './pricing.js';
+import { $, $$, reduce, svg, mix, shade, rgba } from './utils.js?v=20261104c';
+import { WHATSAPP, TYPES, EXTRAS, PER_SECTION, RUSH } from './pricing.js?v=20261104c';
 
 // Preguntas que cambian según el servicio: no mueven el precio, viajan en el resumen de WhatsApp
 const NEEDS = {

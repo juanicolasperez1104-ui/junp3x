@@ -1,8 +1,8 @@
 // Intro: el logo se arma cubo por cubo, se compila el </> y viaja a la barra.
-import { $, reduce } from './utils.js';
-import { buildLogo } from './logo.js';
-import { hideHero, showHero } from './hero.js';
-import { waveField } from './waves.js';
+import { $, reduce } from './utils.js?v=20261104c';
+import { buildLogo } from './logo.js?v=20261104c';
+import { hideHero, showHero } from './hero.js?v=20261104c';
+import { waveField } from './waves.js?v=20261104c';
 
 const EASE = 'cubic-bezier(.16,1,.3,1)';
 const SPRING = 'cubic-bezier(.22,1.25,.36,1)';

@@ -1,6 +1,6 @@
 // Portada: título que sube palabra por palabra, escenario con piezas reales y terreno de cubos vivo debajo.
-import { $, $$, reduce, fine, pointer, mix, shade, rgba, BG } from './utils.js';
-import { TYPES } from './pricing.js';
+import { $, $$, reduce, fine, pointer, mix, shade, rgba, BG } from './utils.js?v=20261104c';
+import { TYPES } from './pricing.js?v=20261104c';
 
 const EASE = 'cubic-bezier(.23,1,.32,1)';
 const headline = $('#headline');

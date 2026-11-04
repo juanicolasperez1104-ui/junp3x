@@ -1,9 +1,9 @@
 // Asistente con IA: se abre desde el botón de WhatsApp, responde dudas y precios,
 // y pasa la conversación a WhatsApp cuando la persona quiere hablar con Nicolás.
-import { $, $$, fine } from './utils.js';
-import { systemPrompt, cleanTurns, LIMITS } from './knowledge.js';
-import { waLink } from './pricing.js';
-import { buildRobot, followPointer } from './robot.js';
+import { $, $$, fine } from './utils.js?v=20261104c';
+import { systemPrompt, cleanTurns, LIMITS } from './knowledge.js?v=20261104c';
+import { waLink } from './pricing.js?v=20261104c';
+import { buildRobot, followPointer } from './robot.js?v=20261104c';
 
 const WELCOME = 'Hola, soy el asistente de Junp3x. Cuéntame qué necesita tu negocio y te doy un precio orientativo al instante.';
 const FALLBACK = 'Ahora mismo no puedo responder por aquí. Toca "Seguir por WhatsApp" y Nicolás te contesta en persona.';

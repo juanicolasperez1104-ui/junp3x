@@ -1,5 +1,5 @@
 // Logo Junp3x: triángulo "play" hecho de cubos isométricos con </> en el centro.
-import { svg, mix, shade, rgba } from './utils.js';
+import { svg, mix, shade, rgba } from './utils.js?v=20261104c';
 
 const S = 24; // tamaño de cada cubo en unidades del SVG
 
