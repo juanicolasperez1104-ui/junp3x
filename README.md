@@ -31,6 +31,10 @@ Sitio estático (HTML, CSS y JavaScript sin librerías externas) con un asistent
 - `robots.txt` y `sitemap.xml`: para buscadores. Los datos estructurados (servicio profesional) van en el `<head>` de `index.html`.
 - `_headers`: cabeceras de seguridad para el hosting.
 
+## Publicación
+- Cloudflare Pages publica solo desde GitHub: `main` → junp3x.com; cualquier otra rama → vista previa en `<rama>.junp3x.pages.dev`.
+- Si Cloudflare muestra "This project is disconnected from your Git account", no se publica nada nuevo: reconectar en Settings → Builds y dar acceso al repositorio `junp3x` a la app de GitHub "Cloudflare Workers and Pages".
+
 ## Activar el asistente de IA (Cloudflare Pages)
 **Opción gratuita (activa):** IA de Cloudflare (Workers AI, modelo Llama 3.3 70B).
 1. Cloudflare → Workers & Pages → proyecto `junp3x` → Settings → Bindings → Add → **Workers AI**.
