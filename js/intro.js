@@ -1,8 +1,9 @@
-// Intro: el logo se arma cubo por cubo, se compila el </> y viaja a la barra.
-import { $, reduce } from './utils.js?v=20261104c';
-import { buildLogo } from './logo.js?v=20261104c';
-import { hideHero, showHero } from './hero.js?v=20261104c';
-import { waveField } from './waves.js?v=20261104c';
+// Intro corta (unos 3 s): el logo se arma en una ráfaga de cubos, se enciende el </>,
+// aparece el nombre y el logo viaja a la barra.
+import { $, reduce } from './utils.js?v=20261104d';
+import { buildLogo } from './logo.js?v=20261104d';
+import { hideHero, showHero } from './hero.js?v=20261104d';
+import { waveField } from './waves.js?v=20261104d';
 
 const EASE = 'cubic-bezier(.16,1,.3,1)';
 const SPRING = 'cubic-bezier(.22,1.25,.36,1)';
@@ -31,11 +32,11 @@ function play() {
   hideHero();
 
   const push = a => (running.push(a), a);
-  const T0 = 700, STEP = 150, DUR = 1000, N = logo.groups.length;
+  const T0 = 120, STEP = 32, DUR = 560, N = logo.groups.length;
 
   // la superficie de puntos se eleva y ondula detrás del logo
   waves.start();
-  push(field.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 2200, easing: EASE, fill: 'both' }));
+  push(field.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 900, easing: EASE, fill: 'both' }));
   logoEl.style.transformOrigin = '50% 50%';
   push(logoEl.animate([{ transform: 'scale(.9)' }, { transform: 'none' }], { duration: T0 + N * STEP + DUR, easing: 'cubic-bezier(.3,0,.2,1)', fill: 'both' }));
 
@@ -50,34 +51,34 @@ function play() {
   });
 
   // una ola de luz recorre el triángulo cuando queda completo
-  const tSweep = T0 + (N - 1) * STEP + 220 + DUR - 250;
+  const tSweep = T0 + (N - 1) * STEP + 220 + DUR - 300;
   logo.groups.forEach((g, i) => push(g.animate(
     [{ filter: 'brightness(1)' }, { filter: 'brightness(1.55) saturate(1.2)', offset: .4 }, { filter: 'brightness(1)' }],
-    { duration: 650, delay: tSweep + i * 38, easing: 'ease-in-out' })));
+    { duration: 500, delay: tSweep + i * 18, easing: 'ease-in-out' })));
 
   later.forEach(clearTimeout);
   later.length = 0;
-  later.push(setTimeout(() => waves.pulse(.1), tSweep), setTimeout(() => waves.pulse(.06), tSweep + 1500));
+  later.push(setTimeout(() => waves.pulse(.1), tSweep), setTimeout(() => waves.pulse(.06), tSweep + 700));
 
   // el código se compila: < y > se abren desde el centro y / cae girando
-  const tCode = tSweep + N * 19;
+  const tCode = tSweep + N * 8;
   const [lt, sl, gt] = logo.chars;
   const adv = parseFloat(lt.getAttribute('font-size')) * .6;
   logo.core.style.transformBox = 'fill-box';
   logo.core.style.transformOrigin = 'center';
-  push(logo.core.animate([{ opacity: 0, transform: 'scale(.2)' }, { opacity: 1, transform: 'none' }], { duration: 1300, delay: tCode, easing: EASE, fill: 'both' }));
-  push(lt.animate([{ opacity: 0, transform: `translateX(${adv}px)` }, { opacity: 1, transform: 'none' }], { duration: 900, delay: tCode + 250, easing: EASE, fill: 'both' }));
-  push(gt.animate([{ opacity: 0, transform: `translateX(${-adv}px)` }, { opacity: 1, transform: 'none' }], { duration: 900, delay: tCode + 250, easing: EASE, fill: 'both' }));
-  push(sl.animate([{ opacity: 0, transform: 'translateY(-14px) rotate(-120deg) scale(.4)' }, { opacity: 1, transform: 'none' }], { duration: 900, delay: tCode + 450, easing: SPRING, fill: 'both' }));
+  push(logo.core.animate([{ opacity: 0, transform: 'scale(.2)' }, { opacity: 1, transform: 'none' }], { duration: 600, delay: tCode, easing: EASE, fill: 'both' }));
+  push(lt.animate([{ opacity: 0, transform: `translateX(${adv}px)` }, { opacity: 1, transform: 'none' }], { duration: 450, delay: tCode + 100, easing: EASE, fill: 'both' }));
+  push(gt.animate([{ opacity: 0, transform: `translateX(${-adv}px)` }, { opacity: 1, transform: 'none' }], { duration: 450, delay: tCode + 100, easing: EASE, fill: 'both' }));
+  push(sl.animate([{ opacity: 0, transform: 'translateY(-14px) rotate(-120deg) scale(.4)' }, { opacity: 1, transform: 'none' }], { duration: 500, delay: tCode + 180, easing: SPRING, fill: 'both' }));
 
   // nombre y lema
-  const tWord = tCode + 1150;
+  const tWord = tCode + 380;
   letters.forEach((l, i) => push(l.animate(
     [{ transform: 'translateY(70%)', opacity: 0, filter: 'blur(8px)' }, { transform: 'none', opacity: 1, filter: 'blur(0)' }],
-    { duration: 900, delay: tWord + i * 80, easing: EASE, fill: 'both' })));
-  push(slogan.animate([{ opacity: 0, letterSpacing: '.35em' }, { opacity: 1, letterSpacing: '.06em' }], { duration: 1200, delay: tWord + 650, easing: EASE, fill: 'both' }));
+    { duration: 600, delay: tWord + i * 40, easing: EASE, fill: 'both' })));
+  push(slogan.animate([{ opacity: 0, letterSpacing: '.35em' }, { opacity: 1, letterSpacing: '.06em' }], { duration: 700, delay: tWord + 260, easing: EASE, fill: 'both' }));
 
-  const total = tWord + 2500;
+  const total = tWord + 1150;
   clearTimeout(timer);
   timer = setTimeout(finish, total);
 }

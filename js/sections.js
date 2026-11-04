@@ -1,6 +1,6 @@
 // Secciones con comportamiento propio: fichas de caso, demo del chatbot y contacto.
-import { $, $$, reduce } from './utils.js?v=20261104c';
-import { buildLogo } from './logo.js?v=20261104c';
+import { $, $$, reduce, onScroll } from './utils.js?v=20261104d';
+import { buildLogo } from './logo.js?v=20261104d';
 
 /* ---------- Proyectos: ficha del caso con transición desde la imagen ---------- */
 // Solo datos reales de cada proyecto: contexto, necesidad, solución y funcionalidades.
@@ -110,29 +110,77 @@ function projects() {
 }
 
 /* ---------- Soluciones: pestañas accesibles (clic, flechas, Inicio y Fin) ---------- */
-/* ---------- Demo del chatbot: el video se reproduce al verse y cada paso salta a su momento ---------- */
+/* ---------- Demo del chatbot: sequence scrubbing ---------- */
+// Al bajar, la conversación de Team Hair avanza cuadro por cuadro (142 cuadros sacados
+// del video real, 3 por segundo). Subir la regresa. Cada paso de la lista salta a su momento.
+// Con "reducir movimiento" se muestra el video normal con sus controles.
+const SEQ = { count: 142, fps: 3, path: i => `assets/seq/bot/f${String(i + 1).padStart(3, '0')}.webp` };
 function demo() {
-  const video = $('#demoVid'), bar = $('#vidProg'), steps = $$('#botSteps button');
-  const marks = steps.map(b => +b.dataset.t);
-  if (reduce) video.controls = true;
-  else new IntersectionObserver(([e]) => { e.isIntersecting ? video.play().catch(() => {}) : video.pause(); }, { threshold: .35 }).observe(video);
+  const sec = $('#chatbots'), video = $('#demoVid'), canvas = $('#botSeq'), bar = $('#vidProg');
+  const steps = $$('#botSteps button'), marks = steps.map(b => +b.dataset.t);
   let cur = -1;
   const mark = i => {
     if (i === cur) return;
     cur = i;
     steps.forEach((b, k) => b.classList.toggle('on', k === i));
   };
+  const stepAt = t => { let i = marks.length - 1; while (i > 0 && t < marks[i]) i--; return i; };
   mark(0);
-  video.addEventListener('timeupdate', () => {
-    if (video.duration) bar.style.transform = `scaleX(${video.currentTime / video.duration})`;
-    let i = marks.length - 1;
-    while (i > 0 && video.currentTime < marks[i]) i--;
-    mark(i);
+
+  if (reduce) {
+    canvas.hidden = true;
+    video.controls = true;
+    video.preload = 'metadata';
+    video.addEventListener('timeupdate', () => mark(stepAt(video.currentTime)));
+    steps.forEach((b, k) => b.addEventListener('click', () => { video.currentTime = marks[k] + .05; video.play().catch(() => {}); }));
+    return;
+  }
+
+  sec.classList.add('seq');
+  video.remove();
+  const ctx = canvas.getContext('2d');
+  const frames = new Array(SEQ.count);
+  let shown = -1, want = 0;
+  const draw = () => {
+    // el cuadro pedido, o el último ya descargado antes de él
+    let i = want;
+    while (i > 0 && !frames[i]?.complete) i--;
+    if (i === shown || !frames[i]?.complete) return;
+    shown = i;
+    ctx.drawImage(frames[i], 0, 0, canvas.width, canvas.height);
+  };
+  const load = i => {
+    if (frames[i]) return;
+    const img = new Image();
+    img.decoding = 'async';
+    img.onload = () => { if (Math.abs(i - want) < 6 || shown < 0) draw(); };
+    img.src = SEQ.path(i);
+    frames[i] = img;
+  };
+  load(0);
+  // descarga el resto solo cuando la sección se acerca, primero cada 4 cuadros y luego los demás
+  new IntersectionObserver(([e], io) => {
+    if (!e.isIntersecting) return;
+    io.disconnect();
+    for (let i = 0; i < SEQ.count; i += 4) load(i);
+    setTimeout(() => { for (let i = 0; i < SEQ.count; i++) load(i); }, 400);
+  }, { rootMargin: '150% 0px' }).observe(sec);
+
+  const range = () => {
+    const r = sec.getBoundingClientRect();
+    return { top: r.top + scrollY, len: Math.max(1, r.height - innerHeight), p: Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - innerHeight))) };
+  };
+  onScroll(() => {
+    const { p } = range();
+    want = Math.round(p * (SEQ.count - 1));
+    draw();
+    bar.style.transform = `scaleX(${p.toFixed(4)})`;
+    mark(stepAt(want / SEQ.fps));
   });
   steps.forEach((b, k) => b.addEventListener('click', () => {
-    mark(k);
-    video.currentTime = marks[k] + .05;
-    video.play().catch(() => {});
+    const { top, len } = range();
+    const p = Math.min(1, (marks[k] * SEQ.fps + 1) / (SEQ.count - 1));
+    scrollTo({ top: top + p * len, behavior: 'smooth' });
   }));
 }
 

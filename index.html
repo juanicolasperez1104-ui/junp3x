@@ -23,8 +23,8 @@
 <link rel="preload" href="assets/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/img/corp-viaje.webp" imagesrcset="assets/img/corp-viaje-800.webp 800w, assets/img/corp-viaje.webp 1600w" imagesizes="(max-width:820px) 92vw, 52vw" fetchpriority="high">
-<link rel="stylesheet" href="css/styles.css?v=20261104c">
-<script type="module" src="js/main.js?v=20261104c"></script>
+<link rel="stylesheet" href="css/styles.css?v=20261104d">
+<script type="module" src="js/main.js?v=20261104d"></script>
 <!-- Datos estructurados para buscadores (no se ejecutan) -->
 <script type="application/ld+json">
 {
@@ -110,7 +110,7 @@
 </section>
 
 <!-- ============ Proyectos: vitrina a pantalla completa (se desliza y cambia sola cada 25 s) ============ -->
-<section class="works" id="proyectos" data-tone="#0b0f1c" aria-label="Proyectos">
+<section class="works sheet" id="proyectos" data-tone="#0b0f1c" aria-label="Proyectos">
   <div class="works-pin">
     <div class="works-track">
 
@@ -173,33 +173,36 @@
   </div>
 </dialog>
 
-<!-- ============ Chatbots: demo guiada con el caso Team Hair ============ -->
-<section class="bot" id="chatbots" data-tone="#0b1d15">
-  <div class="bot-in">
-    <div class="bot-copy">
-      <h2 class="sec-title">Así atiende un chatbot de Junp3x</h2>
-      <p class="sec-sub">Caso Team Hair: el cliente agenda su cita por WhatsApp sin esperar a nadie. Toca un paso para verlo.</p>
-      <ol class="bot-steps" id="botSteps">
-        <li><button type="button" data-t="0"><b>Saluda y ofrece opciones</b></button></li>
-        <li><button type="button" data-t="3"><b>Elige sede y servicio</b></button></li>
-        <li><button type="button" data-t="12"><b>Elige profesional, día y hora</b></button></li>
-        <li><button type="button" data-t="24"><b>Confirma la cita</b></button></li>
-        <li><button type="button" data-t="30"><b>Recuerda y avisa</b></button></li>
-        <li><button type="button" data-t="39"><b>Cancela o reprograma</b></button></li>
-      </ol>
-      <div class="actions"><a class="btn btn-main" href="#cotizar" data-type="chatbot">Quiero uno para mi negocio</a><button class="btn btn-ghost" type="button" data-open-chat>Probar el asistente de esta página</button></div>
-    </div>
-    <div class="bot-media">
-      <div class="phone">
-        <video id="demoVid" src="assets/video/demo-chatbot.mp4" poster="assets/video/demo-poster.jpg" muted playsinline loop preload="metadata" aria-label="Video del chatbot de Team Hair agendando una cita"></video>
-        <div class="phone-time"><i id="vidProg"></i></div>
+<!-- ============ Chatbots: al bajar, la conversación avanza cuadro por cuadro (sequence scrubbing) ============ -->
+<section class="bot sheet" id="chatbots" data-tone="#0b1d15">
+  <div class="bot-pin">
+    <div class="bot-in">
+      <div class="bot-copy">
+        <h2 class="sec-title">Así atiende un chatbot de Junp3x</h2>
+        <p class="sec-sub">Caso Team Hair: el cliente agenda su cita por WhatsApp sin esperar a nadie.</p>
+        <ol class="bot-steps" id="botSteps">
+          <li><button type="button" data-t="0"><b>Saluda y ofrece opciones</b></button></li>
+          <li><button type="button" data-t="3"><b>Elige sede y servicio</b></button></li>
+          <li><button type="button" data-t="12"><b>Elige profesional, día y hora</b></button></li>
+          <li><button type="button" data-t="24"><b>Confirma la cita</b></button></li>
+          <li><button type="button" data-t="30"><b>Recuerda y avisa</b></button></li>
+          <li><button type="button" data-t="39"><b>Cancela o reprograma</b></button></li>
+        </ol>
+      </div>
+      <div class="bot-media">
+        <div class="phone">
+          <canvas id="botSeq" width="480" height="800" role="img" aria-label="Conversación del chatbot de Team Hair agendando una cita"></canvas>
+          <video id="demoVid" src="assets/video/demo-chatbot.mp4" poster="assets/video/demo-poster.jpg" muted playsinline loop preload="none" aria-label="Video del chatbot de Team Hair agendando una cita"></video>
+          <div class="phone-time"><i id="vidProg"></i></div>
+        </div>
       </div>
     </div>
   </div>
+  <div class="actions bot-after"><a class="btn btn-main" href="#cotizar" data-type="chatbot">Quiero uno para mi negocio</a><button class="btn btn-ghost" type="button" data-open-chat>Probar el asistente de esta página</button></div>
 </section>
 
 <!-- ============ Por qué Junp3x: las 3X ============ -->
-<section class="block wrap why" id="tresx" data-tone="#1c2023">
+<section class="block wrap why sheet" id="tresx" data-tone="#1c2023">
   <header class="sec-head">
     <h2 class="sec-title">Por qué trabajar con Junp3x</h2>
   </header>
@@ -254,32 +257,48 @@
 </section>
 
 <!-- ============ Proceso: cuatro pasos que aparecen al bajar ============ -->
-<section class="process" id="proceso" data-tone="#1c2023">
+<section class="process sheet" id="proceso" data-tone="#1c2023">
   <div class="sx-pin">
     <h2 class="sec-title sx-title">De la idea al lanzamiento</h2>
     <div class="sx-stage">
       <article class="sx-panel tone-coral">
         <div class="sx-text"><h3>Conversamos</h3><p>Nos cuentas tu negocio y qué quieres lograr, por WhatsApp o correo.</p></div>
-        <svg class="sx-art" viewBox="0 -150 200 310" aria-hidden="true"><g class="cb" transform="translate(0 0)"><path class="ct" d="M100 40l60 30-60 30-60-30z"/><path class="cl" d="M40 70l60 30v52l-60-30z"/><path class="cr" d="M160 70l-60 30v52l60-30z"/></g></svg>
+        <svg class="sx-art art-talk" viewBox="0 0 240 240" aria-hidden="true">
+          <g class="bub b1"><rect x="16" y="34" width="156" height="66" rx="24"/><path d="M44 98l-8 22 26-22"/><circle class="dot" cx="66" cy="67" r="8"/><circle class="dot" cx="94" cy="67" r="8"/><circle class="dot" cx="122" cy="67" r="8"/></g>
+          <g class="bub b2"><rect x="68" y="130" width="156" height="66" rx="24"/><path d="M196 194l8 22-26-22"/><rect class="ln" x="92" y="152" width="108" height="9" rx="4.5"/><rect class="ln l2" x="92" y="169" width="70" height="9" rx="4.5"/></g>
+        </svg>
       </article>
       <article class="sx-panel tone-mid">
         <div class="sx-text"><h3>Diseñamos</h3><p>Ves cómo va a quedar antes de programar.</p></div>
-        <svg class="sx-art" viewBox="0 -150 200 310" aria-hidden="true"><g class="cb" transform="translate(0 0)"><path class="ct" d="M100 40l60 30-60 30-60-30z"/><path class="cl" d="M40 70l60 30v52l-60-30z"/><path class="cr" d="M160 70l-60 30v52l60-30z"/></g><g class="cb" transform="translate(0 -46)"><path class="ct" d="M100 40l60 30-60 30-60-30z"/><path class="cl" d="M40 70l60 30v52l-60-30z"/><path class="cr" d="M160 70l-60 30v52l60-30z"/></g></svg>
+        <svg class="sx-art art-design" viewBox="0 0 240 240" aria-hidden="true">
+          <rect class="frm" x="14" y="28" width="212" height="164" rx="16"/><path class="frm-bar" d="M14 54h212"/>
+          <rect class="blk k1" x="32" y="70" width="176" height="44" rx="8"/><rect class="blk k2" x="32" y="126" width="82" height="48" rx="8"/><rect class="blk k3" x="126" y="126" width="82" height="48" rx="8"/>
+          <rect class="sel" x="122" y="122" width="90" height="56" rx="10"/>
+          <path class="cur" d="M0 0v30l8-8 6 14 6-3-6-13h11z"/>
+        </svg>
       </article>
       <article class="sx-panel tone-sky">
         <div class="sx-text"><h3>Construimos</h3><p>Programamos y probamos en celular y computador.</p></div>
-        <svg class="sx-art" viewBox="0 -150 200 310" aria-hidden="true"><g class="cb" transform="translate(0 0)"><path class="ct" d="M100 40l60 30-60 30-60-30z"/><path class="cl" d="M40 70l60 30v52l-60-30z"/><path class="cr" d="M160 70l-60 30v52l60-30z"/></g><g class="cb" transform="translate(0 -46)"><path class="ct" d="M100 40l60 30-60 30-60-30z"/><path class="cl" d="M40 70l60 30v52l-60-30z"/><path class="cr" d="M160 70l-60 30v52l60-30z"/></g><g class="cb" transform="translate(0 -92)"><path class="ct" d="M100 40l60 30-60 30-60-30z"/><path class="cl" d="M40 70l60 30v52l-60-30z"/><path class="cr" d="M160 70l-60 30v52l60-30z"/></g></svg>
+        <svg class="sx-art art-build" viewBox="0 0 240 240" aria-hidden="true">
+          <g class="cube c1"><path class="ct" d="M120 150l44 22-44 22-44-22z"/><path class="cl" d="M76 172l44 22v40l-44-22z"/><path class="cr" d="M164 172l-44 22v40l44-22z"/></g>
+          <g class="cube c2"><path class="ct" d="M120 110l44 22-44 22-44-22z"/><path class="cl" d="M76 132l44 22v40l-44-22z"/><path class="cr" d="M164 132l-44 22v40l44-22z"/></g>
+          <g class="cube c3"><path class="ct" d="M120 70l44 22-44 22-44-22z"/><path class="cl" d="M76 92l44 22v40l-44-22z"/><path class="cr" d="M164 92l-44 22v40l44-22z"/></g>
+          <g class="code"><path d="M44 30l-22 20 22 20"/><path d="M196 30l22 20-22 20"/><path class="sl" d="M132 22l-24 56"/></g>
+        </svg>
       </article>
       <article class="sx-panel tone-cyan">
         <div class="sx-text"><h3>Lanzamos</h3><p>Publicamos en tu dominio y quedamos pendientes.</p></div>
-        <svg class="sx-art" viewBox="0 -150 200 310" aria-hidden="true"><g class="cb" transform="translate(0 0)"><path class="ct" d="M100 40l60 30-60 30-60-30z"/><path class="cl" d="M40 70l60 30v52l-60-30z"/><path class="cr" d="M160 70l-60 30v52l60-30z"/></g><g class="cb" transform="translate(0 -46)"><path class="ct" d="M100 40l60 30-60 30-60-30z"/><path class="cl" d="M40 70l60 30v52l-60-30z"/><path class="cr" d="M160 70l-60 30v52l60-30z"/></g><g class="cb" transform="translate(0 -92)"><path class="ct" d="M100 40l60 30-60 30-60-30z"/><path class="cl" d="M40 70l60 30v52l-60-30z"/><path class="cr" d="M160 70l-60 30v52l60-30z"/></g><g class="cb" transform="translate(0 -138)"><path class="ct" d="M100 40l60 30-60 30-60-30z"/><path class="cl" d="M40 70l60 30v52l-60-30z"/><path class="cr" d="M160 70l-60 30v52l60-30z"/></g></svg>
+        <svg class="sx-art art-launch" viewBox="0 0 240 240" aria-hidden="true">
+          <g class="stars"><circle cx="40" cy="40" r="3"/><circle cx="200" cy="60" r="2.5"/><circle cx="60" cy="150" r="2"/><circle cx="190" cy="170" r="3"/><circle cx="120" cy="24" r="2"/></g>
+          <g class="rocket"><g class="trail"><rect x="111" y="168" width="6" height="40" rx="3"/><rect x="123" y="168" width="6" height="56" rx="3"/></g><path class="fin" d="M98 128l-18 30 22-6z"/><path class="fin" d="M142 128l18 30-22-6z"/><path class="body" d="M120 34c22 18 30 52 24 118H96c-6-66 2-100 24-118z"/><circle class="win" cx="120" cy="88" r="12"/></g>
+        </svg>
       </article>
     </div>
   </div>
 </section>
 
 <!-- ============ Cotizador ============ -->
-<section class="block wrap" id="cotizar" data-tone="#1c2023">
+<section class="block wrap sheet" id="cotizar" data-tone="#1c2023">
   <header class="sec-head">
     <h2 class="sec-title">Calcula el estimado de tu proyecto</h2>
     <p class="sec-sub">Responde unas preguntas y envía el resumen por WhatsApp.</p>
@@ -337,7 +356,7 @@
 </section>
 
 <!-- ============ Preguntas frecuentes ============ -->
-<section class="block wrap faq" id="preguntas" data-tone="#1c2023">
+<section class="block wrap faq sheet" id="preguntas" data-tone="#1c2023">
   <header class="sec-head">
     <h2 class="sec-title">Preguntas frecuentes</h2>
   </header>

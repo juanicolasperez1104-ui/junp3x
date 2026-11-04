@@ -1,6 +1,6 @@
 // Escenas: vitrina de proyectos (deslizar o arrastrar, cambio automático), proceso que
 // aparece al bajar, color de fondo, menú activo y cursor. Nada depende de la rueda del mouse.
-import { $, $$, reduce, fine, pointer } from './utils.js?v=20261104c';
+import { $, $$, reduce, fine, pointer } from './utils.js?v=20261104d';
 
 /* ---------- Proyectos: vitrina a pantalla completa ---------- */
 // Se desliza con el dedo (o arrastrando con el mouse) y, si nadie la toca, pasa sola

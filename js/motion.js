@@ -1,5 +1,5 @@
 // Movimiento general: apariciones, botones, barra y menú.
-import { $, $$, reduce, fine, onceVisible, onScroll, svg } from './utils.js?v=20261104c';
+import { $, $$, reduce, fine, onceVisible, onScroll, svg } from './utils.js?v=20261104d';
 
 /* ---------- Apariciones: títulos por palabras y bloques por partes ---------- */
 function splitWords(el) {
