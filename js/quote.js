@@ -192,13 +192,13 @@ function shortcuts() {
   });
 
   const dock = $('#qdock');
-  const zones = { hero: true, quote: false, contact: false, works: false, bot: false, sol: false };
+  const zones = { hero: true, quote: false, contact: false, works: false, bot: false };
   const dockIO = new IntersectionObserver(entries => {
     entries.forEach(e => { zones[e.target.dataset.zone] = e.isIntersecting; });
     dock.classList.toggle('show', !Object.values(zones).some(Boolean));
   }, { rootMargin: '-15% 0px -15% 0px' });
-  // soluciones, los proyectos y la demo del chatbot ya tienen sus propios botones
-  [['hero', 'inicio'], ['quote', 'cotizar'], ['contact', 'contacto'], ['works', 'proyectos'], ['bot', 'chatbots'], ['sol', 'soluciones']].forEach(([zone, id]) => {
+  // los proyectos y la demo del chatbot ya tienen sus propios botones
+  [['hero', 'inicio'], ['quote', 'cotizar'], ['contact', 'contacto'], ['works', 'proyectos'], ['bot', 'chatbots']].forEach(([zone, id]) => {
     const section = document.getElementById(id);
     section.dataset.zone = zone;
     dockIO.observe(section);

@@ -33,8 +33,6 @@ function reveals() {
   });
   stagger($$('.q-form, .q-result'));
   stagger($$('.contact-in > *:not(h2)'));
-  stagger($$('.sol-tab'));
-  stagger($$('.sol-box > .sol-panel'), 'rise', 2);
   stagger($$('.bot-copy > :not(.sec-title)'), 'rise', 1);
   stagger($$('.bot-media'), 'rise', 2);
   stagger($$('.x3-card'));

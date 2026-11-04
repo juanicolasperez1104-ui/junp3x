@@ -1,7 +1,6 @@
-// Secciones con comportamiento propio: soluciones, fichas de caso, demo del chatbot y contacto.
+// Secciones con comportamiento propio: fichas de caso, demo del chatbot y contacto.
 import { $, $$, reduce } from './utils.js';
 import { buildLogo } from './logo.js';
-import { TYPES } from './pricing.js';
 
 /* ---------- Proyectos: ficha del caso con transición desde la imagen ---------- */
 // Solo datos reales de cada proyecto: contexto, necesidad, solución y funcionalidades.
@@ -111,33 +110,6 @@ function projects() {
 }
 
 /* ---------- Soluciones: pestañas accesibles (clic, flechas, Inicio y Fin) ---------- */
-function solutions() {
-  const tabs = $$('.sol-tab'), panels = $$('.sol-panel');
-  // el "desde" de cada solución sale del mismo lugar que el cotizador
-  $$('[data-from]').forEach(el => { el.textContent = `Desde $${TYPES[el.dataset.from].base[0]} USD`; });
-  const select = (i, focus) => {
-    tabs.forEach((t, k) => {
-      const on = k === i;
-      t.setAttribute('aria-selected', String(on));
-      t.tabIndex = on ? 0 : -1;
-      panels[k].hidden = !on;
-    });
-    if (focus) tabs[i].focus();
-    if (!reduce) panels[i].animate([{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'none' }], { duration: 600, easing: 'cubic-bezier(.23,1,.32,1)' });
-  };
-  tabs.forEach((t, i) => {
-    t.addEventListener('click', () => select(i));
-    t.addEventListener('keydown', e => {
-      const n = tabs.length;
-      const to = { ArrowDown: i + 1, ArrowRight: i + 1, ArrowUp: i - 1, ArrowLeft: i - 1, Home: 0, End: n - 1 }[e.key];
-      if (to === undefined) return;
-      e.preventDefault();
-      select((to + n) % n, true);
-    });
-  });
-  panels.forEach((p, k) => { p.hidden = k !== 0; });
-}
-
 /* ---------- Demo del chatbot: el video se reproduce al verse y cada paso salta a su momento ---------- */
 function demo() {
   const video = $('#demoVid'), bar = $('#vidProg'), steps = $$('#botSteps button');
@@ -196,7 +168,6 @@ function contact() {
 }
 
 export function initSections() {
-  solutions();
   projects();
   demo();
   contact();

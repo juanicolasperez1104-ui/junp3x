@@ -1,35 +1,35 @@
-// Escenas: proyectos en carrusel (deslizar o botones), proceso que aparece al bajar,
-// color de fondo, menú activo y cursor. Nada depende de la rueda del mouse: en el
-// celular todo se maneja con el dedo o con botones.
+// Escenas: vitrina de proyectos (deslizar o arrastrar, cambio automático), proceso que
+// aparece al bajar, color de fondo, menú activo y cursor. Nada depende de la rueda del mouse.
 import { $, $$, reduce, fine, pointer } from './utils.js';
 
-/* ---------- Proyectos: carrusel horizontal con deslizamiento, flechas y puntos ---------- */
+/* ---------- Proyectos: vitrina a pantalla completa ---------- */
+// Se desliza con el dedo (o arrastrando con el mouse) y, si nadie la toca, pasa sola
+// al siguiente proyecto cada 25 s. Cada capa se mueve a otra velocidad al cambiar.
+const AUTO_MS = 25000;
 function works() {
-  const sec = $('#proyectos'), track = $('.works-track', sec), panels = $$('.work', sec);
-  const prev = $('#worksPrev'), next = $('#worksNext'), dotsBox = $('#worksDots');
-  let cur = -1, raf = 0, inView = false;
-
-  const dots = panels.map((w, i) => {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.setAttribute('aria-label', `Ver ${$('h2', w).textContent}`);
-    b.addEventListener('click', () => go(i));
-    return b;
-  });
-  dotsBox.append(...dots);
+  const sec = $('#proyectos'), track = $('.works-track', sec), panels = $$('.work', sec), timer = $('#worksTimer');
+  let cur = -1, raf = 0, inView = false, clock = 0, anim = null;
 
   const go = i => {
-    const k = Math.max(0, Math.min(panels.length - 1, i));
+    const k = (i + panels.length) % panels.length;
     track.scrollTo({ left: panels[k].offsetLeft, behavior: reduce ? 'instant' : 'smooth' });
   };
-  prev.addEventListener('click', () => go(cur - 1));
-  next.addEventListener('click', () => go(cur + 1));
+
+  // cuenta regresiva visible como una línea fina; se reinicia con cada cambio
+  const restart = () => {
+    clearTimeout(clock);
+    anim?.cancel();
+    if (reduce || !inView || document.hidden) return;
+    anim = timer.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: AUTO_MS, easing: 'linear', fill: 'forwards' });
+    clock = setTimeout(() => go(cur + 1), AUTO_MS);
+  };
+
   sec.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight') { e.preventDefault(); go(cur + 1); }
     if (e.key === 'ArrowLeft') { e.preventDefault(); go(cur - 1); }
   });
 
-  // marca el proyecto visible y mueve un poco cada capa según qué tan centrado está
+  // marca el proyecto visible y desplaza cada capa según qué tan centrado está
   const paint = () => {
     raf = 0;
     const x = track.scrollLeft, w = track.clientWidth || 1;
@@ -41,18 +41,51 @@ function works() {
     });
     if (idx === cur) return;
     cur = idx;
-    dots.forEach((d, i) => d.setAttribute('aria-current', i === idx ? 'true' : 'false'));
     panels.forEach((p, i) => p.toggleAttribute('inert', i !== idx));
-    prev.disabled = idx === 0;
-    next.disabled = idx === panels.length - 1;
+    restart();
   };
-  track.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(paint); }, { passive: true });
+  // mientras se desliza, las piezas siguen al dedo sin retraso
+  let idle = 0;
+  track.addEventListener('scroll', () => {
+    if (!raf) raf = requestAnimationFrame(paint);
+    track.classList.add('moving');
+    clearTimeout(idle);
+    idle = setTimeout(() => track.classList.remove('moving'), 160);
+  }, { passive: true });
   addEventListener('resize', () => { cur = -1; paint(); });
+  document.addEventListener('visibilitychange', restart);
   paint();
-  // el texto del proyecto entra cuando el carrusel llega a la pantalla
-  new IntersectionObserver(([e]) => { inView = e.isIntersecting; if (inView) paint(); }, { threshold: .35 }).observe(track);
+  new IntersectionObserver(([e]) => { inView = e.isIntersecting; if (inView) paint(); restart(); }, { threshold: .35 }).observe(track);
 
-  // con el puntero: la ventana del proyecto se inclina unos grados hacia él
+  // con el mouse: arrastrar de lado a lado, como con el dedo
+  let drag = null;
+  track.addEventListener('pointerdown', e => {
+    if (e.pointerType !== 'mouse' || e.button !== 0 || e.target.closest('a, button')) return;
+    e.preventDefault(); // sin esto el navegador arrastra la imagen en vez del carrusel
+    drag = { x: e.clientX, left: track.scrollLeft, moved: false };
+    track.classList.add('dragging');
+  });
+  addEventListener('pointermove', e => {
+    if (!drag) return;
+    const dx = e.clientX - drag.x;
+    if (Math.abs(dx) > 4) drag.moved = true;
+    track.scrollLeft = drag.left - dx;
+  });
+  track.addEventListener('dragstart', e => e.preventDefault());
+  const release = e => {
+    if (!drag) return;
+    const dx = e.clientX - drag.x, w = track.clientWidth;
+    track.classList.remove('dragging');
+    const base = Math.round(drag.left / w);
+    go(Math.abs(dx) > w * .12 ? base + (dx < 0 ? 1 : -1) : base);
+    // un arrastre no abre la ficha del proyecto
+    if (drag.moved) track.addEventListener('click', ev => ev.stopPropagation(), { capture: true, once: true });
+    drag = null;
+  };
+  addEventListener('pointerup', release);
+  addEventListener('pointercancel', release);
+
+  // con el puntero fino: la ventana del proyecto se inclina unos grados hacia él
   if (!fine || reduce) return;
   $$('.work-media', sec).forEach(m => {
     m.addEventListener('pointermove', e => {
