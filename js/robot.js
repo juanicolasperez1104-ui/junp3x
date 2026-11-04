@@ -1,5 +1,5 @@
 // Robot de Junp3x: la cara del asistente. Un cubo con pantalla, ojos que miran el cursor y parpadean.
-import { svg, reduce } from './utils.js?v=20261104d';
+import { svg, reduce } from './utils.js?v=20261104e';
 
 let gazers = [];
 

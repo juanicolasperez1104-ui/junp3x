@@ -1,9 +1,9 @@
 // Asistente con IA: se abre desde el botón de WhatsApp, responde dudas y precios,
 // y pasa la conversación a WhatsApp cuando la persona quiere hablar con Nicolás.
-import { $, $$, fine } from './utils.js?v=20261104d';
-import { systemPrompt, cleanTurns, LIMITS } from './knowledge.js?v=20261104d';
-import { waLink } from './pricing.js?v=20261104d';
-import { buildRobot, followPointer } from './robot.js?v=20261104d';
+import { $, $$, fine } from './utils.js?v=20261104e';
+import { systemPrompt, cleanTurns, LIMITS } from './knowledge.js?v=20261104e';
+import { waLink } from './pricing.js?v=20261104e';
+import { buildRobot, followPointer } from './robot.js?v=20261104e';
 
 const WELCOME = 'Hola, soy el asistente de Junp3x. Cuéntame qué necesita tu negocio y te doy un precio orientativo al instante.';
 const FALLBACK = 'Ahora mismo no puedo responder por aquí. Toca "Seguir por WhatsApp" y Nicolás te contesta en persona.';
@@ -143,7 +143,7 @@ export function initAssistant() {
   if (fine) {
     // se abre solo cuando el cursor se mueve sobre el botón (no si el botón aparece bajo un cursor quieto)
     ui.toggle.addEventListener('pointermove', () => {
-      if (isOpen() || hoverTimer || !$('#intro').hidden) return;
+      if (isOpen() || hoverTimer) return;
       hoverTimer = setTimeout(() => { hoverTimer = 0; setOpen(true); }, 140);
     });
     const stay = () => { clearTimeout(hoverTimer); hoverTimer = 0; };

@@ -1,6 +1,6 @@
 // Escenas: vitrina de proyectos (deslizar o arrastrar, cambio automático), proceso que
 // aparece al bajar, color de fondo, menú activo y cursor. Nada depende de la rueda del mouse.
-import { $, $$, reduce, fine, pointer } from './utils.js?v=20261104d';
+import { $, $$, reduce, fine, pointer } from './utils.js?v=20261104e';
 
 /* ---------- Proyectos: vitrina a pantalla completa ---------- */
 // Se desliza con el dedo (o arrastrando con el mouse) y, si nadie la toca, pasa sola
@@ -85,16 +85,6 @@ function works() {
   addEventListener('pointerup', release);
   addEventListener('pointercancel', release);
 
-  // con el puntero fino: la ventana del proyecto se inclina unos grados hacia él
-  if (!fine || reduce) return;
-  $$('.work-media', sec).forEach(m => {
-    m.addEventListener('pointermove', e => {
-      const r = m.getBoundingClientRect();
-      m.style.setProperty('--ry', `${((e.clientX - r.left) / r.width - .5) * 5}deg`);
-      m.style.setProperty('--rx', `${(.5 - (e.clientY - r.top) / r.height) * 4}deg`);
-    });
-    m.addEventListener('pointerleave', () => { m.style.setProperty('--rx', '0deg'); m.style.setProperty('--ry', '0deg'); });
-  });
 }
 
 /* ---------- Proceso: cada paso entra al llegar a él y se apila sobre el anterior ---------- */

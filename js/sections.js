@@ -1,6 +1,6 @@
 // Secciones con comportamiento propio: fichas de caso, demo del chatbot y contacto.
-import { $, $$, reduce, onScroll } from './utils.js?v=20261104d';
-import { buildLogo } from './logo.js?v=20261104d';
+import { $, $$, reduce } from './utils.js?v=20261104e';
+import { buildLogo } from './logo.js?v=20261104e';
 
 /* ---------- Proyectos: ficha del caso con transición desde la imagen ---------- */
 // Solo datos reales de cada proyecto: contexto, necesidad, solución y funcionalidades.
@@ -99,9 +99,6 @@ function projects() {
 
   $$('[data-proj]').forEach(btn => {
     btn.addEventListener('click', () => open(btn));
-    // la imagen del proyecto también abre la ficha
-    const work = btn.closest('.work');
-    if (work) $('.work-media[data-cursor]', work)?.addEventListener('click', () => open(btn));
   });
   $('#caseClose').addEventListener('click', close);
   quote.addEventListener('click', () => dlg.close());
@@ -110,78 +107,78 @@ function projects() {
 }
 
 /* ---------- Soluciones: pestañas accesibles (clic, flechas, Inicio y Fin) ---------- */
-/* ---------- Demo del chatbot: sequence scrubbing ---------- */
-// Al bajar, la conversación de Team Hair avanza cuadro por cuadro (142 cuadros sacados
-// del video real, 3 por segundo). Subir la regresa. Cada paso de la lista salta a su momento.
-// Con "reducir movimiento" se muestra el video normal con sus controles.
-const SEQ = { count: 142, fps: 3, path: i => `assets/seq/bot/f${String(i + 1).padStart(3, '0')}.webp` };
+/* ---------- Demo del chatbot: un celular que se puede usar ---------- */
+// Recrea el flujo real del bot de Team Hair (sedes, servicios y mensajes tomados del bot
+// publicado). Todo pasa en la página: no se envía nada a ningún lado.
+const SEDES = ['Av. Suba', 'Éxito Colina', 'Salitre', 'Vidall y Beto', 'Gran Estación'];
+const SERVICIOS = [['Corte de barbería', '$25.000', '40 min'], ['Arreglo de barba', '$18.000', '30 min']];
+const CATEGORIAS = ['Peluquería · 5 servicios', 'Barbería · 2 servicios', 'Uñas · 2 servicios', 'Cejas y pestañas · 1 servicio', 'Estética · 2 servicios', 'Spa · 2 servicios'];
+const HORAS = { 'Mañana': ['9:00 a. m.', '10:00 a. m.', '11:00 a. m.'], 'Tarde': ['2:00 p. m.', '3:00 p. m.', '4:00 p. m.'] };
+
 function demo() {
-  const sec = $('#chatbots'), video = $('#demoVid'), canvas = $('#botSeq'), bar = $('#vidProg');
-  const steps = $$('#botSteps button'), marks = steps.map(b => +b.dataset.t);
-  let cur = -1;
-  const mark = i => {
-    if (i === cur) return;
-    cur = i;
-    steps.forEach((b, k) => b.classList.toggle('on', k === i));
-  };
-  const stepAt = t => { let i = marks.length - 1; while (i > 0 && t < marks[i]) i--; return i; };
-  mark(0);
+  const log = $('#waLog'), opts = $('#waOpts');
+  if (!log) return;
+  const cita = {};
+  let token = 0;
 
-  if (reduce) {
-    canvas.hidden = true;
-    video.controls = true;
-    video.preload = 'metadata';
-    video.addEventListener('timeupdate', () => mark(stepAt(video.currentTime)));
-    steps.forEach((b, k) => b.addEventListener('click', () => { video.currentTime = marks[k] + .05; video.play().catch(() => {}); }));
-    return;
-  }
+  const bubble = (text, who) => {
+    const p = document.createElement('p');
+    p.className = `wa-msg ${who}`;
+    p.textContent = text;
+    log.append(p);
+    log.scrollTo({ top: log.scrollHeight, behavior: reduce ? 'instant' : 'smooth' });
+  };
+  // el bot "escribe" un momento antes de responder
+  const say = (lines, choices) => {
+    const my = ++token;
+    opts.replaceChildren();
+    const typing = document.createElement('p');
+    typing.className = 'wa-msg in wa-typing';
+    typing.textContent = 'escribiendo…';
+    log.append(typing);
+    log.scrollTo({ top: log.scrollHeight });
+    setTimeout(() => {
+      if (my !== token) return;
+      typing.remove();
+      lines.forEach(l => bubble(l, 'in'));
+      opts.replaceChildren(...choices.map(([label, next]) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = label;
+        b.addEventListener('click', () => { bubble(label, 'out'); next(label); });
+        return b;
+      }));
+    }, reduce ? 0 : 650);
+  };
 
-  sec.classList.add('seq');
-  video.remove();
-  const ctx = canvas.getContext('2d');
-  const frames = new Array(SEQ.count);
-  let shown = -1, want = 0;
-  const draw = () => {
-    // el cuadro pedido, o el último ya descargado antes de él
-    let i = want;
-    while (i > 0 && !frames[i]?.complete) i--;
-    if (i === shown || !frames[i]?.complete) return;
-    shown = i;
-    ctx.drawImage(frames[i], 0, 0, canvas.width, canvas.height);
-  };
-  const load = i => {
-    if (frames[i]) return;
-    const img = new Image();
-    img.decoding = 'async';
-    img.onload = () => { if (Math.abs(i - want) < 6 || shown < 0) draw(); };
-    img.src = SEQ.path(i);
-    frames[i] = img;
-  };
-  load(0);
-  // descarga el resto solo cuando la sección se acerca, primero cada 4 cuadros y luego los demás
+  const menu = () => say(['¡Hola! 👋 Bienvenid@ a Team Hair ✨ Soy el asistente virtual y te ayudo a agendar tu cita en segundos, a cualquier hora.', '¿Qué quieres hacer?'], [
+    ['📅 Agendar cita', sede],
+    ['💇 Ver servicios', () => say(['Estas son nuestras categorías:', CATEGORIAS.join('\n')], [['📅 Agendar cita', sede], ['Volver al menú', menu]])],
+    ['📍 Sedes y horarios', () => say(['Nuestras sedes:', SEDES.join('\n')], [['📅 Agendar cita', sede], ['Volver al menú', menu]])],
+    ['🙋 Hablar con una persona', () => say(['Listo, una persona del equipo de Team Hair te responde por este chat. (En la demo termina aquí.)'], [['Volver al menú', menu]])],
+  ]);
+  const sede = () => say(['¿En qué sede quieres tu cita?'], SEDES.map(s => [s, v => { cita.sede = v; servicio(); }]));
+  const servicio = () => say(['Barbería: elige el servicio.'], SERVICIOS.map(([n, precio, dur]) => [`${n} · ${precio}`, () => { cita.servicio = n; cita.precio = precio; cita.dur = dur; profesional(); }]));
+  const profesional = () => say(['¿Con quién quieres tu cita? Si tienes un profesional favorito, elígelo.'], [['Julián', v => { cita.pro = v; dia(); }], ['El primero disponible', () => { cita.pro = 'el primero disponible'; dia(); }]]);
+  const dia = () => say(['¿Qué día te queda bien?'], [['Hoy', v => { cita.dia = v; momento(); }], ['Mañana', v => { cita.dia = v; momento(); }]]);
+  const momento = () => say([`Para ${cita.dia.toLowerCase()} hay horarios libres. ¿En qué momento del día?`], Object.keys(HORAS).map(m => [m, () => hora(m)]));
+  const hora = m => say(['Elige la hora:'], HORAS[m].map(h => [h, () => { cita.hora = h; confirmar(); }]));
+  const confirmar = () => say([`${cita.servicio}\n👤 ${cita.pro}\n📍 Sede ${cita.sede}\n📅 ${cita.dia}, ${cita.hora}\n💲 ${cita.precio} · ${cita.dur} aprox.`, '¿La confirmo?'], [['✅ Confirmar', listo], ['✏️ Cambiar algo', sede], ['Volver al menú', menu]]);
+  const listo = () => say([`¡Listo! ✅ Tu cita quedó agendada: ${cita.dia.toLowerCase()} a las ${cita.hora} con ${cita.pro} en la sede ${cita.sede}.`, 'Te enviaré un recordatorio 1 hora antes. Si necesitas cambiarla, escribe "menú".'], [['⏰ Ver el recordatorio', recordatorio], ['Volver al menú', menu]]);
+  const recordatorio = () => say([`⏰ Recordatorio de Team Hair\nHola, tu cita de ${cita.servicio.toLowerCase()} es en 1 hora (${cita.hora}) en la sede ${cita.sede}. ¿Nos confirmas tu asistencia?`], [
+    ['👍 Ahí estaré', () => say(['¡Te esperamos! 💈'], [['Reiniciar la demo', restart]])],
+    ['🔁 Reprogramar', sede],
+    ['❌ Cancelar', () => say(['Cita cancelada. El horario quedó libre para otro cliente.'], [['Reiniciar la demo', restart]])],
+  ]);
+  const restart = () => { log.replaceChildren(); menu(); };
+
+  // arranca cuando el celular aparece en pantalla, como si el cliente escribiera "Hola"
   new IntersectionObserver(([e], io) => {
     if (!e.isIntersecting) return;
     io.disconnect();
-    for (let i = 0; i < SEQ.count; i += 4) load(i);
-    setTimeout(() => { for (let i = 0; i < SEQ.count; i++) load(i); }, 400);
-  }, { rootMargin: '150% 0px' }).observe(sec);
-
-  const range = () => {
-    const r = sec.getBoundingClientRect();
-    return { top: r.top + scrollY, len: Math.max(1, r.height - innerHeight), p: Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - innerHeight))) };
-  };
-  onScroll(() => {
-    const { p } = range();
-    want = Math.round(p * (SEQ.count - 1));
-    draw();
-    bar.style.transform = `scaleX(${p.toFixed(4)})`;
-    mark(stepAt(want / SEQ.fps));
-  });
-  steps.forEach((b, k) => b.addEventListener('click', () => {
-    const { top, len } = range();
-    const p = Math.min(1, (marks[k] * SEQ.fps + 1) / (SEQ.count - 1));
-    scrollTo({ top: top + p * len, behavior: 'smooth' });
-  }));
+    bubble('Hola', 'out');
+    menu();
+  }, { threshold: .3 }).observe(log);
 }
 
 /* ---------- Contacto: el logo se arma al llegar y se copia el correo ---------- */
