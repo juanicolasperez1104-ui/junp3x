@@ -1,72 +1,59 @@
-// Escenas guiadas por el scroll: app de mantenimiento, proyectos en horizontal,
-// proceso en paneles, color de fondo, menú activo y cursor.
-import { $, $$, reduce, fine, clamp01, onScroll, pointer } from './utils.js';
+// Escenas: proyectos en carrusel (deslizar o botones), proceso que aparece al bajar,
+// color de fondo, menú activo y cursor. Nada depende de la rueda del mouse: en el
+// celular todo se maneja con el dedo o con botones.
+import { $, $$, reduce, fine, pointer } from './utils.js';
 
-const smooth = t => t * t * (3 - 2 * t);
-// avance de 0 a 1 de una sección alta mientras su contenido queda fijo en pantalla
-const progress = el => {
-  const r = el.getBoundingClientRect();
-  return clamp01(-r.top / Math.max(1, r.height - innerHeight));
-};
-// recorre tramos con una pausa en cada parada para dar tiempo a leer
-const dwell = (seg, hold = .2) => {
-  const k = Math.floor(seg), f = seg - k;
-  return k + smooth(clamp01((f - hold) / (1 - hold * 2)));
-};
+/* ---------- Proyectos: carrusel horizontal con deslizamiento, flechas y puntos ---------- */
+function works() {
+  const sec = $('#proyectos'), track = $('.works-track', sec), panels = $$('.work', sec);
+  const prev = $('#worksPrev'), next = $('#worksNext'), dotsBox = $('#worksDots');
+  let cur = -1, raf = 0, inView = false;
 
-/* ---------- App: el celular cambia de pantalla y el texto acompaña cada paso ---------- */
-function app() {
-  const sec = $('#app'), caps = $$('.app-caps li', sec), screens = $$('.scr', sec);
-  const laptop = $('.laptop', sec), phone = $('.handset', sec);
-  let cur = 0;
-  const show = idx => {
+  const dots = panels.map((w, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('aria-label', `Ver ${$('h2', w).textContent}`);
+    b.addEventListener('click', () => go(i));
+    return b;
+  });
+  dotsBox.append(...dots);
+
+  const go = i => {
+    const k = Math.max(0, Math.min(panels.length - 1, i));
+    track.scrollTo({ left: panels[k].offsetLeft, behavior: reduce ? 'instant' : 'smooth' });
+  };
+  prev.addEventListener('click', () => go(cur - 1));
+  next.addEventListener('click', () => go(cur + 1));
+  sec.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') { e.preventDefault(); go(cur + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); go(cur - 1); }
+  });
+
+  // marca el proyecto visible y mueve un poco cada capa según qué tan centrado está
+  const paint = () => {
+    raf = 0;
+    const x = track.scrollLeft, w = track.clientWidth || 1;
+    const idx = Math.round(x / w);
+    panels.forEach(p => {
+      const off = (p.offsetLeft - x) / w;
+      if (!reduce) p.style.setProperty('--sx', Math.max(-1.2, Math.min(1.2, off)).toFixed(3));
+      if (inView && Math.abs(off) < .5) p.classList.add('seen');
+    });
     if (idx === cur) return;
     cur = idx;
-    caps.forEach((c, i) => c.classList.toggle('on', i === idx));
-    screens.forEach((s, i) => { s.classList.toggle('on', i === idx); s.classList.toggle('past', i < idx); });
+    dots.forEach((d, i) => d.setAttribute('aria-current', i === idx ? 'true' : 'false'));
+    panels.forEach((p, i) => p.toggleAttribute('inert', i !== idx));
+    prev.disabled = idx === 0;
+    next.disabled = idx === panels.length - 1;
   };
-  onScroll(() => {
-    const p = progress(sec);
-    show(Math.min(caps.length - 1, Math.floor(p * caps.length)));
-    sec.style.setProperty('--p', p.toFixed(4));
-    laptop.style.setProperty('--ly', `${((.5 - p) * 70).toFixed(1)}px`);
-    phone.style.setProperty('--hy', `${((p - .5) * 50).toFixed(1)}px`);
-  });
-}
-
-/* ---------- Proyectos: el scroll vertical recorre los paneles de lado a lado ---------- */
-function works() {
-  const sec = $('#proyectos'), track = $('.works-track', sec), panels = $$('.work', sec), bar = $('#worksProg');
-  let dist = 0;
-  const size = () => {
-    dist = Math.max(0, track.scrollWidth - innerWidth);
-    sec.style.height = `${dist + innerHeight}px`;
-  };
-  size();
-  new ResizeObserver(size).observe(track);
-  onScroll(() => {
-    const p = progress(sec), n = panels.length - 1;
-    const x = dwell(p * n, .16) / n * dist;
-    track.style.transform = `translate3d(${-x}px,0,0)`;
-    bar.style.transform = `scaleX(${p})`;
-    panels.forEach(w => {
-      const off = (w.offsetLeft - x) / w.offsetWidth;
-      w.style.setProperty('--sx', Math.max(-1.2, Math.min(1.2, off)).toFixed(3));
-      if (Math.abs(off) < .5) w.classList.add('seen');
-    });
-  });
-
-  // con el teclado: el contenedor fijo no se desplaza solo; la página baja hasta el proyecto enfocado
-  const pin = $('.works-pin', sec);
-  pin.addEventListener('scroll', () => { pin.scrollLeft = 0; });
-  panels.forEach((w, i) => w.addEventListener('focusin', () => {
-    pin.scrollLeft = 0;
-    const top = sec.getBoundingClientRect().top + scrollY;
-    scrollTo({ top: top + (i / (panels.length - 1)) * (sec.offsetHeight - innerHeight), behavior: 'instant' });
-  }));
+  track.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(paint); }, { passive: true });
+  addEventListener('resize', () => { cur = -1; paint(); });
+  paint();
+  // el texto del proyecto entra cuando el carrusel llega a la pantalla
+  new IntersectionObserver(([e]) => { inView = e.isIntersecting; if (inView) paint(); }, { threshold: .35 }).observe(track);
 
   // con el puntero: la ventana del proyecto se inclina unos grados hacia él
-  if (!fine) return;
+  if (!fine || reduce) return;
   $$('.work-media', sec).forEach(m => {
     m.addEventListener('pointermove', e => {
       const r = m.getBoundingClientRect();
@@ -77,26 +64,14 @@ function works() {
   });
 }
 
-/* ---------- Proceso: cada paso entra deslizándose sobre el anterior ---------- */
+/* ---------- Proceso: cada paso entra al llegar a él y se apila sobre el anterior ---------- */
 function process() {
-  const sec = $('#proceso'), panels = $$('.sx-panel', sec), n = panels.length;
-  onScroll(() => {
-    const seg = progress(sec) * (n - 1);
-    const t = panels.map((_, i) => i === 0 ? 1 : smooth(clamp01((seg - (i - 1) - .12) / .76)));
-    panels.forEach((el, i) => {
-      const cover = t[i + 1] || 0;
-      el.style.transform = `translate3d(${((1 - t[i]) * 120).toFixed(2)}%,0,0) scale(${(1 - cover * .08).toFixed(4)})`;
-      el.style.setProperty('--t', t[i].toFixed(3));
-      el.style.setProperty('--dim', (cover * .5).toFixed(3));
-      if (t[i] > .55) el.classList.add('on');
-    });
-  });
-  // el primer panel suelta sus cubos al aparecer la sección
-  new IntersectionObserver(([e], io) => {
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
     if (!e.isIntersecting) return;
-    panels[0].classList.add('on');
-    io.disconnect();
-  }, { threshold: .4 }).observe(panels[0]);
+    e.target.classList.add('on');
+    io.unobserve(e.target);
+  }), { rootMargin: '0px 0px -25% 0px' });
+  $$('#proceso .sx-panel').forEach(p => io.observe(p));
 }
 
 /* ---------- Color de fondo que cambia con cada sección ---------- */
@@ -109,7 +84,7 @@ function tones() {
 
 /* ---------- Cursor: un círculo con una palabra sobre las imágenes que se abren ---------- */
 function cursor() {
-  if (!fine) return;
+  if (!fine || reduce) return;
   const dot = $('#cursor'), label = $('span', dot);
   document.documentElement.classList.add('has-cursor');
   let x = pointer.x, y = pointer.y, raf = 0, on = false;
@@ -142,18 +117,7 @@ export function initScenes() {
   tones();
   navSpy();
   // lo que recibe el foco del teclado aparece aunque su animación de entrada no haya corrido
-  document.addEventListener('focusin', e => e.target.closest('.rise, .work')?.classList.add('seen'));
-  if (reduce) {
-    // sin escenas: tocar cada paso de la app cambia la pantalla del celular
-    const caps = $$('.app-caps li'), screens = $$('.scr');
-    caps.forEach((li, i) => li.addEventListener('click', () => {
-      caps.forEach((c, k) => c.classList.toggle('on', k === i));
-      screens.forEach((s, k) => s.classList.toggle('on', k === i));
-    }));
-    return;
-  }
-  document.documentElement.classList.add('scenes');
-  app();
+  document.addEventListener('focusin', e => e.target.closest('.rise, .sx-panel')?.classList.add('seen', 'on'));
   works();
   process();
   cursor();

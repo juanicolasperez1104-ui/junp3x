@@ -7,7 +7,6 @@ const NEEDS = {
   web: { title: '¿Qué debe lograr tu página?', label: 'Objetivo', options: ['Presentar mi negocio', 'Recibir mensajes por WhatsApp', 'Mostrar productos o servicios', 'Publicar noticias o contenido'] },
   pedidos: { title: '¿Cómo entregas los pedidos?', label: 'Entrega', options: ['A domicilio', 'Para recoger', 'En la mesa', 'Envíos de una tienda'] },
   chatbot: { title: '¿Qué debe hacer el chatbot?', label: 'Funciones', options: ['Responder preguntas frecuentes', 'Mostrar servicios y precios', 'Agendar citas', 'Enviar recordatorios', 'Pasar a una persona'] },
-  software: { title: '¿Qué quieres digitalizar?', label: 'Procesos', options: ['Órdenes de trabajo', 'Inventario o equipos', 'Reportes', 'Firmas y documentos PDF', 'Trabajo en campo desde el celular'] },
   marca: { title: '¿Qué necesitas para tu marca?', label: 'Necesidad', options: ['Logo nuevo', 'Renovar un logo existente', 'Colores y tipografías'] },
 };
 const needsFor = type => NEEDS[type] || NEEDS.web;
@@ -16,8 +15,8 @@ const form = $('#qForm');
 const el = {
   sections: $('#qSections'), sectionsOut: $('#qSecOut'), sectionsBox: $('#qSecWrap'), hint: $('#qSecHint'),
   min: $('#qMin'), max: $('#qMax'), lines: $('#qLines'), send: $('#qSend'), progress: $('#qProg'),
-  tower: $('#qTower'), tag: $('#qTag'), mini: $('#qMiniVal'), price: $('#qPrice'), custom: $('#qCustom'),
-  needs: $('#qNeeds'), needsTitle: $('#qNeedsTitle'), usersBox: $('#qUsersWrap'), extrasBox: $('#qExtrasWrap'), whenBox: $('#qWhenWrap'),
+  tower: $('#qTower'), tag: $('#qTag'), mini: $('#qMiniVal'),
+  needs: $('#qNeeds'), needsTitle: $('#qNeedsTitle'),
   botWrap: $('#x-botWrap'), d3Wrap: $('#x-3dWrap'), domainWrap: $('#x-dominio').closest('label'),
 };
 const touched = new Set(['type']);
@@ -57,15 +56,12 @@ function countTo(node, from, to) {
 }
 
 function update() {
-  const type = form.type.value, T = TYPES[type], web = Boolean(T.includes), custom = Boolean(T.custom);
+  const type = form.type.value, T = TYPES[type], web = Boolean(T.includes);
   const sections = +el.sections.value;
-  const fast = !custom && form.when.value === 'rapido';
+  const fast = form.when.value === 'rapido';
 
   renderNeeds(type);
   el.sectionsBox.hidden = !web;
-  el.usersBox.hidden = !custom;
-  el.extrasBox.hidden = custom;
-  el.whenBox.hidden = custom;
   el.hint.textContent = web ? `Incluye ${T.includes} ${T.unit}. Cada una extra suma entre $${PER_SECTION[0]} y $${PER_SECTION[1]}.` : '';
   el.botWrap.hidden = !web;
   el.d3Wrap.hidden = !web;
@@ -75,40 +71,31 @@ function update() {
   const needs = $$('input[name="need"]:checked', form).map(c => c.value);
   const chosen = new Set();
   const lines = [];
-  let lo = 0, hi = 0;
-  if (custom) {
-    lines.push([T.name, 'A la medida']);
-    if (needs.length) lines.push([needsFor(type).label, `${needs.length} ${needs.length === 1 ? 'proceso' : 'procesos'}`]);
-    lines.push(['Usuarios', form.users.value]);
-  } else {
-    [lo, hi] = T.base;
-    lines.push([T.name, money(T.base)]);
-    if (web) {
-      const extra = Math.max(0, sections - T.includes);
-      if (extra) {
-        lo += extra * PER_SECTION[0];
-        hi += extra * PER_SECTION[1];
-        lines.push([`${extra} ${T.unit} extra`, money([extra * PER_SECTION[0], extra * PER_SECTION[1]])]);
-      }
+  let [lo, hi] = T.base;
+  lines.push([T.name, money(T.base)]);
+  if (web) {
+    const extra = Math.max(0, sections - T.includes);
+    if (extra) {
+      lo += extra * PER_SECTION[0];
+      hi += extra * PER_SECTION[1];
+      lines.push([`${extra} ${T.unit} extra`, money([extra * PER_SECTION[0], extra * PER_SECTION[1]])]);
     }
-    $$('#qExtras input:checked', form).forEach(c => {
-      const X = EXTRAS[c.value];
-      if (!X || (X.webOnly && !web) || (X.notForBrand && type === 'marca')) return;
-      lo += X.price[0];
-      hi += X.price[1];
-      lines.push([X.name, money(X.price)]);
-      chosen.add(c.value);
-    });
-    if (fast) { lines.push(['Entrega en 1 semana', '+20%']); lo *= RUSH; hi *= RUSH; }
-    lo = round5(lo);
-    hi = round5(hi);
-    countTo(el.min, shown[0], lo);
-    countTo(el.max, shown[1], hi);
-    shown = [lo, hi];
   }
-  el.price.hidden = custom;
-  el.custom.hidden = !custom;
-  el.mini.textContent = custom ? 'A la medida' : `$${lo}–${hi} USD`;
+  $$('#qExtras input:checked', form).forEach(c => {
+    const X = EXTRAS[c.value];
+    if (!X || (X.webOnly && !web) || (X.notForBrand && type === 'marca')) return;
+    lo += X.price[0];
+    hi += X.price[1];
+    lines.push([X.name, money(X.price)]);
+    chosen.add(c.value);
+  });
+  if (fast) { lines.push(['Entrega en 1 semana', '+20%']); lo *= RUSH; hi *= RUSH; }
+  lo = round5(lo);
+  hi = round5(hi);
+  countTo(el.min, shown[0], lo);
+  countTo(el.max, shown[1], hi);
+  shown = [lo, hi];
+  el.mini.textContent = `$${lo}–${hi} USD`;
   el.lines.replaceChildren(...lines.map(([a, b]) => {
     const li = document.createElement('li');
     const s1 = document.createElement('span'); s1.textContent = a;
@@ -121,8 +108,7 @@ function update() {
   const parts = [`Hola Junp3x, quiero cotizar: ${T.name}${web ? `, ${sections} ${T.unit}` : ''}.`];
   if (needs.length) parts.push(`${needsFor(type).label}: ${needs.join(', ').toLowerCase()}.`);
   if (extrasText.length) parts.push(`Extras: ${extrasText.join(', ')}.`);
-  if (custom) parts.push(`Usuarios: ${form.users.value}. ¿Podemos hablar del proceso?`);
-  else parts.push(`Entrega: ${fast ? 'en 1 semana' : '2 a 3 semanas'}. Estimado del cotizador: $${lo} a $${hi} USD (precio final por confirmar).`);
+  parts.push(`Entrega: ${fast ? 'en 1 semana' : '2 a 3 semanas'}. Estimado del cotizador: $${lo} a $${hi} USD (precio final por confirmar).`);
   el.send.href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(parts.join(' '))}`;
   el.progress.style.transform = `scaleX(${Math.min(1, touched.size / 4)})`;
   drawTower(type, web ? sections : 0, chosen, fast);
@@ -132,7 +118,7 @@ function update() {
 let previous = { type: null, layers: 0 };
 function drawTower(type, sections, extras, fast) {
   const cx = 120, base = 212, hw = type === 'marca' ? 44 : 56, hd = hw * .5;
-  const isWeb = sections > 0, layers = isWeb ? sections : type === 'chatbot' ? 3 : type === 'software' ? 5 : 1;
+  const isWeb = sections > 0, layers = isWeb ? sections : type === 'chatbot' ? 3 : 1;
   const th = type === 'marca' ? hw * 1.1 : Math.min(12, 96 / layers), gap = type === 'marca' ? 0 : 3;
   const poly = (pts, fill) => svg('path', { d: `M${pts.join('L')}Z`, fill });
 
@@ -177,7 +163,7 @@ function drawTower(type, sections, extras, fast) {
   }
   el.tower.replaceChildren(...parts);
 
-  const label = isWeb ? `${sections} ${sections === 1 ? 'sección' : 'secciones'}` : type === 'chatbot' ? 'Flujo de chatbot' : type === 'software' ? 'Software a la medida' : 'Identidad visual';
+  const label = isWeb ? `${sections} ${sections === 1 ? 'sección' : 'secciones'}` : type === 'chatbot' ? 'Flujo de chatbot' : 'Identidad visual';
   el.tag.textContent = label + (fast ? ' · modo rápido' : '');
 
   if (!reduce) {
@@ -206,13 +192,13 @@ function shortcuts() {
   });
 
   const dock = $('#qdock');
-  const zones = { hero: true, quote: false, contact: false, app: false, works: false, bot: false, sol: false };
+  const zones = { hero: true, quote: false, contact: false, works: false, bot: false, sol: false };
   const dockIO = new IntersectionObserver(entries => {
     entries.forEach(e => { zones[e.target.dataset.zone] = e.isIntersecting; });
     dock.classList.toggle('show', !Object.values(zones).some(Boolean));
   }, { rootMargin: '-15% 0px -15% 0px' });
-  // soluciones, la app, los proyectos y la demo del chatbot ya tienen sus propios botones
-  [['hero', 'inicio'], ['quote', 'cotizar'], ['contact', 'contacto'], ['app', 'app'], ['works', 'proyectos'], ['bot', 'chatbots'], ['sol', 'soluciones']].forEach(([zone, id]) => {
+  // soluciones, los proyectos y la demo del chatbot ya tienen sus propios botones
+  [['hero', 'inicio'], ['quote', 'cotizar'], ['contact', 'contacto'], ['works', 'proyectos'], ['bot', 'chatbots'], ['sol', 'soluciones']].forEach(([zone, id]) => {
     const section = document.getElementById(id);
     section.dataset.zone = zone;
     dockIO.observe(section);
@@ -231,7 +217,7 @@ function shortcuts() {
 export function initQuote() {
   form.addEventListener('input', e => {
     const t = e.target;
-    touched.add(t.name === 'type' ? 'type' : t.name === 'need' ? 'needs' : t === el.sections || t.name === 'users' ? 'size' : t.type === 'checkbox' ? 'extras' : 'when');
+    touched.add(t.name === 'type' ? 'type' : t.name === 'need' ? 'needs' : t === el.sections ? 'size' : t.type === 'checkbox' ? 'extras' : 'when');
     update();
   });
   form.addEventListener('submit', e => e.preventDefault());

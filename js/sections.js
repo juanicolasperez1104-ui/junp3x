@@ -36,25 +36,6 @@ const PROJECTS = {
     link: 'https://juanicolasperez1104-ui.github.io/Cacao-tame/',
     quote: 'sitio',
   },
-  hair: {
-    title: 'Team Hair · chatbot de citas',
-    context: 'Peluquería con varias sedes que atiende a sus clientes por WhatsApp.',
-    need: 'Responder disponibilidad, precios y horarios a cualquier hora sin perder clientes.',
-    solution: 'Un chatbot de WhatsApp que guía la cita paso a paso y avisa al negocio.',
-    features: ['Menú: citas, servicios, sedes y horarios, preguntas frecuentes y hablar con una persona', 'Agenda por sede, servicio, profesional, día y hora libre', 'Precio y duración de cada servicio', 'Recordatorio una hora antes y aviso al negocio', 'Cancelar o reprogramar libera el cupo'],
-    tech: 'WhatsApp, flujo de conversación y agenda',
-    img: 'assets/img/frame-21.webp',
-    quote: 'chatbot',
-  },
-  app: {
-    title: 'App de mantenimiento',
-    context: 'Empresa de mantenimiento de aire acondicionado con técnicos en campo.',
-    need: 'Dejar el papel: órdenes, fotos y firmas dispersas, y reportes armados a mano.',
-    solution: 'Una app web instalable: el técnico escanea el QR del equipo, llena el checklist, toma fotos y recoge la firma. La orden firmada queda en un PDF sellado.',
-    features: ['Equipos por código QR con hoja de vida', 'Checklist del preventivo', 'Fotos que se guardan sin señal y se suben solas', 'Firma del cliente y PDF que no se puede alterar', 'Reportes en Excel y PDF', 'Usuarios con roles, verificación en dos pasos y marca de cada empresa'],
-    tech: 'Next.js, Supabase y app instalable (PWA)',
-    quote: 'software',
-  },
 };
 
 function projects() {
@@ -83,7 +64,7 @@ function projects() {
     quote.dataset.type = d.quote;
     dlg.classList.toggle('case-tall', Boolean(d.img));
     // la imagen del caso: la misma del panel (con transición) o una propia
-    const root = btn.closest('.work, .app');
+    const root = btn.closest('.work');
     source = d.img || !root ? null : $('[data-case-img]', root);
     if (source) {
       bigArt = source.cloneNode(true);

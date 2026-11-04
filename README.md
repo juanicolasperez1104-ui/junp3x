@@ -4,10 +4,10 @@ Sitio estático (HTML, CSS y JavaScript sin librerías externas) con un asistent
 
 ## Diseño
 - Sitio comercial: cada sección responde una duda del visitante y termina en una acción (cotizar, WhatsApp o ver un caso).
-- Recorrido: portada → soluciones (pestañas: problema, qué incluye, para quién, beneficio, ejemplo real) → software empresarial (app de mantenimiento) → proyectos en recorrido horizontal → demo del chatbot (pasos que saltan al momento del video) → por qué Junp3x (3X) → proceso con entregables → cotizador → preguntas frecuentes → cierre con tres pasos.
-- Tipografía: Host Grotesk (títulos), Geist (textos) y Geist Mono (datos técnicos y precios). Tamaños definidos una sola vez en `:root` de `css/styles.css`.
-- Movimiento: títulos que suben palabra por palabra, botones con texto que rueda y relleno de color, fondo que cambia de tono por sección, intro solo una vez por visita. Scroll nativo (sin inercia). Con "reducir movimiento" las escenas se muestran como una columna normal.
-- Contenido real: nada de clientes, cifras ni testimonios inventados. Los precios salen de `js/pricing.js`; el software empresarial se cotiza a la medida.
+- Recorrido: portada → soluciones (pestañas con qué incluye y un ejemplo real) → proyectos en carrusel → demo del chatbot (pasos que saltan al momento del video) → por qué Junp3x (3X) → proceso → cotizador → preguntas frecuentes → cierre. Poca información por sección: título, una frase y la acción.
+- Tipografía: Bricolage Grotesque (títulos, peso 700), Geist (textos) y Geist Mono (datos técnicos y precios). Tamaños definidos una sola vez en `:root` de `css/styles.css`.
+- Movimiento: títulos que suben palabra por palabra, botones con texto que rueda y relleno de color, fondo que cambia de tono por sección, intro solo una vez por visita. Pensado primero para celular: nada depende de la rueda del mouse; los proyectos se deslizan con el dedo o con botones y el proceso se apila al bajar. Con "reducir movimiento" se quitan los desplazamientos.
+- Contenido real: nada de clientes, cifras ni testimonios inventados. Los precios salen de `js/pricing.js`.
 
 ## Estructura
 - `index.html`: contenido de la página.
@@ -21,7 +21,7 @@ Sitio estático (HTML, CSS y JavaScript sin librerías externas) con un asistent
   - `ambient.js`: fondo con luces que emiten ondas.
   - `hero.js`: portada y terreno de cubos.
   - `motion.js`: apariciones escalonadas, botones y menú.
-  - `scenes.js`: escenas guiadas por el scroll (app, proyectos, proceso), tono de fondo, menú activo y cursor.
+  - `scenes.js`: carrusel de proyectos, entrada del proceso, tono de fondo, menú activo y cursor.
   - `sections.js`: pestañas de soluciones, fichas de caso, demo del chatbot y contacto.
   - `quote.js`: cotizador con preguntas según el servicio.
   - `assistant.js`: chat con IA que se abre desde el botón del robot.

@@ -32,12 +32,9 @@ function reveals() {
     stagger($$('.sec-sub', head), 'rise', 3);
   });
   stagger($$('.q-form, .q-result'));
-  stagger($$('.app-copy > :not(.sec-title)'), 'rise', 2);
   stagger($$('.contact-in > *:not(h2)'));
   stagger($$('.sol-tab'));
   stagger($$('.sol-box > .sol-panel'), 'rise', 2);
-  stagger($$('.feats > li'));
-  stagger($$('.feats-note'));
   stagger($$('.bot-copy > :not(.sec-title)'), 'rise', 1);
   stagger($$('.bot-media'), 'rise', 2);
   stagger($$('.x3-card'));

@@ -7,8 +7,6 @@ export const TYPES = {
   sitio: { name: 'Sitio completo con animaciones', base: [100, 130], includes: 5, unit: 'secciones' },
   pedidos: { name: 'Menú o catálogo con pedidos', base: [110, 150], includes: 5, unit: 'secciones' },
   chatbot: { name: 'Chatbot para WhatsApp', base: [120, 180] },
-  // sin precio de lista: depende del proceso de cada empresa y se cotiza a la medida
-  software: { name: 'Software empresarial a la medida', custom: true },
   marca: { name: 'Logo e identidad visual', base: [40, 60] },
 };
 export const EXTRAS = {

@@ -110,13 +110,11 @@ export function initIntro() {
     return s;
   }));
   letters = [...wordmark.children];
-  $('#skip').addEventListener('click', finish);
   // la rueda, un deslizamiento o una tecla también saltan la entrada
   const skipOnInput = () => { if (!intro.hidden) finish(); };
   addEventListener('wheel', skipOnInput, { passive: true });
   addEventListener('touchmove', skipOnInput, { passive: true });
   addEventListener('keydown', e => { if (['Escape', 'Enter', ' ', 'ArrowDown', 'PageDown'].includes(e.key)) skipOnInput(); });
-  $('#replay').addEventListener('click', () => { scrollTo({ top: 0, behavior: 'instant' }); play(); });
 
   // la entrada completa se ve una vez por visita; al volver, la portada aparece de inmediato
   let seen = false;
